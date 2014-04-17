@@ -26,6 +26,9 @@ import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeTaskEditor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
+import me.iamcxa.remindme.provider.DistanceProvider;
+import me.iamcxa.remindme.provider.GPSCallback;
+import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.service.TaskSortingService;
 import android.R.integer;
 import android.R.string;
@@ -36,6 +39,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -60,7 +64,7 @@ import it.gmariotti.cardslib.library.view.CardListView;
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
 public class ListCursorCardFragment extends BaseFragment implements
-		LoaderManager.LoaderCallbacks<Cursor> {
+		LoaderManager.LoaderCallbacks<Cursor>, GPSCallback {
 
 	private MyCursorCardAdapter mAdapter;
 	private CardListView mListView;
@@ -69,6 +73,10 @@ public class ListCursorCardFragment extends BaseFragment implements
 	public static String selection = null;
 	public static String sortOrder = CommonUtils.DEFAULT_SORT_ORDER;
 	public static String[] selectionArgs;
+public GPSManager gpsManager = new GPSManager();
+	Double Latitude;
+	Double Longitude;
+	
 
 	/**********************/
 	/** Initialization **/
@@ -98,6 +106,8 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		View root = inflater.inflate(R.layout.card_fragment_list_cursor,
 				container, false);
+		gpsManager.startNetWorkListening(getActivity());
+	    gpsManager.setGPSCallback(ListCursorCardFragment.this);
 		// mScrollView = (ScrollView) root.findViewById(R.id.card_scrollview);
 
 		return root;
@@ -156,11 +166,30 @@ public class ListCursorCardFragment extends BaseFragment implements
 					new CardHeader.OnClickCardHeaderPopupMenuListener() {
 						@Override
 						public void onMenuItemClick(BaseCard card, MenuItem item) {
-							Toast.makeText(
-									getContext(),
-									"Click on card=" + card.getId() + " item="
-											+ item.getTitle(),
+
+							String loaction = cursor
+									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Coordinates);
+
+							String[] array = loaction.split(",");
+							Toast.makeText(getContext(),"from"+ Latitude+","+Longitude
+									+"to"+Double.parseDouble(array[0])+","+Double.parseDouble(array[1]),
 									Toast.LENGTH_SHORT).show();
+							try {
+								double distances = DistanceProvider.haversine(
+										Latitude, Longitude,
+										Double.parseDouble(array[0]),
+										Double.parseDouble(array[1]));
+								Toast.makeText(
+										getContext(),
+										"Click on card=" + card.getId()
+												+ " item=" + item.getTitle()
+												+ "該處距離你" + Math.floor(distances*1000) + "公里",
+										Toast.LENGTH_SHORT).show();
+							} catch (Exception e) {
+								Toast.makeText(getContext(), e.toString(),
+										Toast.LENGTH_SHORT).show();
+							}
+
 						}
 					});
 
@@ -411,6 +440,16 @@ public class ListCursorCardFragment extends BaseFragment implements
 				mThirdTitleTextView.setText(Notifications);
 
 		}
+	}
+
+	@Override
+	public void onGPSUpdate(Location location) {
+		// TODO Auto-generated method stub
+
+		// 緯度
+		Latitude = location.getLatitude();
+		Longitude = location.getLongitude();
+
 	}
 
 }

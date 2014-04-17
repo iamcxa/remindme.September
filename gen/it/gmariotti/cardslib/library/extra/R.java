@@ -8,22 +8,22 @@ package it.gmariotti.cardslib.library.extra;
 
 public final class R {
 	public static final class attr {
-		public static final int card_header_layout_resourceID = 0x7f01000d;
-		public static final int card_layout_resourceID = 0x7f01000b;
-		public static final int card_shadow_layout_resourceID = 0x7f01000c;
-		public static final int card_thumbnail_layout_resourceID = 0x7f01000e;
-		public static final int list_card_layout_resourceID = 0x7f01000f;
+		public static final int card_header_layout_resourceID = 0x7f010002;
+		public static final int card_layout_resourceID = 0x7f010000;
+		public static final int card_shadow_layout_resourceID = 0x7f010001;
+		public static final int card_thumbnail_layout_resourceID = 0x7f010003;
+		public static final int list_card_layout_resourceID = 0x7f010004;
 	}
 	public static final class color {
-		public static final int card_activated = 0x7f050007;
-		public static final int card_activated_kitkat = 0x7f050009;
-		public static final int card_background = 0x7f050001;
-		public static final int card_backgroundExpand = 0x7f050003;
-		public static final int card_background_header = 0x7f050002;
-		public static final int card_expand_title_color = 0x7f050005;
-		public static final int card_pressed = 0x7f050006;
-		public static final int card_pressed_kitkat = 0x7f050008;
-		public static final int card_text_color_header = 0x7f050004;
+		public static final int card_activated = 0x7f050006;
+		public static final int card_activated_kitkat = 0x7f050008;
+		public static final int card_background = 0x7f050000;
+		public static final int card_backgroundExpand = 0x7f050002;
+		public static final int card_background_header = 0x7f050001;
+		public static final int card_expand_title_color = 0x7f050004;
+		public static final int card_pressed = 0x7f050005;
+		public static final int card_pressed_kitkat = 0x7f050007;
+		public static final int card_text_color_header = 0x7f050003;
 	}
 	public static final class dimen {
 		public static final int card_background_default_radius = 0x7f060001;
@@ -192,7 +192,7 @@ public final class R {
 		public static final int ForegroundLinearLayout_android_foreground = 0;
 		public static final int ForegroundLinearLayout_android_foregroundGravity = 1;
 		public static final int ForegroundLinearLayout_android_foregroundInsidePadding = 2;
-		public static final int[] card_options = { 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f };
+		public static final int[] card_options = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 };
 		public static final int card_options_card_header_layout_resourceID = 2;
 		public static final int card_options_card_layout_resourceID = 0;
 		public static final int card_options_card_shadow_layout_resourceID = 1;
