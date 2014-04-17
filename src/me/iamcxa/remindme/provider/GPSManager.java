@@ -7,22 +7,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
 import android.util.Log;
 import android.widget.Toast;
->>>>>>> g
- 
 public class GPSManager
 {
         private static final int gpsMinTime = 500;
         private static final int gpsMinDistance = 0;
          
-<<<<<<< HEAD
-        private static LocationManager locationManager = null;
-=======
         public static LocationManager locationManager = null;
->>>>>>> g
         private static LocationListener locationListener = null;
         private static GPSCallback gpsCallback = null;
          
@@ -80,11 +72,7 @@ public class GPSManager
                 criteria.setAltitudeRequired(false);
                 criteria.setBearingRequired(false);
                 criteria.setCostAllowed(true);
-<<<<<<< HEAD
-                criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
-=======
                 criteria.setPowerRequirement(Criteria.POWER_LOW);
->>>>>>> g
                  
                 final String bestProvider = GPSManager.locationManager.getBestProvider(criteria, true);
                  
@@ -104,8 +92,6 @@ public class GPSManager
                         }
                 }
         }
-<<<<<<< HEAD
-=======
         
         public Boolean startGpsListening(final Context context)
         {
@@ -144,7 +130,6 @@ public class GPSManager
                 
         }
         
->>>>>>> g
          
         public void stopListening()
         {
@@ -155,24 +140,17 @@ public class GPSManager
                                 GPSManager.locationManager.removeUpdates(GPSManager.locationListener);
                         }
                          
-<<<<<<< HEAD
-                        GPSManager.locationManager = null;
-=======
                         //GPSManager.locationManager = null;
                         //GPSManager.locationListener=null;
->>>>>>> g
                 }
                 catch (final Exception ex)
                 {
                          
                 }
         }
-<<<<<<< HEAD
-=======
         
         public Location LastLocation(){
         		return GPSManager.locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
 
         }
->>>>>>> g
 }
