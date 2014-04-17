@@ -21,10 +21,10 @@ public class GetLoactionInfo {
 				int id = cursor.getInt(0);
 				float lat2= cursor.getFloat(1);
 				float lng2= cursor.getFloat(2);
-				if(Haversine.haversine(latitude,longitude,lat2,lng2)<Spacing)
+				if(DistanceProvider.haversine(latitude,longitude,lat2,lng2)<Spacing)
 				{
 					Locationid = id;
-					Log.i("資料庫內最近資料",Haversine.haversine(latitude,longitude,lat2,lng2)+" 公里");
+					Log.i("資料庫內最近資料",DistanceProvider.haversine(latitude,longitude,lat2,lng2)+" 公里");
 					Log.i("內容","id:"+id+"+\n經緯度"+lat2+"+"+lng2);
 				}
 				cursor.moveToNext();

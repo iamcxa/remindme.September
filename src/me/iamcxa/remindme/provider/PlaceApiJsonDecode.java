@@ -65,7 +65,7 @@ public class PlaceApiJsonDecode {
 				Object lng2 = PlaceArray.getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lng");
 				Object name = PlaceArray.getJSONObject(0).get("name");
 				Object address = PlaceArray.getJSONObject(0).get("vicinity");
-				minDistance=Haversine.haversine(Double.parseDouble(lat1), Double.parseDouble(lng1), Double.parseDouble(lat2.toString()), Double.parseDouble(lng2.toString()));
+				minDistance=DistanceProvider.haversine(Double.parseDouble(lat1), Double.parseDouble(lng1), Double.parseDouble(lat2.toString()), Double.parseDouble(lng2.toString()));
 				LocationName=name.toString();
 				Address=address.toString();
 				for(int a =1;a<PlaceArray.length();a++)
@@ -73,7 +73,7 @@ public class PlaceApiJsonDecode {
 					lat2 = PlaceArray.getJSONObject(a).getJSONObject("geometry").getJSONObject("location").get("lat");
 					lng2 = PlaceArray.getJSONObject(a).getJSONObject("geometry").getJSONObject("location").get("lng");
 					name = PlaceArray.getJSONObject(a).get("name");
-					double Distance= Haversine.haversine(Double.parseDouble(lat1), Double.parseDouble(lng1), Double.parseDouble(lat2.toString()), Double.parseDouble(lng2.toString()));
+					double Distance= DistanceProvider.haversine(Double.parseDouble(lat1), Double.parseDouble(lng1), Double.parseDouble(lat2.toString()), Double.parseDouble(lng2.toString()));
 					//Log.i("lat","經緯度:"+lat2.toString()+","+lng2.toString()+"\n名稱:"+name.toString()+"\n距離:"+Haversine.haversine(Double.parseDouble(lat1), Double.parseDouble(lng1), Double.parseDouble(lat2.toString()), Double.parseDouble(lng2.toString()))+"公里\n  ");
 					if(Distance<minDistance)
 					{
