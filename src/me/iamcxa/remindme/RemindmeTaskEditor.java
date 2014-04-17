@@ -637,7 +637,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 					if(QuickTitle[a]!=null){
 						switch (a) {
 						case 1:
-							
+							String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
 							break;
 						case 2:
 							SearchText.setText(QuickTitle[2]);

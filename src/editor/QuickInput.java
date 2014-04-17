@@ -38,5 +38,18 @@ public class QuickInput {
 		}
 		return returnString;
 	}
+
+	
+	public static String[] TimeQuickInput(String time){
+		String[] TimeArray =new String[10];
+		TimeArray =time.split(".");
+		for (int i = 0; i < TimeArray.length; i++) {
+			if(TimeArray[i]==null)
+			{
+				TimeArray[i]="0";
+			}
+		}
+		return TimeArray;
+	}
 	
 }
