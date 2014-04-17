@@ -631,7 +631,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 				Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
 				Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 			}
-			if(isDraped)
+			if(isDraped && !SearchText.getText().toString().equals(""))
 			{
 				Longitude = map.getCameraPosition().target.longitude;
 				Latitude = map.getCameraPosition().target.latitude;
