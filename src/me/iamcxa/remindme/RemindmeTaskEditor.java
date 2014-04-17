@@ -14,6 +14,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import editor.QuickInput;
+
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor.GpsSetting;
 import me.iamcxa.remindme.provider.GPSCallback;
@@ -38,6 +40,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -242,7 +245,8 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 
 		// 標題輸入欄位
 		tittlEditText = (EditText) findViewById(R.id.editTextTittle);
-		tittlEditText.setHint("標題");
+		tittlEditText.setHint("您能輸入\"123 9. 星巴克 裝文青 \"快速設定");
+		tittlEditText.setTextSize(textsize(5));
 		tittlEditText.setHintTextColor(R.color.background_window);
 
 		// 取得Calendar實例
@@ -332,7 +336,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 				dateTittle = (TextView) textView.findViewById(R.id.name);
 				dateDesc = (TextView) textView.findViewById(R.id.desc);
 				dateTittle.setText(strs[position]);
-				dateDesc.setText(mYear + "/" + mMonth + "/" + mDay);
+				//dateDesc.setText(mYear + "/" + mMonth + "/" + mDay);
 				return textView;
 				// 提醒時間
 			case 1:
@@ -343,7 +347,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 				timeTittle = (TextView) textView.findViewById(R.id.name);
 				timeDesc = (TextView) textView.findViewById(R.id.desc);
 				timeTittle.setText(strs[position]);
-				timeDesc.setText(mHour + ":" + mMinute);
+				//timeDesc.setText(mHour + ":" + mMinute);
 				return textView;
 				// 提醒內容
 			case 2:
@@ -624,6 +628,32 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
+			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
+			if(dateDesc.getText().equals("") && timeDesc.getText().equals("") 
+					&& contentDesc.getText().equals("") && SearchText.getText().toString().equals(""))
+			{
+				String[] QuickTitle = QuickInput.QuickInput(tittlEditText.getText().toString());
+				for (int a=0 ;a<QuickTitle.length;a++) {
+					if(QuickTitle[a]!=null){
+						switch (a) {
+						case 1:
+							
+							break;
+						case 2:
+							SearchText.setText(QuickTitle[2]);
+							break;
+						case 3:
+							tittlEditText.setText(QuickTitle[3]);
+							break;
+						case 4:
+							contentDesc.setText(QuickTitle[4]);
+							break;
+						default:
+							break;
+						}
+					}
+				}
+			}
 			if(!isdidSearch && !SearchText.getText().toString().equals(""))
 			{
 				//SearchPlace();
@@ -799,6 +829,11 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	        }
 		}
 	}
+	
+	private int textsize(int size){
+   	 DisplayMetrics dm = this.getResources().getDisplayMetrics();
+   	 return (int)(size*dm.density);
+   }
 }
 
 // * CLASS JUST FOR THE CUSTOM ALERT DIALOG

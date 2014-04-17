@@ -15,7 +15,8 @@
     android:scrollbarStyle="insideOverlay"
     android:scrollbars="vertical"
     tools:context="me.iamcxa.remindme.ActivityEditor" 
-    android:windowSoftInputMode="stateHidden">
+    android:windowSoftInputMode="stateHidden"
+    >
 
     <LinearLayout
         android:id="@+id/relativeLayout1"
@@ -46,7 +47,7 @@
             android:singleLine="false"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="bold" 
+            android:textStyle="bold"
             >
 
             <requestFocus />
