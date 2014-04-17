@@ -56,30 +56,26 @@ public class TaskDBProvider extends ContentProvider {
 					+ " ("
 					+ RemindmeTaskCursor.KeyColumns.KEY_ID // 0
 					+ " INTEGER PRIMARY KEY autoincrement,"
-					+ RemindmeTaskCursor.KeyColumns.GoogleCalSyncID // 1
-					+ " TEXT,"
 					+ RemindmeTaskCursor.KeyColumns.Tittle // 2
 					+ " TEXT," // 2
+					+ RemindmeTaskCursor.KeyColumns.StartDate
+					+ " TEXT," 
+					+ RemindmeTaskCursor.KeyColumns.EndDate
+					+ " TEXT," 
 					+ RemindmeTaskCursor.KeyColumns.StartTime // 3
 					+ " TEXT,"
 					+ RemindmeTaskCursor.KeyColumns.EndTime
-					+ " TEXT," // 4
-					+ RemindmeTaskCursor.KeyColumns.StartDate
-					+ " TEXT," // 5
-					+ RemindmeTaskCursor.KeyColumns.EndDate
-					+ " TEXT," // 6
+					+ " TEXT," 
 					+ RemindmeTaskCursor.KeyColumns.Is_Repeat
-					+ " INTEGER," // 7
+					+ " INTEGER,"
 					+ RemindmeTaskCursor.KeyColumns.Is_AllDay
-					+ " INTEGER," // 8
+					+ " INTEGER," 
 					+ RemindmeTaskCursor.KeyColumns.LocationName
-					+ " TEXT," // 9
+					+ " TEXT," 
 					+ RemindmeTaskCursor.KeyColumns.Coordinates
-					+ " TEXT," // 10
+					+ " TEXT," 
 					+ RemindmeTaskCursor.KeyColumns.Distance
-					+ " TEXT," // 11
-					+ RemindmeTaskCursor.KeyColumns.CalendarID
-					+ " TEXT," // 12
+					+ " TEXT," 
 					+ RemindmeTaskCursor.KeyColumns.CONTENT
 					+ " TEXT," // 13
 					+ RemindmeTaskCursor.KeyColumns.CREATED
@@ -95,6 +91,10 @@ public class TaskDBProvider extends ContentProvider {
 					+ RemindmeTaskCursor.KeyColumns.PriorityWeight
 					+ " INTEGER," // 19
 					+ RemindmeTaskCursor.KeyColumns.Collaborators + " TEXT," // 20
+					+ RemindmeTaskCursor.KeyColumns.GoogleCalSyncID 
+					+ " TEXT,"
+					+ RemindmeTaskCursor.KeyColumns.CalendarID
+					+ " TEXT," // 12
 					+ RemindmeTaskCursor.KeyColumns.other + " TEXT" // 21
 					+ ");");
 		}
@@ -306,6 +306,8 @@ public class TaskDBProvider extends ContentProvider {
 				RemindmeTaskCursor.KeyColumns.other);
 		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Collaborators,
 				RemindmeTaskCursor.KeyColumns.Collaborators);
+		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Coordinates,
+				RemindmeTaskCursor.KeyColumns.Coordinates);
 
 	}
 }

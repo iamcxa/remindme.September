@@ -7,7 +7,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
-
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -106,7 +105,6 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private static EditText SearchText;
 	
 	private static String LastTimeSearchName="";
-	
 	// 是否開啟提醒
 	private int on_off = 0;
 	// 是否聲音警告
@@ -148,7 +146,6 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private CheckedTextView ctv1, ctv2;
 	// 存取佈局實例
 	private static LayoutInflater li;
-
 
 	// 初始化方法
 	private void init(Intent intent) {
@@ -286,7 +283,6 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	static class ViewAdapter extends BaseAdapter {
 		// 列表內容
 		String[] strs = { "截止日", "提醒時間", "備註"};
-
 		// 取得列表數量
 		// @Override
 		@Override

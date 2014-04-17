@@ -59,7 +59,7 @@ import it.gmariotti.cardslib.library.view.CardListView;
  * 
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
-public class ListCursorCardFragment extends BaseFragment implements
+public class ListCursorCardFragmentTime extends BaseFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 
 	private MyCursorCardAdapter mAdapter;
@@ -81,8 +81,9 @@ public class ListCursorCardFragment extends BaseFragment implements
 		if (mListView != null) {
 			mListView.setAdapter(mAdapter);
 		}
-		getLoaderManager();
-		LoaderManager.enableDebugLogging(true);
+
+getLoaderManager();
+LoaderManager.enableDebugLogging(true);
 		// Force start background query to load sessions
 		getLoaderManager().restartLoader(0, null, this);
 	}
@@ -116,7 +117,8 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		Loader<Cursor> loader = null;
 		loader = new CursorLoader(getActivity(), CommonUtils.CONTENT_URI,
-				projection, selection, selectionArgs, sortOrder);
+				projection, selection, selectionArgs,
+				sortOrder);
 		return loader;
 	}
 
@@ -166,6 +168,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// Add Header to card
 			card.addCardHeader(header);
+
 			final MyCardThumbnail thumb = new MyCardThumbnail(getActivity());
 			thumb.setDrawableResource(card.resourceIdThumb);
 			card.addCardThumbnail(thumb);
@@ -194,11 +197,12 @@ public class ListCursorCardFragment extends BaseFragment implements
 									"Card id=" + card.getId()
 											+ "Click on Content Area",
 									Toast.LENGTH_SHORT).show();
-
+							
+							
 							int id1 = Integer.parseInt(card.getId());
-							String date1 = cursor.getString(2);
+							String date1 =cursor.getString(2) ;
 							String time1 = cursor.getString(2);
-							String content = cursor.getString(3);
+							String content = cursor.getString(3);			
 							String endTime = cursor
 									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndTime);
 							String endDate = cursor
@@ -214,10 +218,9 @@ public class ListCursorCardFragment extends BaseFragment implements
 							b.putString("LocationName", LocationName);
 							b.putString("endDate", endDate);
 							b.putString("endTime", endTime);
-
+							
 							Intent intent = new Intent();
-							intent.setClass(getActivity(),
-									RemindmeTaskEditor.class);
+							intent.setClass(getActivity(), RemindmeTaskEditor.class);
 							startActivity(intent);
 						}
 					});
@@ -238,7 +241,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 			return card;
 		}
 
-		private void setCardFromCursor(MyCursorCard card, Cursor cursor) {
+		private  void setCardFromCursor(MyCursorCard card, Cursor cursor) {
 			// 準備常數
 			CommonUtils.debugMsg(0, "prepare data from cursor...");
 			boolean Extrainfo = cursor
@@ -287,20 +290,22 @@ public class ListCursorCardFragment extends BaseFragment implements
 			}
 
 			// 小圖標顯示 - 判斷是否存有地點資訊
-			CommonUtils.debugMsg(0, "Location=\"" + LocationName + "\"");
+			CommonUtils.debugMsg(0, "Location=\"" + LocationName
+					+ "\"");
 			if ((LocationName.length()) > 1) {
 				card.resourceIdThumb = R.drawable.map_marker;
-			} else {
+					} else {
 				card.resourceIdThumb = R.drawable.tear_of_calendar;
 				card.LocationName = null;
 			}
-
+			
 			// 距離與地點資訊
 			CommonUtils.debugMsg(0, "dintence=" + dintence);
 			if (dintence == null) {
 				card.LocationName = LocationName;
 			} else {
-				card.LocationName = "距離 " + dintence + " 公里 - " + LocationName;
+				card.LocationName = "距離 " + dintence + " 公里 - "
+						+ LocationName;
 			}
 
 			// 可展開額外資訊欄位
@@ -310,6 +315,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 			if (!Extrainfo) {
 				card.resourceIdThumb = R.drawable.outline_star_act;
 				// 額外資訊提示 - 第四行
+				
 
 				// This provides a simple (and useless) expand area
 				CardExpand expand = new CardExpand(getActivity());
@@ -317,7 +323,8 @@ public class ListCursorCardFragment extends BaseFragment implements
 				expand.setTitle(getString(R.string.app_name));
 				card.addCardExpand(expand);
 			}
-			card.Notifications = cursor.getString(0);
+			card.Notifications = cursor
+					.getString(0);
 
 			// 依照權重給予卡片顏色
 			if (cursor
@@ -368,10 +375,10 @@ public class ListCursorCardFragment extends BaseFragment implements
 	/************************/
 	public class MyCursorCard extends Card {
 
-		String DateTime;
-		String LocationName;
-		String Notifications;
-		String mainHeader;
+		 String DateTime;
+		 String LocationName;
+		 String Notifications;
+		 String mainHeader;
 
 		int resourceIdThumb;
 
