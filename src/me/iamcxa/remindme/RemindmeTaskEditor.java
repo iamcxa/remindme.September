@@ -650,6 +650,8 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 							try {
 								mHour = Integer.parseInt(Time[0]);
 								mMinute = Integer.parseInt(Time[1]);
+								timeDesc.setText(mHour + ":" + mMinute);
+								
 							} catch (Exception e) {
 								Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
 							}
