@@ -190,9 +190,9 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 		} else if ((48 > dayLeft) && (dayLeft > 23)) {
 			newPriorityWeight -= 20;
 		} else if ((24 > dayLeft) && (dayLeft > 11)) {
-			newPriorityWeight += 90;
+			newPriorityWeight += 5;
 		} else if ((12 > dayLeft) && (dayLeft > 6)) {
-			newPriorityWeight += 150;
+			newPriorityWeight += 30;
 		}
 
 		// ¶ZÂ÷
@@ -205,9 +205,9 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 		} else if ((10 > Distance) && (Distance > 3)) {
 			newPriorityWeight *= 0.98;
 		} else if ((4 > Distance) && (Distance > 1)) {
-			newPriorityWeight *= 1.01;
+			newPriorityWeight *= 1.001;
 		} else if ((0.5 > Distance) && (Distance > 0.1)) {
-			newPriorityWeight *= 1.12;
+			newPriorityWeight *= 1.01;
 		}
 		newPriorityWeight = newPriorityWeight + oldWeights;
 		CommonUtils
