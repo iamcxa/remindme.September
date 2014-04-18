@@ -7,9 +7,13 @@
             android:title="輸出debugmsg"
             android:defaultValue="true"
             android:summary="True of False"
-            android:key="debugmsg" android:enabled="true"/>
-        </PreferenceCategory>                
-        
+            android:key="debugmsg" android:enabled="true"/>               
+        <CheckBoxPreference
+            android:title="service開關"
+            android:defaultValue="true"
+            android:summary="True of False"
+            android:key="openService" android:enabled="true"/>
+        </PreferenceCategory> 
     <PreferenceCategory android:title="Category 2">
         <EditTextPreference
             android:name="EditText"
@@ -38,6 +42,6 @@
             android:title="Ringtones"
             android:key="ringtonePref" />       
 
-    </PreferenceCategory>  
+    </PreferenceCategory> 
           
 </PreferenceScreen>

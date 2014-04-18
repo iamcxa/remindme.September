@@ -304,7 +304,6 @@ public class RemindmeMainActivity extends FragmentActivity {
 			return false;
 		}
 	};
-
 	/************************/
 	/** btnRefreshAddClick **/
 	/************************/

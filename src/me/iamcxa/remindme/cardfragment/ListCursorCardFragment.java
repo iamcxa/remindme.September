@@ -170,26 +170,44 @@ public GPSManager gpsManager = new GPSManager();
 							String loaction = cursor
 									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Coordinates);
 
-							String[] array = loaction.split(",");
-							Toast.makeText(getContext(),"from"+ Latitude+","+Longitude
-									+"to"+Double.parseDouble(array[0])+","+Double.parseDouble(array[1]),
-									Toast.LENGTH_SHORT).show();
-							try {
-								double distances = DistanceProvider.haversine(
-										Latitude, Longitude,
-										Double.parseDouble(array[0]),
-										Double.parseDouble(array[1]));
+//							String[] array = loaction.split(",");
+//							Toast.makeText(getContext(),"from"+ Latitude+","+Longitude
+//									+"to"+Double.parseDouble(array[0])+","+Double.parseDouble(array[1]),
+//									Toast.LENGTH_SHORT).show();
+//							try {
+//								double distances = DistanceProvider.haversine(
+//										Latitude, Longitude,
+//										Double.parseDouble(array[0]),
+//										Double.parseDouble(array[1]));
+//								Toast.makeText(
+//										getContext(),
+//										"Click on card=" + card.getId()
+//												+ " item=" + item.getTitle()
+//												+ "該處距離你" + Math.floor(distances*1000) + "公里",
+//										Toast.LENGTH_SHORT).show();
+//							} catch (Exception e) {
+//								Toast.makeText(getContext(), e.toString(),
+//										Toast.LENGTH_SHORT).show();
+//							}
+							double distances = DistanceProvider.Distance(loaction, Latitude, Longitude);
+							if(distances>1)
+							{
+							Toast.makeText(
+									getContext(),
+									"Click on card=" + card.getId()
+											+ " item=" + item.getTitle()
+											+ "該處距離你" + Math.floor(distances) + "公里",
+											Toast.LENGTH_SHORT).show();
+							}
+							else
+							{
 								Toast.makeText(
 										getContext(),
 										"Click on card=" + card.getId()
 												+ " item=" + item.getTitle()
-												+ "該處距離你" + Math.floor(distances*1000) + "公里",
-										Toast.LENGTH_SHORT).show();
-							} catch (Exception e) {
-								Toast.makeText(getContext(), e.toString(),
-										Toast.LENGTH_SHORT).show();
+												+ "該處距離你" + Math.floor(distances*1000) + "公尺",
+												Toast.LENGTH_SHORT).show();
 							}
-
 						}
 					});
 
