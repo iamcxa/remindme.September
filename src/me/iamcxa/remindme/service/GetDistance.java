@@ -3,7 +3,9 @@
  */
 package me.iamcxa.remindme.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
@@ -35,11 +37,11 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 			+ " NOT LIKE \"null%\"";
 	public static String sortOrder = RemindmeTaskCursor._ID;
 	public static String[] selectionArgs;
-//	private ArrayList<String> coordinatesList = new ArrayList<String>();
-//	private ArrayList<String> distanceList = new ArrayList<String>();
-//	private ArrayList<String> newdistanceList = new ArrayList<String>();
-//	private ArrayList<String> idList = new ArrayList<String>();
-//	private ArrayList<String> WeightsList = new ArrayList<String>();
+	// private ArrayList<String> coordinatesList = new ArrayList<String>();
+	// private ArrayList<String> distanceList = new ArrayList<String>();
+	// private ArrayList<String> newdistanceList = new ArrayList<String>();
+	// private ArrayList<String> idList = new ArrayList<String>();
+	// private ArrayList<String> WeightsList = new ArrayList<String>();
 
 	private int newPriorityWeight;
 	private String endDate, endTime;
@@ -50,8 +52,8 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_loading);
-		WindowManager.LayoutParams lp = getWindow().getAttributes(); 
-		lp.alpha = 0f; 
+		WindowManager.LayoutParams lp = getWindow().getAttributes();
+		lp.alpha = 0f;
 		getWindow().setAttributes(lp);
 
 		CommonUtils.debugMsg(0, "GetDistance onCreate");
@@ -118,10 +120,10 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		CommonUtils.debugMsg(0, "GetDistance onLoaderReset");
-//		coordinatesList.clear();
-//		idList.clear();
-//		newdistanceList.clear();
-//		distanceList.clear();
+		// coordinatesList.clear();
+		// idList.clear();
+		// newdistanceList.clear();
+		// distanceList.clear();
 	}
 
 	@Override
@@ -134,13 +136,13 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 		data.moveToFirst();
 		for (i = 0; i < data.getCount(); i++) {
 			CommonUtils.debugMsg(0, "GetDistance data.move@" + i);
-			//idList.add("" + data.getInt(RemindmeTaskCursor.IndexColumns.KEY_ID));
-			//WeightsList.add("" + data.getInt(4));
+			// idList.add("" +
+			// data.getInt(RemindmeTaskCursor.IndexColumns.KEY_ID));
+			// WeightsList.add("" + data.getInt(4));
 
-			CommonUtils.debugMsg(0, "GetDistance LatLon1=" + data.getString(2)+" / LatLon2="+Lat+","+
-					Lon);
-			Distance = DistanceProvider.Distance(data.getString(2), Lat,
-					Lon)*1000;
+			CommonUtils.debugMsg(0, "GetDistance LatLon1=" + data.getString(2)
+					+ " / LatLon2=" + Lat + "," + Lon);
+			Distance = DistanceProvider.Distance(data.getString(2), Lat, Lon);
 			endDate = data.getString(5);
 			endTime = data.getString(6);
 			dayLeft = CommonUtils.getDaysLeft(endDate + " " + endTime, 1);
@@ -151,8 +153,8 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 			CommonUtils.debugMsg(0, "GetDistance Distance=" + Distance);
 			saveOrUpdate(
 					Integer.valueOf(data.getInt(0)),
-					getNewWeight(i, Integer.valueOf(data.getInt(4)),
-							Distance, dayLeft), Distance);
+					getNewWeight(i, Integer.valueOf(data.getInt(4)), Distance,
+							dayLeft), Distance);
 			if (!data.isLast())
 				data.moveToNext();
 
@@ -174,8 +176,9 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 	// if(3> 時間 >0) 權重每少一小時 +1000
 
 	public int getNewWeight(int i, int oldWeights, Double Distance, long dayLeft) {
-		int newPriorityWeight = 200;
-		dayLeft = (100+dayLeft) * 24;
+		int newPriorityWeight = 100;
+		dayLeft = (dayLeft) * 24;
+		Distance *= 10;
 		CommonUtils.debugMsg(0, "GetDistance dayLeft=" + dayLeft);
 		// 時間
 		if ((720 > dayLeft)) {
@@ -183,31 +186,32 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 		} else if ((168 > dayLeft) && (dayLeft > 119)) {
 			newPriorityWeight *= 0.5;
 		} else if ((120 > dayLeft) && (dayLeft > 47)) {
-			newPriorityWeight *= 33;
+			newPriorityWeight -= 50;
 		} else if ((48 > dayLeft) && (dayLeft > 23)) {
-			newPriorityWeight *= 150;
+			newPriorityWeight -= 20;
 		} else if ((24 > dayLeft) && (dayLeft > 11)) {
-			newPriorityWeight *= 250;
+			newPriorityWeight += 90;
 		} else if ((12 > dayLeft) && (dayLeft > 6)) {
-			newPriorityWeight *= 800;
+			newPriorityWeight += 150;
 		}
 
 		// 距離
 		if ((Distance > 99)) {
-			newPriorityWeight *= 0.75;
+			newPriorityWeight *= 0.5;
 		} else if ((100 > Distance) && (Distance > 49)) {
 			newPriorityWeight *= 0.88;
 		} else if ((50 > Distance) && (Distance > 9)) {
-			newPriorityWeight *= 1.02;
+			newPriorityWeight *= 0.92;
 		} else if ((10 > Distance) && (Distance > 3)) {
-			newPriorityWeight *= 1.10;
+			newPriorityWeight *= 0.98;
 		} else if ((4 > Distance) && (Distance > 1)) {
-			newPriorityWeight *=1.12;
+			newPriorityWeight *= 1.01;
 		} else if ((0.5 > Distance) && (Distance > 0.1)) {
-			newPriorityWeight *= 1.2;
+			newPriorityWeight *= 1.12;
 		}
 		newPriorityWeight = newPriorityWeight + oldWeights;
-		CommonUtils.debugMsg(0, "GetDistance getNewWeight=" + newPriorityWeight);
+		CommonUtils
+				.debugMsg(0, "GetDistance getNewWeight=" + newPriorityWeight);
 		return newPriorityWeight;
 	}
 
@@ -216,10 +220,13 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 		try {
 			ContentValues values = new ContentValues();
 
+			DecimalFormat df = new DecimalFormat("##.00");
+			Distance = Double.parseDouble(df.format(Distance));
+
 			values.clear();
 
 			values.put(RemindmeTaskCursor.KeyColumns.Distance,
-					Math.floor(Distance));
+					((Distance)));
 			values.put(RemindmeTaskCursor.KeyColumns.PriorityWeight,
 					newPriorityWeight);
 
@@ -232,8 +239,8 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 			CommonUtils.debugMsg(0, "GetDistance newPriorityWeight更新成功！");
 			return true;
 		} catch (Exception e) {
-			Toast.makeText(getApplication(), "GetDistance 儲存出錯！", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(getApplication(), "GetDistance 儲存出錯！",
+					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 

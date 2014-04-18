@@ -150,7 +150,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// Set the header title
 			header.setTitle(card.mainHeader);
-			header.setPopupMenu(R.menu.editor_activity_actionbar,
+			header.setPopupMenu(R.menu.card_popup,
 					new CardHeader.OnClickCardHeaderPopupMenuListener() {
 						@Override
 						public void onMenuItemClick(BaseCard card, MenuItem item) {
@@ -268,7 +268,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Distance);
 			String startTime = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.StartTime);
-			String endTime = cursor.getString(5);
+			String endTime = "";// cursor.getString(5);
 			String endDate = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndDate);
 			String LocationName = cursor
@@ -318,17 +318,17 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// 距離與地點資訊
 			CommonUtils.debugMsg(0, "dintence=" + dintence);
-			if (dintence == null) {
+			if (dintence==null) {
 				card.LocationName = LocationName;
 			} else {
-				if (Double.valueOf(dintence) < 1000) {
-					card.LocationName = LocationName + " - 距離 " + dintence
-							+ " 公尺 ";
-				} else {
-					card.LocationName = LocationName + " - 距離 " + dintence
-							+ " 公里";
+				//if (Double.valueOf(dintence) < 1) {
+				//	card.LocationName = LocationName + " - 距離 "
+					//		+ Double.valueOf(dintence) * 1000 + " 公尺";
+		//		} else {
+					card.LocationName = LocationName + " - 距離 "
+							+ dintence  + " 公里";
 
-				}
+			//	}
 			}
 
 			// 可展開額外資訊欄位
@@ -351,10 +351,10 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// 依照權重給予卡片顏色
 			if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 2000) {
+					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 5000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
 			} else if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 1000) {
+					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 3000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
 			}
 
@@ -369,7 +369,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 				CommonUtils.RemindmeTaskCursor.KeyColumns.KEY_ID + " = ? ",
 				new String[] { card.getId() });
 
-		 mAdapter.notifyDataSetChanged();
+		mAdapter.notifyDataSetChanged();
 
 	}
 

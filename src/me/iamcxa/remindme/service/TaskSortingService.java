@@ -74,8 +74,10 @@ public class TaskSortingService extends Service implements GPSCallback {
 		gpsManager = new GPSManager();
 		CommonUtils.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
+		
+		String timePeriod=CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
 
-		handler.postDelayed(GpsTime, 5000);
+		handler.postDelayed(GpsTime, Long.parseLong(timePeriod));
 		
 //		new Thread(new Runnable() {
 //			@Override

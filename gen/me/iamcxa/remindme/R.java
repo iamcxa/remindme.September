@@ -707,14 +707,13 @@ Button Header
         public static final int OK=0x7f0b000e;
         public static final int Search=0x7f0b000d;
         public static final int SearchText=0x7f0b000c;
-        public static final int action_add=0x7f0b003c;
-        public static final int action_cancel=0x7f0b003b;
-        public static final int action_refresh=0x7f0b0044;
-        public static final int action_search=0x7f0b0042;
-        public static final int action_settings=0x7f0b0043;
-        public static final int action_share=0x7f0b0045;
+        public static final int action_add=0x7f0b003d;
+        public static final int action_cancel=0x7f0b003c;
+        public static final int action_refresh=0x7f0b0045;
+        public static final int action_search=0x7f0b0043;
+        public static final int action_settings=0x7f0b0044;
+        public static final int action_share=0x7f0b0046;
         public static final int ampm=0x7f0b0006;
-        public static final int apply=0x7f0b0047;
         public static final int buttonSubmit=0x7f0b0017;
         public static final int cardListView1=0x7f0b0030;
         public static final int card_content_expand_layout=0x7f0b0027;
@@ -747,10 +746,10 @@ Button Header
         public static final int fragment_local=0x7f0b0032;
         public static final int fragment_main=0x7f0b0033;
         public static final int fragment_time=0x7f0b0034;
-        public static final int gamesicons=0x7f0b0040;
+        public static final int gamesicons=0x7f0b0041;
         public static final int hour=0x7f0b0005;
         public static final int hybrid=0x7f0b0004;
-        public static final int latesticons=0x7f0b003d;
+        public static final int latesticons=0x7f0b003e;
         public static final int listView1=0x7f0b000b;
         public static final int list_cardId=0x7f0b0029;
         public static final int list_card_undobar=0x7f0b0038;
@@ -758,18 +757,19 @@ Button Header
         public static final int list_card_undobar_message=0x7f0b0039;
         public static final int main_scrollview=0x7f0b0008;
         public static final int map=0x7f0b000f;
-        public static final int menu_item_share=0x7f0b0046;
-        public static final int miscicons=0x7f0b0041;
+        public static final int menu_item_share=0x7f0b0047;
+        public static final int miscicons=0x7f0b0042;
         public static final int name=0x7f0b0010;
         public static final int none=0x7f0b0000;
         public static final int normal=0x7f0b0001;
-        public static final int pager=0x7f0b0015;
-        public static final int playicons=0x7f0b003f;
-        public static final int progressBar1=0x7f0b0013;
+        public static final int pager=0x7f0b0014;
+        public static final int playicons=0x7f0b0040;
+        public static final int progressBar1=0x7f0b0015;
         public static final int relativeLayout1=0x7f0b0009;
+        public static final int remove=0x7f0b003b;
         public static final int satellite=0x7f0b0002;
-        public static final int systemicons=0x7f0b003e;
-        public static final int tabs=0x7f0b0014;
+        public static final int systemicons=0x7f0b003f;
+        public static final int tabs=0x7f0b0013;
         public static final int terrain=0x7f0b0003;
         public static final int textView1=0x7f0b0016;
         public static final int undobar=0x7f0b002c;
@@ -834,12 +834,12 @@ Button Header
         public static final int preference=0x7f030024;
     }
     public static final class menu {
-        public static final int contact_popup=0x7f0e0000;
-        public static final int editor_activity_actionbar=0x7f0e0001;
-        public static final int extras_popup=0x7f0e0002;
-        public static final int main_activity_actionbar=0x7f0e0003;
-        public static final int share_menu=0x7f0e0004;
-        public static final int theme_popup=0x7f0e0005;
+        public static final int card_popup=0x7f0e0000;
+        public static final int contact_popup=0x7f0e0001;
+        public static final int editor_activity_actionbar=0x7f0e0002;
+        public static final int extras_popup=0x7f0e0003;
+        public static final int main_activity_actionbar=0x7f0e0004;
+        public static final int share_menu=0x7f0e0005;
     }
     public static final class plurals {
         /**  Card selected item with CAB 
