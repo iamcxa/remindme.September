@@ -628,7 +628,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
 			if(dateDesc.getText().equals("") && timeDesc.getText().equals("") 
 					&& contentDesc.getText().equals("") && SearchText.getText().toString().equals(""))
 			{
@@ -658,15 +658,21 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 			{
 				//SearchPlace();
 				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),SearchText.getText().toString());
-				Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-				Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				if(LoacationAddress.GeocodingApiLatLngGet()!=null)
+				{
+					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				}
 			}
 			if(isDraped && !SearchText.getText().toString().equals(""))
 			{
 				Longitude = map.getCameraPosition().target.longitude;
 				Latitude = map.getCameraPosition().target.latitude;
 				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
-				SearchText.setText(LoacationAddress.GeocodingApiAddressGet());
+				if(LoacationAddress.GeocodingApiAddressGet()!=null)
+				{
+					SearchText.setText(LoacationAddress.GeocodingApiAddressGet());
+				}
 			}
 			saveOrUpdate();
 			finish();
@@ -731,7 +737,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
                 .title("目前位置")
                 .position(nowLoacation));
         
-        GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
+        //GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
        // textView2.setText(textView2.getText()+" "+LoacationAddress.GeocodingApiAddressGet());
 	}
 	
@@ -750,8 +756,11 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 					LastTimeSearchName = SearchText.getText().toString();
 				}
 				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude);
-				Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-				Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				if(LoacationAddress.GeocodingApiLatLngGet()!=null)
+				{
+					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				}
 				//locationDesc = LoacationAddress.GeocodingApiAddressGet();
 				//Toast.makeText(getApplicationContext(), "獲取經緯度"+map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude+"\n地址:"+locationName, Toast.LENGTH_SHORT).show();
 				
@@ -809,11 +818,12 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private void SearchPlace(){
 		if(!SearchText.getText().toString().equals("")){
 			GeocodingAPI LoacationAddress2 = null;
+			LatLng SearchLocation = null;
 			LoacationAddress2 = new GeocodingAPI(getApplicationContext(),SearchText.getText().toString());
 			//textView2.setText("");
 			//locationName=LoacationAddress2.GeocodingApiAddressGet();
 	        //textView2.setText(textView2.getText()+"\n"+Address);
-	        LatLng SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
+	        SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
 	        //textView2.setText(textView2.getText()+"\n"+SearchLocation);
 	        if(SearchLocation!=null)
 	        {
