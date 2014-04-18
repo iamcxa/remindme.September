@@ -116,14 +116,12 @@ public class TaskSortingService extends Service implements GPSCallback {
 				    isGpsStrat=false;
 				    handler.postDelayed(this,10000);
 				    Toast.makeText(getApplicationContext(), "關閉GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
-				    Lat=0;
-				    Lon=0;
 				    double distances = DistanceProvider.Distance("22.65141212389,120.349236913", Lat, Lon);
 					if(distances<1)
 					{
 					Toast.makeText(
 							getApplicationContext(),
-							Math.floor(distances*1000) + "公尺",
+							Math.floor(distances*1000) + "公里",
 									Toast.LENGTH_SHORT).show();
 					}
 					else
@@ -133,7 +131,8 @@ public class TaskSortingService extends Service implements GPSCallback {
 								Math.floor(distances) + "公里",
 										Toast.LENGTH_SHORT).show();
 					}
-				
+				    Lat=0;
+				    Lon=0;
 				}else
 				{
 					if(isGpsStrat)
