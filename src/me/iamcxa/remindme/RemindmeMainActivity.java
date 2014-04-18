@@ -8,12 +8,11 @@ import java.util.Locale;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragmentLocal;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragmentTime;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
-import me.iamcxa.remindme.cardfragment.ListviewFragment;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
 import me.iamcxa.remindme.fragment.CardFragmentLoader1;
 import me.iamcxa.remindme.fragment.CardFragmentLoader2;
+import me.iamcxa.remindme.service.GetDistance;
 import me.iamcxa.remindme.service.TaskSortingService;
-import android.R.integer;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,21 +21,16 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
-import com.google.android.gms.drive.internal.r;
 /**
  * @author cxa Main Activity
  */
@@ -57,6 +51,10 @@ public class RemindmeMainActivity extends FragmentActivity {
 	private int threadID;
 	private static android.app.FragmentManager fragmentManager;
 	public static int layoutID = 0;
+	
+	ListCursorCardFragment cardview = new ListCursorCardFragment();
+	ListCursorCardFragmentTime cardview1 = new ListCursorCardFragmentTime();
+	ListCursorCardFragmentLocal cardview2 = new ListCursorCardFragmentLocal();
 
 	/**********************/
 	/** onCreate LOCALE **/
@@ -199,10 +197,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// 設定卡片
-				ListCursorCardFragment cardview = new ListCursorCardFragment();
-				ListCursorCardFragmentTime cardview1 = new ListCursorCardFragmentTime();
-				ListCursorCardFragmentLocal cardview2 = new ListCursorCardFragmentLocal();
-				ListCursorCardFragment.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.PriorityWeight;
+				ListCursorCardFragment.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.PriorityWeight+" DESC";
 				ListCursorCardFragmentTime.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.EndDate;
 				ListCursorCardFragmentLocal.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.Distance;
 				ListCursorCardFragment.selection = null;
@@ -296,8 +291,8 @@ public class RemindmeMainActivity extends FragmentActivity {
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			Toast.makeText(getApplication(), item.getTitle(),
-					Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplication(), item.getTitle(),
+//					Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent();
 			intent.setClass(getApplication(), RemindmeTaskEditor.class);
 			startActivity(intent);
@@ -316,7 +311,12 @@ public class RemindmeMainActivity extends FragmentActivity {
 			// intent.setClass(getApplication(), testcard.class);
 			// startActivity(intent);
 			setLoding("ON");
-			setFragment(3, 0);
+			Intent intent1 = new Intent();
+			intent1.setClass(getApplication(), GetDistance.class);
+			startActivity(intent1);
+			setLoding("OFF");
+			//setFragment(3, 0);
+		
 			return false;
 		}
 	};
