@@ -55,6 +55,8 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -103,7 +105,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 
 	private static Button Search;
 	
-	private static Button OK;
+	private static ImageButton OK;
 	
 	private static EditText SearchText;
 	
@@ -187,7 +189,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		setContentView(R.layout.activity_event_editor);
 		SearchText = (EditText)findViewById(R.id.SearchText);
 		Search = (Button)findViewById(R.id.Search);
-		OK = (Button)findViewById(R.id.OK);
+		OK = (ImageButton)findViewById(R.id.OK);
 		Search.setOnClickListener(SearchPlace);
 		OK.setOnClickListener(SearchPlace);
 		gpsManager = new GPSManager();
@@ -628,14 +630,17 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-<<<<<<< HEAD
 //			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
-=======
-			//Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
->>>>>>> TestFragment
 			if(dateDesc.getText().equals("") && timeDesc.getText().equals("") 
 					&& contentDesc.getText().equals("") && SearchText.getText().toString().equals(""))
 			{
+				String[] StringArray= tittlEditText.getText().toString().split(" ");
+				try {
+					int i = Integer.parseInt(StringArray[0]);
+					//System.out.println(i);
+				} catch(Exception e) {
+					tittlEditText.setText("3 "+StringArray[0]);
+				} 
 				String[] QuickTitle = QuickInput.QuickInput(tittlEditText.getText().toString());
 				for (int a=0 ;a<QuickTitle.length;a++) {
 					if(QuickTitle[a]!=null){
