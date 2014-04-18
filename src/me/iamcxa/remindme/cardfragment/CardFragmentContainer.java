@@ -5,7 +5,6 @@ package me.iamcxa.remindme.cardfragment;
 
 import me.iamcxa.remindme.R;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

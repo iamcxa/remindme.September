@@ -3,21 +3,15 @@
  */
 package me.iamcxa.remindme.service;
 
-import java.util.List;
-
-import me.iamcxa.remindme.provider.DistanceProvider;
 import me.iamcxa.remindme.provider.GPSManager;
-import com.google.android.gms.drive.internal.r;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeMainActivity;
 import me.iamcxa.remindme.provider.GPSCallback;
-import android.R.integer;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -25,7 +19,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
+import android.preference.PreferenceManager;
 
 /**
  * @author cxa
@@ -40,11 +34,13 @@ public class TaskSortingService extends Service implements GPSCallback {
 		handler.removeCallbacks(GpsTime);
 	}
 	private static final int notifyID = 1;
-	private static double Lat;
-	private static double Lon;
+	public static double Lat;
+	public static double Lon;
 	private Handler handler = null;
 	 private GPSManager gpsManager = null;
 	 private static boolean isGpsStrat= false;
+	 private String msg=null;
+	 private static Notification noti ;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -76,6 +72,21 @@ public class TaskSortingService extends Service implements GPSCallback {
 		super.onCreate();
 		handler = new Handler();
 		gpsManager = new GPSManager();
+		CommonUtils.mPreferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		
+		String timePeriod=CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
+
+		handler.postDelayed(GpsTime, Long.parseLong(timePeriod));
+		
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//
+//				CommonUtils.debugMsg(0,"service setDaemon");
+//				handler.postDelayed(GpsTime, CommonUtils.mPreferences.getLong("GetPriorityPeriod", 5000));
+//			}
+//		}).setDaemon(true);
 		
 		CommonUtils.debugMsg(0,"service pre-start");
 		String ns = Context.NOTIFICATION_SERVICE;
@@ -86,17 +97,20 @@ public class TaskSortingService extends Service implements GPSCallback {
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				intent, 0);
 		Bitmap bm = BitmapFactory.decodeResource(getResources(),
-				R.drawable.empty_flag);
-		Notification noti = new Notification.Builder(getApplicationContext())
-				.setContentTitle("remindme Task shorting service")
-				.setContentText("remindme is running")
-				.setSmallIcon(R.drawable.outline_star_act).setLargeIcon(bm)
-				.setNumber(notifyID).setSubText("subtext").setWhen(when)
-				.setContentIntent(contentIntent).build();
-		
-		handler.postDelayed(GpsTime, 5000);
+				R.drawable.remindme_logo);
+		 noti = new Notification.Builder(getApplicationContext())
+		.setContentTitle("remindme Task shorting service")
+		.setContentText("remindme is running")
+		.setSmallIcon(R.drawable.remindme_logo).setLargeIcon(bm)
+		.setNumber(notifyID).setSubText(msg).setWhen(when)
+		.setContentIntent(contentIntent).build();
+		  nNotificationManager.notify(notifyID,noti);
+	
 		try {
-			nNotificationManager.notify(notifyID,noti);
+
+			
+		
+			
 			CommonUtils.debugMsg(0,"service started");
 		} catch (Exception e) {
 			CommonUtils.debugMsg(0,"service start error="+e.toString()
@@ -106,8 +120,10 @@ public class TaskSortingService extends Service implements GPSCallback {
 	}
 	
 	
+	
 	private Runnable GpsTime = new Runnable() {
-		  public void run() {
+		  @Override
+		public void run() {
 			  if(Lat!=0 && Lon!=0)
 				{
 					//Toast.makeText(getApplicationContext(),"當前速度:"+speed,Toast.LENGTH_SHORT).show();
@@ -115,6 +131,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 				    gpsManager.setGPSCallback(null);
 				    isGpsStrat=false;
 				    handler.postDelayed(this,10000);
+<<<<<<< HEAD
 //				    Toast.makeText(getApplicationContext(), "關閉GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
 				    double distances = DistanceProvider.Distance("22.65141212389,120.349236913", Lat, Lon);
 //					if(distances<1)
@@ -132,13 +149,32 @@ public class TaskSortingService extends Service implements GPSCallback {
 //										Toast.LENGTH_SHORT).show();
 //					}
 				    Lat=0;
+=======
+				    
+				    GetDistance.Lat=Lat;
+				    GetDistance.Lon=Lon;
+					Intent intent1 = new Intent();
+					intent1.setClass(getApplication(), GetDistance.class);
+					intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					startActivity(intent1);
+
+					CommonUtils.debugMsg(0,"service setDaemon ok");
+				    
+					Lat=0;
+>>>>>>> demo_cxa
 				    Lon=0;
 				}else
 				{
 					if(isGpsStrat)
 					{
 						handler.postDelayed(this,1000);
+<<<<<<< HEAD
 //						Toast.makeText(getApplicationContext(), "已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+=======
+						msg="已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon;
+						//noti.notify();
+				//	Toast.makeText(getApplicationContext(), "已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+>>>>>>> demo_cxa
 					}
 					else
 					{
@@ -146,7 +182,13 @@ public class TaskSortingService extends Service implements GPSCallback {
 						gpsManager.setGPSCallback(TaskSortingService.this);
 						isGpsStrat=true;
 						handler.postDelayed(this,1000);
+<<<<<<< HEAD
 //						Toast.makeText(getApplicationContext(), "開啟GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+=======
+						//Toast.makeText(getApplicationContext(), "開啟GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+						msg="開啟GPS:"+Lat+","+Lon;
+						//noti.notify();
+>>>>>>> demo_cxa
 					}
 				}
 		  }

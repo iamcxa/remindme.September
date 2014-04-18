@@ -3,24 +3,13 @@
  */
 package me.iamcxa.remindme;
 
-import java.io.OptionalDataException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-
-import com.google.android.gms.internal.t;
-
-import android.R.bool;
-import android.R.integer;
-import android.R.string;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.util.Log;
-import android.webkit.WebView.FindListener;
 
 /**
  * @author cxa
@@ -86,12 +75,16 @@ public class CommonUtils {
 	/** getDaysLeft **/
 	/***********************/
 	@SuppressLint("SimpleDateFormat")
-	public static long getDaysLeft(String TaskDate) {
+	public static long getDaysLeft(String TaskDate,int Option) {
 
 		// 定義時間格式
 		// java.text.SimpleDateFormat sdf = new
-		// java.text.SimpleDateFormat("yyyy/MM/dd HH:mm");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf=null ;
+		if(Option==1){
+			 sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		}else if(Option==2) {
+			 sdf = new SimpleDateFormat("yyyy/MM/dd");
+		}
 
 		// 取得現在時間
 		Date now = new Date();
@@ -153,6 +146,17 @@ public class CommonUtils {
 				KeyColumns.GoogleCalSyncID,// 20
 				KeyColumns.other // 21
 		};
+		
+		// 查詢欄位陣列
+		public static final String[] PROJECTION_GPS = new String[] {
+				KeyColumns.KEY_ID, // 0
+				KeyColumns.LocationName, // 1
+				KeyColumns.Coordinates,// 2
+				KeyColumns.Distance,// 3
+				KeyColumns.PriorityWeight,// 4
+				KeyColumns.EndDate,// 5
+				KeyColumns.EndTime,// 6
+		};
 
 		public static class IndexColumns {
 			public static final int KEY_ID = 0;
@@ -166,15 +170,15 @@ public class CommonUtils {
 			public static final int LocationName = 8;
 			public static final int Coordinates = 9;
 			public static final int Distance = 10;
-			public static final int CalendarID = 11;
-			public static final int CONTENT = 12;
-			public static final int CREATED = 13;
-			public static final int Is_Alarm_ON = 14;
-			public static final int Is_Hide_ON = 15;
-			public static final int Is_PW_ON = 16;
-			public static final int Password = 17;
-			public static final int PriorityWeight = 18;
-			public static final int Collaborators = 19;
+			public static final int CONTENT = 11;
+			public static final int CREATED = 12;
+			public static final int Is_Alarm_ON = 13;
+			public static final int Is_Hide_ON = 14;
+			public static final int Is_PW_ON = 15;
+			public static final int Password = 16;
+			public static final int PriorityWeight = 17;
+			public static final int Collaborators = 18;
+			public static final int CalendarID = 19;
 			public static final int GoogleCalSyncID = 20;
 			public static final int other = 21;
 			// public static final int AlarmSoundPath = "AlarmSoundPath";

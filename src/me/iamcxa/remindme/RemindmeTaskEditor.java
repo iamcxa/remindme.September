@@ -3,11 +3,8 @@
  */
 package me.iamcxa.remindme;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -22,7 +19,6 @@ import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.GeocodingAPI;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -41,7 +37,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -760,6 +755,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	
 	
 	private Button.OnClickListener SearchPlace = new Button.OnClickListener(){
+		@Override
 		public void onClick(View v){
 			//宣告GPSManager
 		    switch (v.getId()) {
@@ -815,7 +811,8 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	};
 	
 	private Runnable GpsTime = new Runnable() {
-	    public void run() {
+	    @Override
+		public void run() {
 		 GpsUseTime++;
 	     // Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取    lastlocation. 
 	     if( GpsUseTime > GpsSetting.TIMEOUT_SEC ){

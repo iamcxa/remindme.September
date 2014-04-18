@@ -18,19 +18,11 @@
 
 package me.iamcxa.remindme.cardfragment;
 
-import java.util.Date;
-
-import com.google.android.gms.internal.el;
-
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeTaskEditor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
-import me.iamcxa.remindme.service.TaskSortingService;
-import android.R.integer;
-import android.R.string;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -41,11 +33,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.Card.OnLongCardClickListener;
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
 import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
@@ -260,7 +250,7 @@ LoaderManager.enableDebugLogging(true);
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
 			String extraInfo = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
-			long dayLeft = CommonUtils.getDaysLeft(endDate);
+			long dayLeft = CommonUtils.getDaysLeft(endDate,2);
 			// int dayLeft = Integer.parseInt("" + dayLeftLong);
 
 			// give a ID.

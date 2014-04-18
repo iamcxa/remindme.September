@@ -18,20 +18,12 @@
 
 package me.iamcxa.remindme.cardfragment;
 
-import java.util.Date;
-
-import com.google.android.gms.internal.el;
-
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeTaskEditor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
-import me.iamcxa.remindme.provider.DistanceProvider;
 import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
-import me.iamcxa.remindme.service.TaskSortingService;
-import android.R.integer;
-import android.R.string;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -45,11 +37,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.Card.OnLongCardClickListener;
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
 import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
@@ -68,15 +58,13 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 	private MyCursorCardAdapter mAdapter;
 	private CardListView mListView;
-
 	public static String[] projection = RemindmeTaskCursor.PROJECTION;
 	public static String selection = null;
 	public static String sortOrder = CommonUtils.DEFAULT_SORT_ORDER;
 	public static String[] selectionArgs;
-public GPSManager gpsManager = new GPSManager();
+	public GPSManager gpsManager = new GPSManager();
 	Double Latitude;
 	Double Longitude;
-	
 
 	/**********************/
 	/** Initialization **/
@@ -90,7 +78,7 @@ public GPSManager gpsManager = new GPSManager();
 			mListView.setAdapter(mAdapter);
 		}
 		getLoaderManager();
-		LoaderManager.enableDebugLogging(true);
+		// LoaderManager.enableDebugLogging(true);
 		// Force start background query to load sessions
 		getLoaderManager().restartLoader(0, null, this);
 	}
@@ -107,7 +95,7 @@ public GPSManager gpsManager = new GPSManager();
 		View root = inflater.inflate(R.layout.card_fragment_list_cursor,
 				container, false);
 		gpsManager.startNetWorkListening(getActivity());
-	    gpsManager.setGPSCallback(ListCursorCardFragment.this);
+		gpsManager.setGPSCallback(ListCursorCardFragment.this);
 		// mScrollView = (ScrollView) root.findViewById(R.id.card_scrollview);
 
 		return root;
@@ -162,52 +150,36 @@ public GPSManager gpsManager = new GPSManager();
 
 			// Set the header title
 			header.setTitle(card.mainHeader);
-			header.setPopupMenu(R.menu.editor_activity_actionbar,
+			header.setPopupMenu(R.menu.card_popup,
 					new CardHeader.OnClickCardHeaderPopupMenuListener() {
 						@Override
 						public void onMenuItemClick(BaseCard card, MenuItem item) {
 
-							String loaction = cursor
-									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Coordinates);
+							removeCard((Card) card);
+							// String loaction = cursor
+							// .getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Coordinates);
+							//
+							// String[] array = loaction.split(",");
+							// Toast.makeText(getContext(),"from"+
+							// Latitude+","+Longitude
+							// +"to"+Double.parseDouble(array[0])+","+Double.parseDouble(array[1]),
+							// Toast.LENGTH_SHORT).show();
+							// try {
+							// double distances = DistanceProvider.haversine(
+							// Latitude, Longitude,
+							// Double.parseDouble(array[0]),
+							// Double.parseDouble(array[1]));
+							// Toast.makeText(
+							// getContext(),
+							// "Click on card=" + card.getId()
+							// + " item=" + item.getTitle()
+							// + "該處距離你" + Math.floor(distances*1000) + "公尺",
+							// Toast.LENGTH_SHORT).show();
+							// } catch (Exception e) {
+							// Toast.makeText(getContext(), e.toString(),
+							// Toast.LENGTH_SHORT).show();
+							// }
 
-//							String[] array = loaction.split(",");
-//							Toast.makeText(getContext(),"from"+ Latitude+","+Longitude
-//									+"to"+Double.parseDouble(array[0])+","+Double.parseDouble(array[1]),
-//									Toast.LENGTH_SHORT).show();
-//							try {
-//								double distances = DistanceProvider.haversine(
-//										Latitude, Longitude,
-//										Double.parseDouble(array[0]),
-//										Double.parseDouble(array[1]));
-//								Toast.makeText(
-//										getContext(),
-//										"Click on card=" + card.getId()
-//												+ " item=" + item.getTitle()
-//												+ "該處距離你" + Math.floor(distances*1000) + "公里",
-//										Toast.LENGTH_SHORT).show();
-//							} catch (Exception e) {
-//								Toast.makeText(getContext(), e.toString(),
-//										Toast.LENGTH_SHORT).show();
-//							}
-							double distances = DistanceProvider.Distance(loaction, Latitude, Longitude);
-							if(distances>1)
-							{
-							Toast.makeText(
-									getContext(),
-									"Click on card=" + card.getId()
-											+ " item=" + item.getTitle()
-											+ "該處距離你" + Math.floor(distances) + "公里",
-											Toast.LENGTH_SHORT).show();
-							}
-							else
-							{
-								Toast.makeText(
-										getContext(),
-										"Click on card=" + card.getId()
-												+ " item=" + item.getTitle()
-												+ "該處距離你" + Math.floor(distances*1000) + "公尺",
-												Toast.LENGTH_SHORT).show();
-							}
 						}
 					});
 
@@ -222,11 +194,11 @@ public GPSManager gpsManager = new GPSManager();
 					new Card.OnLongCardClickListener() {
 						@Override
 						public boolean onLongClick(Card card, View view) {
-							Toast.makeText(
-									getContext(),
-									"Card id=" + card.getId()
-											+ "LONG Click on Content Area",
-									Toast.LENGTH_SHORT).show();
+							// Toast.makeText(
+							// getContext(),
+							// "Card id=" + card.getId()
+							// + "LONG Click on Content Area",
+							// Toast.LENGTH_SHORT).show();
 							return true;
 						}
 					});
@@ -296,15 +268,16 @@ public GPSManager gpsManager = new GPSManager();
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Distance);
 			String startTime = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.StartTime);
-			String endTime = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndTime);
+			String endTime = "";// cursor.getString(5);
 			String endDate = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndDate);
 			String LocationName = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
 			String extraInfo = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
-			long dayLeft = CommonUtils.getDaysLeft(endDate);
+			String PriorityWeight = cursor
+					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+			long dayLeft = CommonUtils.getDaysLeft(endDate, 2);
 			// int dayLeft = Integer.parseInt("" + dayLeftLong);
 
 			// give a ID.
@@ -321,16 +294,17 @@ public GPSManager gpsManager = new GPSManager();
 			CommonUtils.debugMsg(0, CID + " dayleft=" + dayLeft);
 			if ((180 > dayLeft) && (dayLeft > 14)) {
 				card.DateTime = "再 " + (int) Math.floor(dayLeft) / 30
-						+ " 個月 - " + endDate;
+						+ " 個月 - " + endDate + " - " + endTime;
 			} else if ((14 > dayLeft) && (dayLeft > 0)) {
-				card.DateTime = "再 " + dayLeft + " 天 - " + endDate;
+				card.DateTime = "再 " + dayLeft + " 天 - " + endDate + " - "
+						+ endTime;
 			} else if ((2 > dayLeft) && (dayLeft > 0)) {
 				card.DateTime = "再 " + (int) Math.floor(dayLeft * 24)
-						+ "小時後 - " + endDate;
+						+ "小時後 - " + endDate + " - " + endTime;
 			} else if (dayLeft == 0) {
-				card.DateTime = "今天 - " + endDate;
+				card.DateTime = "今天 - " + endDate + " - " + endTime;
 			} else {
-				card.DateTime = endDate;
+				card.DateTime = endDate + " - " + endTime;
 			}
 
 			// 小圖標顯示 - 判斷是否存有地點資訊
@@ -344,16 +318,25 @@ public GPSManager gpsManager = new GPSManager();
 
 			// 距離與地點資訊
 			CommonUtils.debugMsg(0, "dintence=" + dintence);
-			if (dintence == null) {
+			if (dintence==null) {
 				card.LocationName = LocationName;
 			} else {
-				card.LocationName = "距離 " + dintence + " 公里 - " + LocationName;
+				//if (Double.valueOf(dintence) < 1) {
+				//	card.LocationName = LocationName + " - 距離 "
+					//		+ Double.valueOf(dintence) * 1000 + " 公尺";
+		//		} else {
+					card.LocationName = LocationName + " - 距離 "
+							+ dintence  + " 公里";
+
+			//	}
 			}
 
 			// 可展開額外資訊欄位
 			CommonUtils.debugMsg(0, "isExtrainfo=" + Extrainfo);
-			card.Notifications = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.CalendarID);
+			card.Notifications = "dbId="
+					+ cursor.getString(0)
+					+ ",w="
+					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
 			if (!Extrainfo) {
 				card.resourceIdThumb = R.drawable.outline_star_act;
 				// 額外資訊提示 - 第四行
@@ -364,33 +347,31 @@ public GPSManager gpsManager = new GPSManager();
 				expand.setTitle(getString(R.string.app_name));
 				card.addCardExpand(expand);
 			}
-			card.Notifications = cursor.getString(0);
+			// card.Notifications = cursor.getString(0);
 
 			// 依照權重給予卡片顏色
 			if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 200) {
+					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 5000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
 			} else if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 100) {
+					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 3000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
 			}
 
 		}
 	}
 
-	/*
-	 * private void removeCard(Card card) {
-	 * 
-	 * // Use this code to delete items on DB ContentResolver resolver =
-	 * getActivity().getContentResolver(); long noDeleted =
-	 * resolver.delete(CommonUtils.CONTENT_URI,
-	 * CommonUtils.RemindmeTaskCursor.KeyColumns.KEY_ID + " = ? ", new String[]
-	 * { card.getId() });
-	 * 
-	 * // mAdapter.notifyDataSetChanged();
-	 * 
-	 * }
-	 */
+	private void removeCard(Card card) {
+
+		// Use this code to delete items on DB
+		ContentResolver resolver = getActivity().getContentResolver();
+		long noDeleted = resolver.delete(CommonUtils.CONTENT_URI,
+				CommonUtils.RemindmeTaskCursor.KeyColumns.KEY_ID + " = ? ",
+				new String[] { card.getId() });
+
+		mAdapter.notifyDataSetChanged();
+
+	}
 
 	/***********************/
 	/** Class MyThumbnail **/
