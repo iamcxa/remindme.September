@@ -628,7 +628,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
 			if(dateDesc.getText().equals("") && timeDesc.getText().equals("") 
 					&& contentDesc.getText().equals("") && SearchText.getText().toString().equals(""))
 			{
@@ -707,7 +707,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		
 		//textView1.setText("經緯度:"+Latitude+","+Longitude);
 		//拿到經緯度後馬上關閉
-		Toast.makeText(getApplicationContext(), "關閉GPS"+location, Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), "關閉GPS"+location, Toast.LENGTH_LONG).show();
 		
 		if(GpsSetting.GpsStatus)
 		{
@@ -797,7 +797,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	    		 gpsManager.stopListening();
 	    	     gpsManager.startNetWorkListening(getApplicationContext());
 	    		 GpsSetting.GpsStatus =true;
-	    		 Toast.makeText(getApplicationContext(), "關閉GPS", Toast.LENGTH_LONG).show();
+//	    		 Toast.makeText(getApplicationContext(), "關閉GPS", Toast.LENGTH_LONG).show();
 	    	 }
 	      }else
 	      {

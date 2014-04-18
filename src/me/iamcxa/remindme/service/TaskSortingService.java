@@ -115,7 +115,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 				    gpsManager.setGPSCallback(null);
 				    isGpsStrat=false;
 				    handler.postDelayed(this,10000);
-				    Toast.makeText(getApplicationContext(), "關閉GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+//				    Toast.makeText(getApplicationContext(), "關閉GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
 				    double distances = DistanceProvider.Distance("22.65141212389,120.349236913", Lat, Lon);
 					if(distances<1)
 					{
@@ -138,7 +138,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 					if(isGpsStrat)
 					{
 						handler.postDelayed(this,1000);
-						Toast.makeText(getApplicationContext(), "已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+//						Toast.makeText(getApplicationContext(), "已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
 					}
 					else
 					{
@@ -146,7 +146,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 						gpsManager.setGPSCallback(TaskSortingService.this);
 						isGpsStrat=true;
 						handler.postDelayed(this,1000);
-						Toast.makeText(getApplicationContext(), "開啟GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
+//						Toast.makeText(getApplicationContext(), "開啟GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
 					}
 				}
 		  }
