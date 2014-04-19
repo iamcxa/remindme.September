@@ -351,7 +351,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// 依照權重給予卡片顏色
 			if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 5000) {
+					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 6000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
 			} else if (cursor
 					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 3000) {
