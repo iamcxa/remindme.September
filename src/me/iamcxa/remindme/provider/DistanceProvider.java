@@ -1,7 +1,5 @@
 package me.iamcxa.remindme.provider;
 
-import android.widget.Toast;
-
 public class DistanceProvider {
 	public static final double R = 6372.8; // In kilometers
     public static double haversine(double lat1, double lon1, double lat2, double lon2) {

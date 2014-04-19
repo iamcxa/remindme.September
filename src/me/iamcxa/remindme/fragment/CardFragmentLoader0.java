@@ -4,7 +4,6 @@
 package me.iamcxa.remindme.fragment;
 
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeMainActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

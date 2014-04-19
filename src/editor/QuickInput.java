@@ -42,13 +42,8 @@ public class QuickInput {
 	
 	public static String[] TimeQuickInput(String time){
 		String[] TimeArray =new String[10];
-		TimeArray =time.split(".");
-		for (int i = 0; i < TimeArray.length; i++) {
-			if(TimeArray[i]==null)
-			{
-				TimeArray[i]="0";
-			}
-		}
+		time = time.replaceAll("\\. ", ".0");
+		TimeArray =time.split("\\.");
 		return TimeArray;
 	}
 	

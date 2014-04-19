@@ -7,8 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 public class GPSManager
 {
         private static final int gpsMinTime = 500;
@@ -101,7 +99,7 @@ public class GPSManager
                 }
                 //判斷GPS有沒有打開
                // if(GPSManager.locationManager.isProviderEnabled(GPSManager.locationManager.GPS_PROVIDER)){
-                	GPSManager.locationManager.requestLocationUpdates(GPSManager.locationManager.GPS_PROVIDER, GPSManager.gpsMinTime,
+                	GPSManager.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPSManager.gpsMinTime,
                                         GPSManager.gpsMinDistance, GPSManager.locationListener);
                 	return true;
                // }
@@ -120,7 +118,7 @@ public class GPSManager
                 }
                 //判斷網路訂位有沒有打開
                 //if (GPSManager.locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                	GPSManager.locationManager.requestLocationUpdates(GPSManager.locationManager.NETWORK_PROVIDER, GPSManager.gpsMinTime,
+                	GPSManager.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPSManager.gpsMinTime,
                                         GPSManager.gpsMinDistance, GPSManager.locationListener);
                 	return true;
                // }
@@ -150,7 +148,7 @@ public class GPSManager
         }
         
         public Location LastLocation(){
-        		return GPSManager.locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
+        		return GPSManager.locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         }
 }

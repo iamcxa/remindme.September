@@ -9,14 +9,11 @@ import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
-import it.gmariotti.cardslib.library.internal.Card.OnLongCardClickListener;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.text.style.SuperscriptSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +131,7 @@ public class CursorCardAdapter {
 			String LocationName = cursor
 					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
 			String extraInfo=cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
-			long dayLeft = CommonUtils.getDaysLeft(endDate);
+			long dayLeft = CommonUtils.getDaysLeft(endDate,2);
 			// int dayLeft = Integer.parseInt("" + dayLeftLong);
 
 			// give a ID.

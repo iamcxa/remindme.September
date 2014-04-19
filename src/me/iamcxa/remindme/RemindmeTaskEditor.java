@@ -3,11 +3,8 @@
  */
 package me.iamcxa.remindme;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
-import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -22,7 +19,6 @@ import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.GeocodingAPI;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -41,7 +37,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,6 +50,8 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -103,7 +100,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 
 	private static Button Search;
 	
-	private static Button OK;
+	private static ImageButton OK;
 	
 	private static EditText SearchText;
 	
@@ -187,7 +184,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		setContentView(R.layout.activity_event_editor);
 		SearchText = (EditText)findViewById(R.id.SearchText);
 		Search = (Button)findViewById(R.id.Search);
-		OK = (Button)findViewById(R.id.OK);
+		OK = (ImageButton)findViewById(R.id.OK);
 		Search.setOnClickListener(SearchPlace);
 		OK.setOnClickListener(SearchPlace);
 		gpsManager = new GPSManager();
@@ -628,16 +625,31 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
 			if(dateDesc.getText().equals("") && timeDesc.getText().equals("") 
 					&& contentDesc.getText().equals("") && SearchText.getText().toString().equals(""))
 			{
+				String[] StringArray= tittlEditText.getText().toString().split(" ");
+				try {
+					int i = Integer.parseInt(StringArray[0]);
+					//System.out.println(i);
+				} catch(Exception e) {
+					tittlEditText.setText("3 "+StringArray[0]);
+				} 
 				String[] QuickTitle = QuickInput.QuickInput(tittlEditText.getText().toString());
 				for (int a=0 ;a<QuickTitle.length;a++) {
 					if(QuickTitle[a]!=null){
 						switch (a) {
 						case 1:
 							String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
+							try {
+								mHour = Integer.parseInt(Time[0]);
+								mMinute = Integer.parseInt(Time[1]);
+								timeDesc.setText(mHour + ":" + mMinute);
+								
+							} catch (Exception e) {
+								Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+							}
 							break;
 						case 2:
 							SearchText.setText(QuickTitle[2]);
@@ -658,15 +670,21 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 			{
 				//SearchPlace();
 				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),SearchText.getText().toString());
-				Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-				Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				if(LoacationAddress.GeocodingApiLatLngGet()!=null)
+				{
+					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				}
 			}
 			if(isDraped && !SearchText.getText().toString().equals(""))
 			{
 				Longitude = map.getCameraPosition().target.longitude;
 				Latitude = map.getCameraPosition().target.latitude;
 				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
-				SearchText.setText(LoacationAddress.GeocodingApiAddressGet());
+				if(LoacationAddress.GeocodingApiAddressGet()!=null)
+				{
+					SearchText.setText(LoacationAddress.GeocodingApiAddressGet());
+				}
 			}
 			saveOrUpdate();
 			finish();
@@ -707,7 +725,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		
 		//textView1.setText("經緯度:"+Latitude+","+Longitude);
 		//拿到經緯度後馬上關閉
-		Toast.makeText(getApplicationContext(), "關閉GPS"+location, Toast.LENGTH_LONG).show();
+//		Toast.makeText(getApplicationContext(), "關閉GPS"+location, Toast.LENGTH_LONG).show();
 		
 		if(GpsSetting.GpsStatus)
 		{
@@ -731,12 +749,13 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
                 .title("目前位置")
                 .position(nowLoacation));
         
-        GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
+        //GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
        // textView2.setText(textView2.getText()+" "+LoacationAddress.GeocodingApiAddressGet());
 	}
 	
 	
 	private Button.OnClickListener SearchPlace = new Button.OnClickListener(){
+		@Override
 		public void onClick(View v){
 			//宣告GPSManager
 		    switch (v.getId()) {
@@ -750,8 +769,11 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 					LastTimeSearchName = SearchText.getText().toString();
 				}
 				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude);
-				Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-				Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				if(LoacationAddress.GeocodingApiLatLngGet()!=null)
+				{
+					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+				}
 				//locationDesc = LoacationAddress.GeocodingApiAddressGet();
 				//Toast.makeText(getApplicationContext(), "獲取經緯度"+map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude+"\n地址:"+locationName, Toast.LENGTH_SHORT).show();
 				
@@ -789,7 +811,8 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	};
 	
 	private Runnable GpsTime = new Runnable() {
-	    public void run() {
+	    @Override
+		public void run() {
 		 GpsUseTime++;
 	     // Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取    lastlocation. 
 	     if( GpsUseTime > GpsSetting.TIMEOUT_SEC ){
@@ -797,7 +820,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	    		 gpsManager.stopListening();
 	    	     gpsManager.startNetWorkListening(getApplicationContext());
 	    		 GpsSetting.GpsStatus =true;
-	    		 Toast.makeText(getApplicationContext(), "關閉GPS", Toast.LENGTH_LONG).show();
+//	    		 Toast.makeText(getApplicationContext(), "關閉GPS", Toast.LENGTH_LONG).show();
 	    	 }
 	      }else
 	      {
@@ -809,11 +832,12 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private void SearchPlace(){
 		if(!SearchText.getText().toString().equals("")){
 			GeocodingAPI LoacationAddress2 = null;
+			LatLng SearchLocation = null;
 			LoacationAddress2 = new GeocodingAPI(getApplicationContext(),SearchText.getText().toString());
 			//textView2.setText("");
 			//locationName=LoacationAddress2.GeocodingApiAddressGet();
 	        //textView2.setText(textView2.getText()+"\n"+Address);
-	        LatLng SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
+	        SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
 	        //textView2.setText(textView2.getText()+"\n"+SearchLocation);
 	        if(SearchLocation!=null)
 	        {
