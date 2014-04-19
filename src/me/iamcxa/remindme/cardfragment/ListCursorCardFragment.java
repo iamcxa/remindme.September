@@ -333,10 +333,10 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// 可展開額外資訊欄位
 			CommonUtils.debugMsg(0, "isExtrainfo=" + Extrainfo);
-			card.Notifications = "dbId="
-					+ cursor.getString(0)
-					+ ",w="
-					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+//			card.Notifications = "dbId="
+//					+ cursor.getString(0)
+//					+ ",w="
+//					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
 			if (!Extrainfo) {
 				card.resourceIdThumb = R.drawable.outline_star_act;
 				// 額外資訊提示 - 第四行
@@ -344,7 +344,12 @@ public class ListCursorCardFragment extends BaseFragment implements
 				// This provides a simple (and useless) expand area
 				CardExpand expand = new CardExpand(getActivity());
 				// Set inner title in Expand Area
-				expand.setTitle(getString(R.string.app_name));
+				String aa="dbId="
+						+ cursor.getString(0)
+						+ ",w="
+						+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+				
+				expand.setTitle(aa);
 				card.addCardExpand(expand);
 			}
 			// card.Notifications = cursor.getString(0);
