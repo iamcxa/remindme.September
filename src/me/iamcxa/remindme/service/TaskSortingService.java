@@ -130,27 +130,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 					gpsManager.stopListening();
 				    gpsManager.setGPSCallback(null);
 				    isGpsStrat=false;
-				    handler.postDelayed(this,10000);
-<<<<<<< HEAD
-//				    Toast.makeText(getApplicationContext(), "關閉GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
-				    double distances = DistanceProvider.Distance("22.65141212389,120.349236913", Lat, Lon);
-//					if(distances<1)
-//					{
-//					Toast.makeText(
-//							getApplicationContext(),
-//							Math.floor(distances*1000) + "公里",
-//									Toast.LENGTH_SHORT).show();
-//					}
-//					else
-//					{
-//						Toast.makeText(
-//								getApplicationContext(),
-//								Math.floor(distances) + "公里",
-//										Toast.LENGTH_SHORT).show();
-//					}
-				    Lat=0;
-=======
-				    
+				    handler.postDelayed(this,10000);				    
 				    GetDistance.Lat=Lat;
 				    GetDistance.Lon=Lon;
 					Intent intent1 = new Intent();
@@ -158,23 +138,17 @@ public class TaskSortingService extends Service implements GPSCallback {
 					intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent1);
 
-					CommonUtils.debugMsg(0,"service setDaemon ok");
-				    
+					CommonUtils.debugMsg(0,"service setDaemon ok"); 
 					Lat=0;
->>>>>>> demo_cxa
 				    Lon=0;
 				}else
 				{
 					if(isGpsStrat)
 					{
 						handler.postDelayed(this,1000);
-<<<<<<< HEAD
-//						Toast.makeText(getApplicationContext(), "已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
-=======
 						msg="已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon;
 						//noti.notify();
 				//	Toast.makeText(getApplicationContext(), "已經開啟GPS但是還沒拿到資料:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
->>>>>>> demo_cxa
 					}
 					else
 					{
@@ -182,13 +156,9 @@ public class TaskSortingService extends Service implements GPSCallback {
 						gpsManager.setGPSCallback(TaskSortingService.this);
 						isGpsStrat=true;
 						handler.postDelayed(this,1000);
-<<<<<<< HEAD
-//						Toast.makeText(getApplicationContext(), "開啟GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
-=======
 						//Toast.makeText(getApplicationContext(), "開啟GPS:"+Lat+","+Lon,Toast.LENGTH_SHORT).show();
 						msg="開啟GPS:"+Lat+","+Lon;
 						//noti.notify();
->>>>>>> demo_cxa
 					}
 				}
 		  }

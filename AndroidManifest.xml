@@ -52,7 +52,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDUH6HgffFiRV1rbChM3YBLu29oDg_35AI" />
+            android:value="AIzaSyB_so61XR17TQz3hs1Err7qWyd39pm8Jsc" />
      	 <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
      	 
         <receiver android:name="RemindmeReciver" android:exported="false">
