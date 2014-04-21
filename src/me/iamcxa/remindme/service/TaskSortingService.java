@@ -43,6 +43,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 	 private String msg=null;
 	 private static Notification noti ;
 	 private static GetDistance UpdateDistance;
+	 private String timePeriod ;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -77,7 +78,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 		CommonUtils.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		
-		String timePeriod=CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
+		timePeriod=CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
 
 		handler.postDelayed(GpsTime, Long.parseLong(timePeriod));
 		
@@ -134,7 +135,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 					gpsManager.stopListening();
 				    gpsManager.setGPSCallback(null);
 				    isGpsStrat=false;
-				    handler.postDelayed(this,10000);				    
+				    handler.postDelayed(this, Long.parseLong(timePeriod));				    
 //				    GetDistance.Lat=Lat;
 //				    GetDistance.Lon=Lon;
 				    

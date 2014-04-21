@@ -28,11 +28,11 @@ import android.text.TextUtils;
 
 public class TaskDBProvider extends ContentProvider {
 	// 資料庫名稱常數
-	private static final String DATABASE_NAME = "Remindme_Task.db";
+	public static final String DATABASE_NAME = "Remindme_Task.db";
 	// 資料庫版本常數
-	private static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 1;
 	// 資料表名稱常數
-	private static final String TASK_LIST_TABLE_NAME = "RemindmeTask";
+	public static final String TASK_LIST_TABLE_NAME = "RemindmeTask";
 	// 查詢欄位集合
 	private static HashMap<String, String> sTaskListProjectionMap;
 	// 查詢、更新條件
@@ -44,7 +44,7 @@ public class TaskDBProvider extends ContentProvider {
 	private DatabaseHelper mOpenHelper;
 
 	// 內部工具類別，建立或開啟資料庫、建立或刪除資料表
-	private static class DatabaseHelper extends SQLiteOpenHelper {
+	public static class DatabaseHelper extends SQLiteOpenHelper {
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}

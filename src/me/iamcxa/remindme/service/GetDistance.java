@@ -10,6 +10,7 @@ import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.provider.DistanceProvider;
+import me.iamcxa.remindme.provider.TaskDBEdit;
 import me.iamcxa.remindme.provider.TaskDBProvider;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -31,8 +32,8 @@ import android.widget.Toast;
  */
 public class GetDistance{
 
-	private static double Lat;
-	private static double Lon;
+	private double Lat;
+	private double Lon;
 	public static String[] projection = RemindmeTaskCursor.PROJECTION_GPS;
 	public static String selection = RemindmeTaskCursor.KeyColumns.Coordinates
 			+ " <> \"\" AND " + RemindmeTaskCursor.KeyColumns.Coordinates
@@ -48,16 +49,16 @@ public class GetDistance{
 	private int newPriorityWeight;
 	private String endDate, endTime;
 	private Context context;
-    private static TaskDBProvider load;
+    private static TaskDBEdit load;
 	
 	GetDistance(Context context){
 		this.context=context;
-		load = new TaskDBProvider();
+		load = new TaskDBEdit(context);
 	}
 	
 	public Cursor loadData() {
-
-		Cursor Data = load.query( CommonUtils.CONTENT_URI, projection,
+		load.openDB();
+		Cursor Data = load.query(projection,
 				selection, selectionArgs, sortOrder);
 		return Data;
 		
@@ -171,18 +172,20 @@ public class GetDistance{
 
 			// 修改
 			Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI, ID);
-			load.update(uri, values, null, null);
+			context.getContentResolver().update(uri, values, null, null);
+			//load.update(values, null, null);
 			// Toast.makeText(this, "事項更新成功！" + curDate.toString(),
 			// Toast.LENGTH_SHORT).show();
 
 			CommonUtils.debugMsg(0, "GetDistance newPriorityWeight更新成功！");
+			load.closeDB();
 			return true;
 		} catch (Exception e) {
 			Toast.makeText(context, "GetDistance 儲存出錯！",
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
-
+		
 	}
 	
 	public void SetLatLng(double Lat,Double Lon){
