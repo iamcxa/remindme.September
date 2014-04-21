@@ -10,10 +10,12 @@ import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.provider.DistanceProvider;
+import me.iamcxa.remindme.provider.TaskDBProvider;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -27,10 +29,10 @@ import android.widget.Toast;
  * @author cxa
  * 
  */
-public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
+public class GetDistance{
 
-	public static double Lat = TaskSortingService.Lat;
-	public static double Lon = TaskSortingService.Lon;;
+	private static double Lat;
+	private static double Lon;
 	public static String[] projection = RemindmeTaskCursor.PROJECTION_GPS;
 	public static String selection = RemindmeTaskCursor.KeyColumns.Coordinates
 			+ " <> \"\" AND " + RemindmeTaskCursor.KeyColumns.Coordinates
@@ -45,89 +47,23 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 
 	private int newPriorityWeight;
 	private String endDate, endTime;
-
-	// private int ID;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_loading);
-		WindowManager.LayoutParams lp = getWindow().getAttributes();
-		lp.alpha = 0f;
-		getWindow().setAttributes(lp);
-
-		CommonUtils.debugMsg(0, "GetDistance onCreate");
-
-		// moveTaskToBack(true);
-		getLoaderManager();
-		getLoaderManager().restartLoader(0, null, this);
-
-		getLoaderManager().initLoader(0, null, this);
-
-		if (this.isTaskRoot())
-			CommonUtils.debugMsg(0, "GetDistance moveTaskToBack!");
-		// @SuppressWarnings("deprecation")
-		// Cursor cursor = managedQuery(CommonUtils.CONTENT_URI, projection,
-		// selection, selectionArgs, sortOrder);
-
+	private Context context;
+    private static TaskDBProvider load;
+	
+	GetDistance(Context context){
+		this.context=context;
+		load = new TaskDBProvider();
 	}
+	
+	public Cursor loadData() {
 
-	@Override
-	protected void onPause() {
-		Log.e("====", "onPause()");
-		super.onPause();
-	}
-
-	@Override
-	protected void onStop() {
-		Log.e("====", "onStop()");
-		super.onStop();
-	}
-
-	@Override
-	protected void onDestroy() {
-		Log.e("====", "onDestroy()");
-		super.onDestroy();
-	}
-
-	@Override
-	protected void onResume() {
-		Log.e("====", "onResume()");
-		super.onResume();
-	}
-
-	@Override
-	protected void onStart() {
-		Log.e("====", "onStart()");
-		super.onStart();
-	}
-
-	@Override
-	protected void onRestart() {
-		Log.e("====", "onRestart()");
-		super.onRestart();
-	}
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-
-		Loader<Cursor> loader = null;
-		loader = new CursorLoader(this, CommonUtils.CONTENT_URI, projection,
+		Cursor Data = load.query( CommonUtils.CONTENT_URI, projection,
 				selection, selectionArgs, sortOrder);
-		return loader;
+		return Data;
+		
 	}
 
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-		CommonUtils.debugMsg(0, "GetDistance onLoaderReset");
-		// coordinatesList.clear();
-		// idList.clear();
-		// newdistanceList.clear();
-		// distanceList.clear();
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+	public void ProcessData(Cursor data) {
 
 		CommonUtils.debugMsg(0, "GetDistance onLoadFinished");
 		int i = 0;
@@ -159,9 +95,6 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 				data.moveToNext();
 
 		}
-
-		finish();
-		return;
 	}
 
 	// if(10km> 距離 >3km) 權重每少 1km+150.。
@@ -238,17 +171,22 @@ public class GetDistance extends Activity implements LoaderCallbacks<Cursor> {
 
 			// 修改
 			Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI, ID);
-			getContentResolver().update(uri, values, null, null);
+			load.update(uri, values, null, null);
 			// Toast.makeText(this, "事項更新成功！" + curDate.toString(),
 			// Toast.LENGTH_SHORT).show();
 
 			CommonUtils.debugMsg(0, "GetDistance newPriorityWeight更新成功！");
 			return true;
 		} catch (Exception e) {
-			Toast.makeText(getApplication(), "GetDistance 儲存出錯！",
+			Toast.makeText(context, "GetDistance 儲存出錯！",
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
+	}
+	
+	public void SetLatLng(double Lat,Double Lon){
+		this.Lat=Lat;
+		this.Lon=Lon;
 	}
 }

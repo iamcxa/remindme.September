@@ -118,9 +118,16 @@ public class GPSManager
                 }
                 //判斷網路訂位有沒有打開
                 //if (GPSManager.locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                	GPSManager.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPSManager.gpsMinTime,
-                                        GPSManager.gpsMinDistance, GPSManager.locationListener);
+                
+                
+//                	GPSManager.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPSManager.gpsMinTime,
+//                                        GPSManager.gpsMinDistance, GPSManager.locationListener);
+//                	return true;
+                	
+                	GPSManager.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPSManager.gpsMinTime,
+                            GPSManager.gpsMinDistance, GPSManager.locationListener);
                 	return true;
+                	
                // }
                // else{
                // 	return false;

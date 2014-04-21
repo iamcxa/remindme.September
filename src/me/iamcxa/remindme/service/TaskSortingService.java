@@ -4,6 +4,7 @@
 package me.iamcxa.remindme.service;
 
 import me.iamcxa.remindme.provider.GPSManager;
+import me.iamcxa.remindme.provider.TaskDBProvider;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeMainActivity;
@@ -41,6 +42,7 @@ public class TaskSortingService extends Service implements GPSCallback {
 	 private static boolean isGpsStrat= false;
 	 private String msg=null;
 	 private static Notification noti ;
+	 private static GetDistance UpdateDistance;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -88,6 +90,8 @@ public class TaskSortingService extends Service implements GPSCallback {
 //			}
 //		}).setDaemon(true);
 		
+		UpdateDistance = new GetDistance(getApplicationContext());
+		
 		CommonUtils.debugMsg(0,"service pre-start");
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager nNotificationManager = (NotificationManager) getSystemService(ns);
@@ -131,13 +135,17 @@ public class TaskSortingService extends Service implements GPSCallback {
 				    gpsManager.setGPSCallback(null);
 				    isGpsStrat=false;
 				    handler.postDelayed(this,10000);				    
-				    GetDistance.Lat=Lat;
-				    GetDistance.Lon=Lon;
-					Intent intent1 = new Intent();
-					intent1.setClass(getApplication(), GetDistance.class);
-					intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(intent1);
-
+//				    GetDistance.Lat=Lat;
+//				    GetDistance.Lon=Lon;
+				    
+//					Intent intent1 = new Intent();
+//					intent1.setClass(getApplication(), GetDistance.class);
+//					intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//					startActivity(intent1);
+				    
+				    UpdateDistance.SetLatLng(Lat, Lon);
+				    UpdateDistance.ProcessData(UpdateDistance.loadData());
+				    
 					CommonUtils.debugMsg(0,"service setDaemon ok"); 
 					Lat=0;
 				    Lon=0;
