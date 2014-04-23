@@ -1,4 +1,4 @@
-package me.iamcxa.remindme.cardfragment;
+package me.iamcxa.remindme.fragment;
 
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
 import me.iamcxa.remindme.CommonUtils;

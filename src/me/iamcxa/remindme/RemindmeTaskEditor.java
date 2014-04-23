@@ -460,10 +460,10 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	 */
 	private void showDialog1(String msg, String tittle, int target) {
 		View v = li
-				.inflate(R.layout.activity_event_editor_parts_editview, null);
+				.inflate(R.layout.activity_event_editor_parts_textedit, null);
 		final TextView editTextTittle = (TextView) v.findViewById(R.id.name);
 		final EditText editTextbox = (EditText) v
-				.findViewById(R.id.editTextbox);
+				.findViewById(R.id.editTexbox);
 		editTextTittle.setText(tittle + target);
 
 		switch (target) {
