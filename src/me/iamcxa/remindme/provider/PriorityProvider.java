@@ -1,7 +1,7 @@
 /**
  * 
  */
-package me.iamcxa.remindme.service;
+package me.iamcxa.remindme.provider;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
-import me.iamcxa.remindme.provider.DistanceProvider;
-import me.iamcxa.remindme.provider.TaskDBEdit;
-import me.iamcxa.remindme.provider.TaskDBProvider;
+import me.iamcxa.remindme.database.TaskDbEditor;
+import me.iamcxa.remindme.database.TaskDbProvider;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
@@ -30,7 +29,7 @@ import android.widget.Toast;
  * @author cxa
  * 
  */
-public class GetDistance{
+public class PriorityProvider{
 
 	private double Lat;
 	private double Lon;
@@ -49,11 +48,11 @@ public class GetDistance{
 	private int newPriorityWeight;
 	private String endDate, endTime;
 	private Context context;
-    private static TaskDBEdit load;
+    private static TaskDbEditor load;
 	
-	GetDistance(Context context){
+	public PriorityProvider(Context context){
 		this.context=context;
-		load = new TaskDBEdit(context);
+		load = new TaskDbEditor(context);
 	}
 	
 	public Cursor loadData() {

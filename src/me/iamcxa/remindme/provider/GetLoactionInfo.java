@@ -1,5 +1,6 @@
 package me.iamcxa.remindme.provider;
 
+import me.iamcxa.remindme.database.LocationDbEditor;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
@@ -10,7 +11,7 @@ public class GetLoactionInfo {
 	
 	public static int isKeywordDataExist(Context context,double latitude,double longitude,String keyword,String type){
 		int Locationid=-1;
-		DbEdit DB = new DbEdit(context);
+		LocationDbEditor DB = new LocationDbEditor(context);
 		DB.openDB();
 		//Cursor cursor = DB.getAll();
 		Cursor cursor = DB.getKeywordLocation(keyword);
@@ -35,7 +36,7 @@ public class GetLoactionInfo {
 	}
 	
 	public static String GetSQLRecentLocation(Context context,double latitude,double longitude,long id){
-		DbEdit GetSQLData = new DbEdit(context);
+		LocationDbEditor GetSQLData = new LocationDbEditor(context);
 		GetSQLData.openDB();
 		Cursor cursor = GetSQLData.get(id);
 		GetSQLData.closeDB();

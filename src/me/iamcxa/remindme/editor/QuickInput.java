@@ -1,4 +1,4 @@
-package editor;
+package me.iamcxa.remindme.editor;
 
 public class QuickInput {
 	/*

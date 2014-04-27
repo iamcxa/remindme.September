@@ -1,5 +1,6 @@
 package me.iamcxa.remindme;
 
+import me.iamcxa.remindme.fragment.RemindmePreferenceFragment;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -16,7 +17,7 @@ public class RemindmePreference extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.preference);
 
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager
@@ -24,8 +25,6 @@ public class RemindmePreference extends Activity {
 
 		RemindmePreferenceFragment fragment11 = new RemindmePreferenceFragment();
 		fragmentTransaction.replace(android.R.id.content, fragment11);
-		// fragmentTransaction.addToBackStack(null);
-		// fragmentTransaction.setTransition(4097);
 
 		fragmentTransaction.commit();
 	}
@@ -33,11 +32,6 @@ public class RemindmePreference extends Activity {
 	// This is the action bar menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		// getMenuInflater().inflate(R.menu.share_menu, menu);
-		// getMenuInflater().inflate(R.menu.actionbar, menu);
-		// MenuItem item = menu.findItem(R.id.menu_item_share);
-		// getMenuInflater().inflate(R.menu.editor_activity_actionbar, menu);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -45,11 +39,6 @@ public class RemindmePreference extends Activity {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
-	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

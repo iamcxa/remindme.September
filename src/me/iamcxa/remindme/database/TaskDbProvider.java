@@ -1,7 +1,7 @@
 /**
  * 
  */
-package me.iamcxa.remindme.provider;
+package me.iamcxa.remindme.database;
 
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ import android.text.TextUtils;
  * 
  */
 
-public class TaskDBProvider extends ContentProvider {
+public class TaskDbProvider extends ContentProvider {
 	// 資料庫名稱常數
 	public static final String DATABASE_NAME = "Remindme_Task.db";
 	// 資料庫版本常數
