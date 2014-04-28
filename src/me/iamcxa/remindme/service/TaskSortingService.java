@@ -46,8 +46,8 @@ public class TaskSortingService extends Service {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		handler.removeCallbacks(GpsTime);
 		CommonUtils.debugMsg(0, "service onDestroy");
+		UpdataLocation.CloseUpdatePriority();
 	}
 
 	@Override
@@ -62,18 +62,16 @@ public class TaskSortingService extends Service {
 
 		setNotification();
 
-		UpdatePriority = new PriorityProvider(getApplicationContext());
 		UpdataLocation = new LocationProvider(getApplicationContext());
 
-		handler = new Handler();
 
 		CommonUtils.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		timePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod",
 				"5000");
-
-		handler.postDelayed(GpsTime, Long.parseLong(timePeriod));
+		
+		UpdataLocation.UpdatePriority(Long.parseLong(timePeriod));
 
 	}
 
@@ -106,46 +104,6 @@ public class TaskSortingService extends Service {
 			this.stopSelf();
 		}
 	}
-
-	private Runnable GpsTime = new Runnable() {
-		@Override
-		public void run() {
-			 Stopself();
-			CommonUtils.debugMsg(0, "service GpsTime run");
-	
-
-			if (UpdataLocation.Lat != 0 && UpdataLocation.Lon != 0) {
-
-				// isGpsStrat = false;
-				UpdataLocation.stopListening();
-
-				UpdatePriority
-						.SetLatLng(UpdataLocation.Lat, UpdataLocation.Lon);
-				UpdatePriority.ProcessData(UpdatePriority.loadData());
-
-				handler.postDelayed(this, Long.parseLong(timePeriod));
-
-			
-			} else {
-				if (UpdataLocation.getGpsStatus()) {
-					handler.postDelayed(this, 1000);
-
-					
-					CommonUtils.debugMsg(0, "已經開啟GPS但是還沒拿到資料:"
-							+ UpdataLocation.Lat + "," + UpdataLocation.Lon);
-				} else {
-					UpdataLocation.startNetWorkListening(UpdataLocation);
-
-					// isGpsStrat = true;
-					handler.postDelayed(this, 1000);
-
-					// make log
-					CommonUtils.debugMsg(0, "開啟GPS:" + UpdataLocation.Lat + ","
-							+ UpdataLocation.Lon);
-				}
-			}
-		}
-	};
 
 	@Override
 	public void onLowMemory() {

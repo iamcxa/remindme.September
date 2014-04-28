@@ -11,6 +11,7 @@ import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
 import me.iamcxa.remindme.fragment.CardFragmentLoader1;
 import me.iamcxa.remindme.fragment.CardFragmentLoader2;
+import me.iamcxa.remindme.provider.LocationProvider;
 import me.iamcxa.remindme.provider.PriorityProvider;
 import me.iamcxa.remindme.service.TaskSortingService;
 import android.app.FragmentTransaction;
@@ -336,16 +337,10 @@ public class RemindmeMainActivity extends FragmentActivity {
 		public boolean onMenuItemClick(MenuItem item) {
 			Toast.makeText(getApplication(), item.getTitle(),
 					Toast.LENGTH_SHORT).show();
-			// Intent intent = new Intent();
-			// intent.setClass(getApplication(), testcard.class);
-			// startActivity(intent);
-			setLoding("ON");
-			Intent intent1 = new Intent();
-			intent1.setClass(getApplication(), PriorityProvider.class);
-			startActivity(intent1);
-			setLoding("OFF");
-			// setFragment(3, 0);
-
+			
+			LocationProvider UpdataLocation = new LocationProvider(getApplicationContext());
+			UpdataLocation.UpdateOncePriority();
+			
 			return false;
 		}
 	};

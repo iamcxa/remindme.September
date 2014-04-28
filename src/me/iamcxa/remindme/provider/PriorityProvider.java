@@ -29,7 +29,7 @@ import android.widget.Toast;
  * @author cxa
  * 
  */
-public class PriorityProvider{
+public class PriorityProvider {
 
 	private double Lat;
 	private double Lon;
