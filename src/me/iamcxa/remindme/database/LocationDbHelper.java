@@ -1,14 +1,14 @@
-package me.iamcxa.remindme.provider;
+package me.iamcxa.remindme.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBHelper extends SQLiteOpenHelper{
+public class LocationDbHelper extends SQLiteOpenHelper{
 	private final static int _DBVersion = 1;
 	private final static String _DBName = "LocationInfo.db";
 	public final static String _TableName = "PlaceJson";
-	public DBHelper(Context context) {
+	public LocationDbHelper(Context context) {
 		super(context, _DBName, null, _DBVersion);
 		// TODO Auto-generated constructor stub
 	}

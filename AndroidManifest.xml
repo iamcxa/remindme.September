@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
 
-        <provider android:name=".provider.TaskDBProvider" android:authorities="me.iamcxa.remindme" android:exported="false">
+        <provider android:name="me.iamcxa.remindme.database.TaskDbProvider" android:authorities="me.iamcxa.remindme" android:exported="false">
         </provider>
 
         <activity android:name="RemindmePreference" android:screenOrientation="portrait">

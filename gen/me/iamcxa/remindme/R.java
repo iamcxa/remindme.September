@@ -9,6 +9,8 @@ package me.iamcxa.remindme;
 
 public final class R {
     public static final class array {
+        public static final int PowerUsageOptionString=0x7f0d0010;
+        public static final int PowerUsageOptionValue=0x7f0d0011;
         public static final int bubblecolors=0x7f0d000c;
         public static final int bubblenames=0x7f0d000e;
         public static final int bubblepaddings=0x7f0d000d;
@@ -25,7 +27,7 @@ public final class R {
         public static final int miscicons=0x7f0d0005;
         public static final int playicons=0x7f0d0003;
         public static final int systemicons=0x7f0d0002;
-        public static final int wallpapers=0x7f0d0010;
+        public static final int wallpapers=0x7f0d0012;
     }
     public static final class attr {
         /** 
@@ -720,7 +722,6 @@ Button Header
         public static final int action_refresh=0x7f0b0047;
         public static final int action_search=0x7f0b0045;
         public static final int action_settings=0x7f0b0046;
-        public static final int action_share=0x7f0b0048;
         public static final int ampm=0x7f0b0006;
         public static final int buttonSubmit=0x7f0b0019;
         public static final int cardListView1=0x7f0b0032;
@@ -769,7 +770,7 @@ Button Header
         public static final int list_card_undobar_message=0x7f0b003b;
         public static final int main_scrollview=0x7f0b0008;
         public static final int map=0x7f0b000f;
-        public static final int menu_item_share=0x7f0b0049;
+        public static final int menu_item_share=0x7f0b0048;
         public static final int miscicons=0x7f0b0044;
         public static final int name=0x7f0b0013;
         public static final int none=0x7f0b0000;
@@ -860,17 +861,19 @@ Button Header
         public static final int list_card_undo_items=0x7f090000;
     }
     public static final class string {
-        public static final int action_contact=0x7f08006f;
-        public static final int actionlauncher=0x7f08003b;
-        public static final int actionlauncher_extra=0x7f08003c;
-        public static final int adwlauncher=0x7f08003d;
-        public static final int adwlauncher_extra=0x7f08003e;
-        public static final int apexlauncher=0x7f08003f;
-        public static final int apexlauncher_extra=0x7f080040;
+        public static final int PowerUsageOptionDefaultValue=0x7f080037;
+        public static final int PowerUsageOptionTittle=0x7f080038;
+        public static final int action_contact=0x7f080071;
+        public static final int actionlauncher=0x7f08003d;
+        public static final int actionlauncher_extra=0x7f08003e;
+        public static final int adwlauncher=0x7f08003f;
+        public static final int adwlauncher_extra=0x7f080040;
+        public static final int apexlauncher=0x7f080041;
+        public static final int apexlauncher_extra=0x7f080042;
         /**  Basic theme information 
          */
         public static final int app_name=0x7f080000;
-        public static final int apply=0x7f08003a;
+        public static final int apply=0x7f08003c;
         public static final int apply_wallpaper=0x7f080020;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -899,13 +902,13 @@ Button Header
         /**  Theme properties 
          */
         public static final int authorName=0x7f080025;
-        public static final int basicsheader=0x7f08004c;
+        public static final int basicsheader=0x7f08004e;
         public static final int begin_activity_scan=0x7f080034;
         public static final int carddemo_title_list_cursor=0x7f080036;
         /**  Clock text and text's shadow color 
          */
-        public static final int clockcolor=0x7f08008d;
-        public static final int clockshadow=0x7f08008e;
+        public static final int clockcolor=0x7f08008f;
+        public static final int clockshadow=0x7f080090;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -977,42 +980,42 @@ Button Header
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f080015;
-        public static final int contact=0x7f08006d;
-        public static final int contactheader=0x7f080070;
-        public static final int default_wallpaper=0x7f080090;
+        public static final int contact=0x7f08006f;
+        public static final int contactheader=0x7f080072;
+        public static final int default_wallpaper=0x7f080092;
         public static final int developerName=0x7f080026;
         /**  This (optional) link will appear at the end of the theme description 
          */
         public static final int developer_link=0x7f080029;
         public static final int developer_name=0x7f08001e;
-        public static final int email=0x7f08007b;
-        public static final int email_extra=0x7f08007c;
-        public static final int email_link=0x7f08007d;
+        public static final int email=0x7f08007d;
+        public static final int email_extra=0x7f08007e;
+        public static final int email_link=0x7f08007f;
         /**  Icon Request data 
          */
         public static final int email_subject=0x7f080030;
         public static final int email_text=0x7f080031;
-        public static final int emailheader=0x7f08007a;
-        public static final int extras1=0x7f08005a;
-        public static final int extras1_extra=0x7f08005b;
-        public static final int extras1_link=0x7f08005c;
-        public static final int extras2=0x7f08005d;
-        public static final int extras2_extra=0x7f08005e;
-        public static final int extras2_link=0x7f08005f;
-        public static final int extrasheader=0x7f080053;
-        public static final int facebook=0x7f080077;
-        public static final int facebook_extra=0x7f080078;
-        public static final int facebook_link=0x7f080079;
-        public static final int github=0x7f080061;
-        public static final int github_extra=0x7f080062;
-        public static final int github_link=0x7f080063;
+        public static final int emailheader=0x7f08007c;
+        public static final int extras1=0x7f08005c;
+        public static final int extras1_extra=0x7f08005d;
+        public static final int extras1_link=0x7f08005e;
+        public static final int extras2=0x7f08005f;
+        public static final int extras2_extra=0x7f080060;
+        public static final int extras2_link=0x7f080061;
+        public static final int extrasheader=0x7f080055;
+        public static final int facebook=0x7f080079;
+        public static final int facebook_extra=0x7f08007a;
+        public static final int facebook_link=0x7f08007b;
+        public static final int github=0x7f080063;
+        public static final int github_extra=0x7f080064;
+        public static final int github_link=0x7f080065;
         public static final int go_applied=0x7f080021;
-        public static final int golauncher=0x7f080045;
-        public static final int golauncher_extra=0x7f080046;
-        public static final int gplus=0x7f080071;
-        public static final int gplus_extra=0x7f080072;
-        public static final int gplus_link=0x7f080073;
-        public static final int icon=0x7f08004f;
+        public static final int golauncher=0x7f080047;
+        public static final int golauncher_extra=0x7f080048;
+        public static final int gplus=0x7f080073;
+        public static final int gplus_extra=0x7f080074;
+        public static final int gplus_link=0x7f080075;
+        public static final int icon=0x7f080051;
         /**  Icon Catergories Tabs 
          */
         public static final int icon1=0x7f08002b;
@@ -1020,64 +1023,64 @@ Button Header
         public static final int icon3=0x7f08002d;
         public static final int icon4=0x7f08002e;
         public static final int icon5=0x7f08002f;
-        public static final int icon_extra=0x7f080050;
+        public static final int icon_extra=0x7f080052;
         public static final int icon_title=0x7f08001d;
         /**  A suggested iconPack for drawer, insert here the packagename of the app you'd like to suggest 
          */
-        public static final int iconpack=0x7f08008f;
+        public static final int iconpack=0x7f080091;
         /**  Undo Controller
          */
         public static final int list_card_undo_title=0x7f080001;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f08001c;
-        public static final int more1=0x7f080089;
-        public static final int more2=0x7f08008a;
-        public static final int more3=0x7f08008b;
-        public static final int more4=0x7f08008c;
-        public static final int morenotice=0x7f08006b;
-        public static final int notice=0x7f08006a;
-        public static final int novalauncher=0x7f080041;
-        public static final int novalauncher_extra=0x7f080042;
+        public static final int more1=0x7f08008b;
+        public static final int more2=0x7f08008c;
+        public static final int more3=0x7f08008d;
+        public static final int more4=0x7f08008e;
+        public static final int morenotice=0x7f08006d;
+        public static final int notice=0x7f08006c;
+        public static final int novalauncher=0x7f080043;
+        public static final int novalauncher_extra=0x7f080044;
         public static final int pkg=0x7f08001f;
-        public static final int place1=0x7f080084;
-        public static final int place2=0x7f080085;
-        public static final int place3=0x7f080086;
-        public static final int place4=0x7f080087;
-        public static final int play=0x7f080049;
-        public static final int play_extra=0x7f08004a;
-        public static final int play_link=0x7f08004b;
-        public static final int playheader=0x7f080048;
-        public static final int request=0x7f080051;
+        public static final int place1=0x7f080086;
+        public static final int place2=0x7f080087;
+        public static final int place3=0x7f080088;
+        public static final int place4=0x7f080089;
+        public static final int play=0x7f08004b;
+        public static final int play_extra=0x7f08004c;
+        public static final int play_link=0x7f08004d;
+        public static final int playheader=0x7f08004a;
+        public static final int request=0x7f080053;
         public static final int request_email_addr=0x7f080032;
-        public static final int request_extra=0x7f080052;
-        public static final int rootzwiki=0x7f080064;
-        public static final int rootzwiki_extra=0x7f080065;
-        public static final int rootzwiki_link=0x7f080066;
+        public static final int request_extra=0x7f080054;
+        public static final int rootzwiki=0x7f080066;
+        public static final int rootzwiki_extra=0x7f080067;
+        public static final int rootzwiki_link=0x7f080068;
         public static final int scan_note=0x7f080035;
         public static final int send_email=0x7f080033;
         /**  Share Button 
  This is additional text that is attached to your package when sharing the link 
          */
         public static final int share_this=0x7f080028;
-        public static final int smartlauncher=0x7f080043;
-        public static final int smartlauncher_extra=0x7f080044;
-        public static final int socialheader=0x7f08006e;
-        public static final int space=0x7f080088;
+        public static final int smartlauncher=0x7f080045;
+        public static final int smartlauncher_extra=0x7f080046;
+        public static final int socialheader=0x7f080070;
+        public static final int space=0x7f08008a;
         /** This data is what fills the Theme Tab information 
          */
-        public static final int tab1=0x7f080037;
+        public static final int tab1=0x7f080039;
         /**  This data is what fills the Extras Tab information
          */
-        public static final int tab2=0x7f080047;
+        public static final int tab2=0x7f080049;
         /**  This data is what fills the Contact Tab information
          */
-        public static final int tab3=0x7f08006c;
-        public static final int tab4=0x7f080082;
-        public static final int tab4header=0x7f080083;
+        public static final int tab3=0x7f08006e;
+        public static final int tab4=0x7f080084;
+        public static final int tab4header=0x7f080085;
         /**  This is for information on the template, I would remove this as well as all association in the FramgmentExtra 
          */
-        public static final int template_header=0x7f080060;
+        public static final int template_header=0x7f080062;
         public static final int theme_description=0x7f08002a;
         /**  The feature graphic will appear above the theme description 
          */
@@ -1086,30 +1089,30 @@ Button Header
          */
         public static final int theme_preview1=0x7f080023;
         public static final int theme_preview2=0x7f080024;
-        public static final int themeheader=0x7f080038;
-        public static final int themeheader2=0x7f080039;
-        public static final int twitter=0x7f080074;
-        public static final int twitter_extra=0x7f080075;
-        public static final int twitter_link=0x7f080076;
-        public static final int uccw=0x7f080054;
-        public static final int uccw_extra=0x7f080055;
+        public static final int themeheader=0x7f08003a;
+        public static final int themeheader2=0x7f08003b;
+        public static final int twitter=0x7f080076;
+        public static final int twitter_extra=0x7f080077;
+        public static final int twitter_link=0x7f080078;
+        public static final int uccw=0x7f080056;
+        public static final int uccw_extra=0x7f080057;
         /**  Use this to link to your UCCW skins on Play or Website, or remove the card in FragmentExtras  
          */
-        public static final int uccw_link=0x7f080056;
-        public static final int wallpaper=0x7f08004d;
-        public static final int wallpaper_extra=0x7f08004e;
-        public static final int web=0x7f08007f;
-        public static final int web_extra=0x7f080080;
-        public static final int web_link=0x7f080081;
-        public static final int webheader=0x7f08007e;
-        public static final int xda=0x7f080067;
-        public static final int xda_extra=0x7f080068;
-        public static final int xda_link=0x7f080069;
-        public static final int zooper=0x7f080057;
-        public static final int zooper_extra=0x7f080058;
+        public static final int uccw_link=0x7f080058;
+        public static final int wallpaper=0x7f08004f;
+        public static final int wallpaper_extra=0x7f080050;
+        public static final int web=0x7f080081;
+        public static final int web_extra=0x7f080082;
+        public static final int web_link=0x7f080083;
+        public static final int webheader=0x7f080080;
+        public static final int xda=0x7f080069;
+        public static final int xda_extra=0x7f08006a;
+        public static final int xda_link=0x7f08006b;
+        public static final int zooper=0x7f080059;
+        public static final int zooper_extra=0x7f08005a;
         /**  Use this to link to your Zooper skins on Play or Website, or remove the card in FragmentExtras  
          */
-        public static final int zooper_link=0x7f080059;
+        public static final int zooper_link=0x7f08005b;
     }
     public static final class style {
         public static final int ActionBar_Solid_Irdark=0x7f0a0025;

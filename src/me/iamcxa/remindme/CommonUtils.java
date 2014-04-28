@@ -5,6 +5,7 @@ package me.iamcxa.remindme;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -42,9 +43,16 @@ public class CommonUtils {
 	
 	// debug msg TAG
 	public static final String debugMsgTag = "debugmsg";
-	
+
 	// debug msg on/off, read from Shared Preferences XML file
-	public static boolean debugMsg ;
+	public static boolean isDebugMsgOn(){
+		return CommonUtils.mPreferences.getBoolean("isDebugMsgOn", true);
+	}
+
+	// isServiceOn
+	public static boolean isServiceOn(){
+		return CommonUtils.mPreferences.getBoolean("isServiceOn", true);
+	};
 
 	private CommonUtils() {
 	}
@@ -53,7 +61,7 @@ public class CommonUtils {
 	/** debug msg section **/
 	/***********************/	
 	public static final void debugMsg(int section, String msgs) {
-		if (debugMsg == true) {
+		if (isDebugMsgOn()) {
 			switch (section) {
 			case 0:
 				Log.w(debugMsgTag, " " + msgs);
@@ -70,6 +78,7 @@ public class CommonUtils {
 		}
 
 	}
+	
 	
 	/***********************/
 	/** getDaysLeft **/

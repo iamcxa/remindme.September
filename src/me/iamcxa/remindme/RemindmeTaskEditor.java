@@ -5,16 +5,16 @@ package me.iamcxa.remindme;
 
 import java.util.Calendar;
 import java.util.Date;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import editor.QuickInput;
-
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor.GpsSetting;
+import me.iamcxa.remindme.editor.QuickInput;
 import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.GeocodingAPI;

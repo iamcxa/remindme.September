@@ -7,12 +7,20 @@
             android:title="輸出debugmsg"
             android:defaultValue="true"
             android:summary="True of False"
-            android:key="debugmsg" android:enabled="true"/>               
+            android:key="isDebugMsgOn" android:enabled="true"/>               
         <CheckBoxPreference
             android:title="service開關"
             android:defaultValue="true"
             android:summary="True of False"
-            android:key="openService" android:enabled="true"/>
+            android:key="isServiceOn" android:enabled="true"/> 
+         <CheckBoxPreference
+            android:title="isVibrationOn"
+            android:defaultValue="true"
+            android:summary="True of False"
+            android:key="isVibrationOn" android:enabled="true"/>
+            <SwitchPreference android:title="isServiceOn" android:key="1" android:summary="testsumm"/>
+               <SwitchPreference android:title="isVibrationOn" android:key="2" android:summary="testsumm"/>
+                  <SwitchPreference android:title="isDebugMsgOn" android:key="3" android:summary="testsumm"/>
         </PreferenceCategory> 
     <PreferenceCategory android:title="Category 2">
         <EditTextPreference
@@ -33,14 +41,14 @@
                 android:key="secondEditTextPref" />                
         </PreferenceScreen>        
     </PreferenceCategory>
-    <PreferenceCategory android:title="提醒設定">
-        <ListPreference />
-        <EditTextPreference />       
+    <PreferenceCategory android:title="提醒設定">       
         <RingtonePreference
             android:name="Ringtone Preference"
             android:summary="Select a ringtone"
             android:title="Ringtones"
-            android:key="ringtonePref" />       
+            android:key="ringtonePref" />
+     
+        <ListPreference android:summary="選擇位置偵測精準度" android:entryValues="@array/PowerUsageOptionValue" android:entries="@array/PowerUsageOptionString" android:key="PowerUsageOption" android:enabled="true" android:selectable="true" android:defaultValue="@string/PowerUsageOptionDefaultValue" android:title="@string/PowerUsageOptionTittle"/>       
 
     </PreferenceCategory> 
           

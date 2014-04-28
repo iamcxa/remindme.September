@@ -1,20 +1,20 @@
-package me.iamcxa.remindme.provider;
+package me.iamcxa.remindme.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class DbEdit {
+public class LocationDbEditor {
 	private Context context;
-	private DBHelper DH = null;
+	private LocationDbHelper DH = null;
 	private SQLiteDatabase db;
-	DbEdit(Context context){
+	public LocationDbEditor(Context context){
 		this.context=context;
 	}
 	
 	public void openDB(){
-    	DH = new DBHelper(context);  
+    	DH = new LocationDbHelper(context);  
     }
 	
     public void closeDB(){
@@ -29,12 +29,12 @@ public class DbEdit {
         values.put("_keyword", keyword);
         values.put("_type", type);
         values.put("_ApiJson", Json);
-        db.insert(DBHelper._TableName, null, values);
+        db.insert(LocationDbHelper._TableName, null, values);
     }
     
     public Cursor getAll() {
     	db = DH.getWritableDatabase();
-		return db.query(DBHelper._TableName,		//資料表名稱
+		return db.query(LocationDbHelper._TableName,		//資料表名稱
 		new String[] {"_ID", "_lat", "_lng","_keyword","_type","_ApiJson"},	//欄位名稱
 		null, // WHERE
 		null, // WHERE 的參數
@@ -47,7 +47,7 @@ public class DbEdit {
     public Cursor get(long rowId) {
     	db = DH.getWritableDatabase();
 		Cursor cursor = db.query(true,
-		DBHelper._TableName,				//資料表名稱
+		LocationDbHelper._TableName,				//資料表名稱
 		new String[] {"_ID", "_lat", "_lng","_keyword","_type","_ApiJson"},	//欄位名稱
 		"_ID="+rowId,				//WHERE
 		null, // WHERE 的參數
@@ -67,7 +67,7 @@ public class DbEdit {
     public Cursor getKeywordLocation(String keyword) {
     	db = DH.getWritableDatabase();
 		Cursor cursor = db.query(true,
-		DBHelper._TableName,				//資料表名稱
+		LocationDbHelper._TableName,				//資料表名稱
 		new String[] {"_ID", "_lat", "_lng","_keyword","_type","_ApiJson"},	//欄位名稱
 		"_keyword=?",				//WHERE
 		new String[] {keyword}, // WHERE 的參數
@@ -87,7 +87,7 @@ public class DbEdit {
     public Cursor getTypedLocation(String type) {
     	db = DH.getWritableDatabase();
 		Cursor cursor = db.query(true,
-		DBHelper._TableName,				//資料表名稱
+		LocationDbHelper._TableName,				//資料表名稱
 		new String[] {"_ID", "_lat", "_lng","_keyword","_type","_ApiJson"},	//欄位名稱
 		"_type=?",				//WHERE
 		new String[] {type}, // WHERE 的參數

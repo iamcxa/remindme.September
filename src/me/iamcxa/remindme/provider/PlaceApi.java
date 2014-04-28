@@ -1,5 +1,6 @@
 package me.iamcxa.remindme.provider;
 
+import me.iamcxa.remindme.database.LocationDbEditor;
 import android.content.Context;
 import android.util.Log;
 
@@ -41,7 +42,7 @@ public class PlaceApi {
 //		Thread WaitGetJson = new Thread(GetJson);
 //		WaitGetJson.start();
 		PlaceApiJsonDecode JsonDecode =new PlaceApiJsonDecode(context,Json,lat,lng);
-      	DbEdit DB = new DbEdit(context);
+      	LocationDbEditor DB = new LocationDbEditor(context);
   		DB.openDB();
   		DB.add(Json,Float.parseFloat(lat), Float.parseFloat(lng),this.keyword,this.types);
   		DB.closeDB();
