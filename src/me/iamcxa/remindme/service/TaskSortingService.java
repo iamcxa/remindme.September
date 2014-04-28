@@ -61,17 +61,13 @@ public class TaskSortingService extends Service {
 		super.onCreate();
 
 		setNotification();
-
-		UpdataLocation = new LocationProvider(getApplicationContext());
-
-
+		
 		CommonUtils.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
-		timePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod",
-				"5000");
+		UpdataLocation = new LocationProvider(getApplicationContext());
 		
-		UpdataLocation.UpdatePriority(Long.parseLong(timePeriod));
+		UpdataLocation.UpdatePriority();
 
 	}
 

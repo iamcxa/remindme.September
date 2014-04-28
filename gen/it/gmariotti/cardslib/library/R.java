@@ -8,22 +8,22 @@ package it.gmariotti.cardslib.library;
 
 public final class R {
 	public static final class attr {
-		public static final int card_header_layout_resourceID = 0x7f01000d;
-		public static final int card_layout_resourceID = 0x7f01000b;
-		public static final int card_shadow_layout_resourceID = 0x7f01000c;
-		public static final int card_thumbnail_layout_resourceID = 0x7f01000e;
-		public static final int list_card_layout_resourceID = 0x7f01000f;
+		public static final int card_header_layout_resourceID = 0x7f010002;
+		public static final int card_layout_resourceID = 0x7f010000;
+		public static final int card_shadow_layout_resourceID = 0x7f010001;
+		public static final int card_thumbnail_layout_resourceID = 0x7f010003;
+		public static final int list_card_layout_resourceID = 0x7f010004;
 	}
 	public static final class color {
-		public static final int card_activated = 0x7f050007;
-		public static final int card_activated_kitkat = 0x7f050009;
-		public static final int card_background = 0x7f050001;
-		public static final int card_backgroundExpand = 0x7f050003;
-		public static final int card_background_header = 0x7f050002;
-		public static final int card_expand_title_color = 0x7f050005;
-		public static final int card_pressed = 0x7f050006;
-		public static final int card_pressed_kitkat = 0x7f050008;
-		public static final int card_text_color_header = 0x7f050004;
+		public static final int card_activated = 0x7f050006;
+		public static final int card_activated_kitkat = 0x7f050008;
+		public static final int card_background = 0x7f050000;
+		public static final int card_backgroundExpand = 0x7f050002;
+		public static final int card_background_header = 0x7f050001;
+		public static final int card_expand_title_color = 0x7f050004;
+		public static final int card_pressed = 0x7f050005;
+		public static final int card_pressed_kitkat = 0x7f050007;
+		public static final int card_text_color_header = 0x7f050003;
 	}
 	public static final class dimen {
 		public static final int card_background_default_radius = 0x7f060001;
@@ -76,30 +76,30 @@ public final class R {
 	public static final class drawable {
 		public static final int activated_background_card = 0x7f02001a;
 		public static final int activated_background_kitkat_card = 0x7f02001b;
-		public static final int card_background = 0x7f02002f;
-		public static final int card_foreground_kitkat_selector = 0x7f020030;
-		public static final int card_foreground_selector = 0x7f020031;
-		public static final int card_kitkat_selector = 0x7f020032;
-		public static final int card_menu_button_expand = 0x7f020033;
-		public static final int card_menu_button_overflow = 0x7f020034;
-		public static final int card_menu_button_rounded_overflow = 0x7f020035;
-		public static final int card_multichoice_selector = 0x7f020036;
-		public static final int card_selector = 0x7f020037;
-		public static final int card_shadow = 0x7f020038;
-		public static final int card_undo = 0x7f020039;
-		public static final int ic_menu_expand_card_dark_normal = 0x7f02008d;
-		public static final int ic_menu_expand_card_dark_pressed = 0x7f02008e;
-		public static final int ic_menu_overflow_card_dark_normal = 0x7f02008f;
-		public static final int ic_menu_overflow_card_dark_pressed = 0x7f020090;
-		public static final int ic_menu_overflow_card_rounded_dark_normal = 0x7f020091;
-		public static final int ic_menu_overflow_card_rounded_dark_pressed = 0x7f020092;
-		public static final int ic_undobar_undo = 0x7f0200aa;
-		public static final int pressed_background_card = 0x7f0200bd;
-		public static final int pressed_background_kitkat_card = 0x7f0200be;
-		public static final int undobar = 0x7f0200ec;
-		public static final int undobar_button_focused = 0x7f0200ed;
-		public static final int undobar_button_pressed = 0x7f0200ee;
-		public static final int undobar_divider = 0x7f0200ef;
+		public static final int card_background = 0x7f02002e;
+		public static final int card_foreground_kitkat_selector = 0x7f02002f;
+		public static final int card_foreground_selector = 0x7f020030;
+		public static final int card_kitkat_selector = 0x7f020031;
+		public static final int card_menu_button_expand = 0x7f020032;
+		public static final int card_menu_button_overflow = 0x7f020033;
+		public static final int card_menu_button_rounded_overflow = 0x7f020034;
+		public static final int card_multichoice_selector = 0x7f020035;
+		public static final int card_selector = 0x7f020036;
+		public static final int card_shadow = 0x7f020037;
+		public static final int card_undo = 0x7f020038;
+		public static final int ic_menu_expand_card_dark_normal = 0x7f02008c;
+		public static final int ic_menu_expand_card_dark_pressed = 0x7f02008d;
+		public static final int ic_menu_overflow_card_dark_normal = 0x7f02008e;
+		public static final int ic_menu_overflow_card_dark_pressed = 0x7f02008f;
+		public static final int ic_menu_overflow_card_rounded_dark_normal = 0x7f020090;
+		public static final int ic_menu_overflow_card_rounded_dark_pressed = 0x7f020091;
+		public static final int ic_undobar_undo = 0x7f0200a9;
+		public static final int pressed_background_card = 0x7f0200bc;
+		public static final int pressed_background_kitkat_card = 0x7f0200bd;
+		public static final int undobar = 0x7f0200eb;
+		public static final int undobar_button_focused = 0x7f0200ec;
+		public static final int undobar_button_pressed = 0x7f0200ed;
+		public static final int undobar_divider = 0x7f0200ee;
 	}
 	public static final class id {
 		public static final int card_content_expand_layout = 0x7f0b0029;
@@ -192,7 +192,7 @@ public final class R {
 		public static final int ForegroundLinearLayout_android_foreground = 0;
 		public static final int ForegroundLinearLayout_android_foregroundGravity = 1;
 		public static final int ForegroundLinearLayout_android_foregroundInsidePadding = 2;
-		public static final int[] card_options = { 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f };
+		public static final int[] card_options = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 };
 		public static final int card_options_card_header_layout_resourceID = 2;
 		public static final int card_options_card_layout_resourceID = 0;
 		public static final int card_options_card_shadow_layout_resourceID = 1;

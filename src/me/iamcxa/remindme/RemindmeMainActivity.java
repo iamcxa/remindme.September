@@ -8,6 +8,7 @@ import java.util.Locale;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragmentLocal;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragmentTime;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
+import me.iamcxa.remindme.editor.RemindmeTaskEditor;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
 import me.iamcxa.remindme.fragment.CardFragmentLoader1;
 import me.iamcxa.remindme.fragment.CardFragmentLoader2;
@@ -31,7 +32,6 @@ import android.widget.ProgressBar;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
 /**
  * @author cxa Main Activity

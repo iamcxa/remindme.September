@@ -1,7 +1,7 @@
 /**
  * 
  */
-package me.iamcxa.remindme;
+package me.iamcxa.remindme.editor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,9 +12,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import me.iamcxa.remindme.CommonUtils;
+import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor.GpsSetting;
-import me.iamcxa.remindme.editor.QuickInput;
+import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor.KeyColumns;
+import me.iamcxa.remindme.R.color;
+import me.iamcxa.remindme.R.id;
+import me.iamcxa.remindme.R.layout;
+import me.iamcxa.remindme.R.menu;
 import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.GeocodingAPI;

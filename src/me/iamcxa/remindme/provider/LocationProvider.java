@@ -14,8 +14,10 @@ public class LocationProvider implements GPSCallback {
 	private Context context;
 	private Handler handler = null;
 	private static PriorityProvider UpdatePriority;
-	private Long time;
+	private String updatePeriod;
 	private boolean UseOnceTime;
+	public static String timePeriod;
+	
 	@Override
 	public void onGPSUpdate(Location location) {
 		// TODO Auto-generated method stub
@@ -57,11 +59,14 @@ public class LocationProvider implements GPSCallback {
 		return isGpsStrat;
 	}
 	
-	public void UpdatePriority(long time){
+	public void UpdatePriority(){
 		handler = new Handler();
 		UpdatePriority = new PriorityProvider(context);
-		this.time=time;
-		handler.postDelayed(GpsTime, time);
+		//this.time=time;
+
+		updatePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
+		
+		handler.postDelayed(GpsTime, Long.parseLong(updatePeriod));
 		UseOnceTime =false;
 	}
 	
@@ -82,9 +87,8 @@ public class LocationProvider implements GPSCallback {
 	private Runnable GpsTime = new Runnable() {
 		@Override
 		public void run() {
-//			 Stopself();
-			CommonUtils.debugMsg(0, "service GpsTime run");
-	
+			
+			CommonUtils.debugMsg(0, "service GpsTime run");	
 
 			if (Lat != 0 && Lon != 0) {
 
@@ -99,7 +103,8 @@ public class LocationProvider implements GPSCallback {
 					stopListening();
 				}
 				else{
-					handler.postDelayed(this, time);
+					updatePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
+					handler.postDelayed(this, Long.parseLong(updatePeriod));
 				}
 			
 			} else {

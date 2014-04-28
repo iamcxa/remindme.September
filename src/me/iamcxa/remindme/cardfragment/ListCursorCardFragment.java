@@ -20,8 +20,8 @@ package me.iamcxa.remindme.cardfragment;
 
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeTaskEditor;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
+import me.iamcxa.remindme.editor.RemindmeTaskEditor;
 import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import android.app.LoaderManager;

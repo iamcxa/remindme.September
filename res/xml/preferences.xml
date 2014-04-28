@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen 
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="Category 1">
-        <CheckBoxPreference
-            android:title="輸出debugmsg"
-            android:defaultValue="true"
+    <PreferenceCategory android:title="Category 1" >
+            <SwitchPreference
+       android:defaultValue="true"
+            android:enabled="true"
+            android:key="isDebugMsgOn"
             android:summary="True of False"
-            android:key="isDebugMsgOn" android:enabled="true"/>               
-        <CheckBoxPreference
-            android:title="service開關"
-            android:defaultValue="true"
+            android:title="輸出debugmsg" />
+        <SwitchPreference
+                      android:defaultValue="true"
+            android:enabled="true"
+            android:key="isVibrationOn"
             android:summary="True of False"
-            android:key="isServiceOn" android:enabled="true"/> 
-         <CheckBoxPreference
-            android:title="isVibrationOn"
-            android:defaultValue="true"
+            android:title="isVibrationOn" />
+        <SwitchPreference
+               android:defaultValue="true"
+            android:enabled="true"
+            android:key="isServiceOn"
             android:summary="True of False"
-            android:key="isVibrationOn" android:enabled="true"/>
-            <SwitchPreference android:title="isServiceOn" android:key="1" android:summary="testsumm"/>
-               <SwitchPreference android:title="isVibrationOn" android:key="2" android:summary="testsumm"/>
-                  <SwitchPreference android:title="isDebugMsgOn" android:key="3" android:summary="testsumm"/>
-        </PreferenceCategory> 
-    <PreferenceCategory android:title="Category 2">
+            android:title="service開關" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Category 2" >
         <EditTextPreference
             android:name="EditText"
-            android:summary="輸入智慧優先排序偵測間距(毫秒"
             android:defaultValue="5000"
-            android:title="Edit Text"
-            android:key="GetPriorityPeriod" />          
-        <PreferenceScreen                
-            android:title="Second Preferedebugmsgdebugmsgnce Screen"
-            android:summary=
-                "Click here to go to the second Preference Screen"
-            android:key="secondPrefScreenPref">                            
+            android:key="GetPriorityPeriod"
+            android:summary="輸入智慧優先排序偵測間距(毫秒"
+            android:title="Edit Text" />
+
+        <PreferenceScreen
+            android:key="secondPrefScreenPref"
+            android:summary="Click here to go to the second Preference Screen"
+            android:title="Second Preferedebugmsgdebugmsgnce Screen" >
             <EditTextPreference
                 android:name="EditText"
+                android:key="secondEditTextPref"
                 android:summary="Enter a string"
-                android:title="Edit Text (second Screen)"
-                android:key="secondEditTextPref" />                
-        </PreferenceScreen>        
+                android:title="Edit Text (second Screen)" />
+        </PreferenceScreen>
     </PreferenceCategory>
-    <PreferenceCategory android:title="提醒設定">       
+    <PreferenceCategory android:title="提醒設定" >
         <RingtonePreference
             android:name="Ringtone Preference"
+            android:key="ringtonePref"
             android:summary="Select a ringtone"
-            android:title="Ringtones"
-            android:key="ringtonePref" />
-     
-        <ListPreference android:summary="選擇位置偵測精準度" android:entryValues="@array/PowerUsageOptionValue" android:entries="@array/PowerUsageOptionString" android:key="PowerUsageOption" android:enabled="true" android:selectable="true" android:defaultValue="@string/PowerUsageOptionDefaultValue" android:title="@string/PowerUsageOptionTittle"/>       
+            android:title="Ringtones" />
 
-    </PreferenceCategory> 
-          
+        <ListPreference
+            android:defaultValue="@string/PowerUsageOptionDefaultValue"
+            android:enabled="true"
+            android:entries="@array/PowerUsageOptionString"
+            android:entryValues="@array/PowerUsageOptionValue"
+            android:key="PowerUsageOption"
+            android:selectable="true"
+            android:summary="選擇位置偵測精準度"
+            android:title="@string/PowerUsageOptionTittle" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
