@@ -161,22 +161,23 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 			content = b.getString("content");
 			date1 = b.getString("date1");
 			time1 = b.getString("time1");
-			on_off = b.getInt("on_off");
-			alarm = b.getInt("alarm");
+//			on_off = b.getInt("on_off");
+//			alarm = b.getInt("alarm");
 
-			if (date1 != null && date1.length() > 0) {
-				String[] strs = date1.split("/");
-				mYear = Integer.parseInt(strs[0]);
-				mMonth = Integer.parseInt(strs[1]);
-				mDay = Integer.parseInt(strs[2]);
-			}
-
-			if (time1 != null && time1.length() > 0) {
-				String[] strs = time1.split(":");
-				mHour = Integer.parseInt(strs[0]);
-				mMinute = Integer.parseInt(strs[1]);
-			}
+//			if (date1 != null && date1.length() > 0) {
+//				String[] strs = date1.split("/");
+//				mYear = Integer.parseInt(strs[0]);
+//				mMonth = Integer.parseInt(strs[1]);
+//				mDay = Integer.parseInt(strs[2]);
+//			}
+//
+//			if (time1 != null && time1.length() > 0) {
+//				String[] strs = time1.split(":");
+//				mHour = Integer.parseInt(strs[0]);
+//				mMinute = Integer.parseInt(strs[1]);
+//			}
 		}
+		Toast.makeText(getApplicationContext(), id1+","+content+","+date1+","+time1, Toast.LENGTH_LONG).show();
 
 	}
 

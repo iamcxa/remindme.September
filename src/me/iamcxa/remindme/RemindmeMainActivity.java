@@ -5,8 +5,6 @@ package me.iamcxa.remindme;
 
 import java.util.Locale;
 
-import me.iamcxa.remindme.cardfragment.ListCursorCardFragmentLocal;
-import me.iamcxa.remindme.cardfragment.ListCursorCardFragmentTime;
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
 import me.iamcxa.remindme.editor.RemindmeTaskEditor;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
@@ -55,8 +53,8 @@ public class RemindmeMainActivity extends FragmentActivity {
 	public static int layoutID = 0;
 
 	ListCursorCardFragment cardview = new ListCursorCardFragment();
-	ListCursorCardFragmentTime cardview1 = new ListCursorCardFragmentTime();
-	ListCursorCardFragmentLocal cardview2 = new ListCursorCardFragmentLocal();
+//	ListCursorCardFragmentTime cardview1 = new ListCursorCardFragmentTime();
+//	ListCursorCardFragmentLocal cardview2 = new ListCursorCardFragmentLocal();
 
 	/**********************/
 	/** onCreate LOCALE **/
@@ -225,11 +223,11 @@ public class RemindmeMainActivity extends FragmentActivity {
 				// 設定卡片
 				ListCursorCardFragment.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.PriorityWeight
 						+ " DESC";
-				ListCursorCardFragmentTime.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.EndDate;
-				ListCursorCardFragmentLocal.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.Distance;
+			//	ListCursorCardFragmentTime.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.EndDate;
+				//ListCursorCardFragmentLocal.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.Distance;
 				ListCursorCardFragment.selection = null;
-				ListCursorCardFragmentTime.selection = "TaskLocationName = \"\"";
-				ListCursorCardFragmentLocal.selection = "TaskLocationName <> \"\"";
+				//ListCursorCardFragmentTime.selection = "TaskLocationName = \"\"";
+				//ListCursorCardFragmentLocal.selection = "TaskLocationName <> \"\"";
 
 				// 模式 - 移除或新增Fragment
 				switch (MODE) {
@@ -240,10 +238,10 @@ public class RemindmeMainActivity extends FragmentActivity {
 						fragmentTransaction.remove(cardview);
 						break;
 					case 1:
-						fragmentTransaction.remove(cardview1);
+					//	fragmentTransaction.remove(cardview1);
 						break;
 					case 2:
-						fragmentTransaction.remove(cardview2);
+						//fragmentTransaction.remove(cardview2);
 						break;
 					}
 					fragmentTransaction.commit();
@@ -253,12 +251,12 @@ public class RemindmeMainActivity extends FragmentActivity {
 					// Replace Fragment
 					switch (FragmentPosition) {
 					case 0:
-						fragmentTransaction.replace(R.id.fragment_local,
-								cardview2, "cardview2");
+//						fragmentTransaction.replace(R.id.fragment_local,
+//								cardview2, "cardview2");
 						break;
 					case 1:
-						fragmentTransaction.replace(R.id.fragment_time,
-								cardview1, "cardview1");
+//						fragmentTransaction.replace(R.id.fragment_time,
+//								cardview1, "cardview1");
 						break;
 					case 2:
 						fragmentTransaction.replace(R.id.fragment_main,

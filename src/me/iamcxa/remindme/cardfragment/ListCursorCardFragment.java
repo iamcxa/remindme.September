@@ -18,6 +18,8 @@
 
 package me.iamcxa.remindme.cardfragment;
 
+
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
@@ -26,12 +28,14 @@ import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -45,6 +49,7 @@ import it.gmariotti.cardslib.library.internal.CardExpand;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
+import it.gmariotti.cardslib.library.internal.ViewToClickToExpand.CardElementUI;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardListView;
 
@@ -54,7 +59,7 @@ import it.gmariotti.cardslib.library.view.CardListView;
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
 public class ListCursorCardFragment extends BaseFragment implements
-		LoaderManager.LoaderCallbacks<Cursor>, GPSCallback {
+		LoaderManager.LoaderCallbacks<Cursor> {
 
 	private MyCursorCardAdapter mAdapter;
 	private CardListView mListView;
@@ -94,8 +99,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		View root = inflater.inflate(R.layout.card_fragment_list_cursor,
 				container, false);
-		gpsManager.startNetWorkListening(getActivity());
-		gpsManager.setGPSCallback(ListCursorCardFragment.this);
+
 		// mScrollView = (ScrollView) root.findViewById(R.id.card_scrollview);
 
 		return root;
@@ -134,7 +138,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 	/*******************************/
 	/** Class MyCursorCardAdapter **/
 	/*******************************/
-	public class MyCursorCardAdapter extends CardCursorAdapter {
+	public class MyCursorCardAdapter extends CardCursorAdapter   implements StickyListHeadersAdapter {
 
 		public MyCursorCardAdapter(Context context) {
 			super(context);
@@ -144,6 +148,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 		protected Card getCardFromCursor(final Cursor cursor) {
 			MyCursorCard card = new MyCursorCard(super.getContext());
 			setCardFromCursor(card, cursor);
+			card.setClickable(true);
 
 			// Create a CardHeader
 			CardHeader header = new CardHeader(getActivity());
@@ -156,108 +161,77 @@ public class ListCursorCardFragment extends BaseFragment implements
 						public void onMenuItemClick(BaseCard card, MenuItem item) {
 
 							removeCard((Card) card);
-							// String loaction = cursor
-							// .getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Coordinates);
-							//
-							// String[] array = loaction.split(",");
-							// Toast.makeText(getContext(),"from"+
-							// Latitude+","+Longitude
-							// +"to"+Double.parseDouble(array[0])+","+Double.parseDouble(array[1]),
-							// Toast.LENGTH_SHORT).show();
-							// try {
-							// double distances = DistanceProvider.haversine(
-							// Latitude, Longitude,
-							// Double.parseDouble(array[0]),
-							// Double.parseDouble(array[1]));
-							// Toast.makeText(
-							// getContext(),
-							// "Click on card=" + card.getId()
-							// + " item=" + item.getTitle()
-							// + "該處距離你" + Math.floor(distances*1000) + "公尺",
-							// Toast.LENGTH_SHORT).show();
-							// } catch (Exception e) {
-							// Toast.makeText(getContext(), e.toString(),
-							// Toast.LENGTH_SHORT).show();
-							// }
 
 						}
 					});
 
 			// Add Header to card
 			card.addCardHeader(header);
-			final MyCardThumbnail thumb = new MyCardThumbnail(getActivity());
+
+			// Add Thumbnail to card
+			final CardThumbnail thumb = new CardThumbnail(getActivity());
 			thumb.setDrawableResource(card.resourceIdThumb);
 			card.addCardThumbnail(thumb);
 
-			// Set onClick listener
-			card.addPartialOnClickListener(Card.CLICK_LISTENER_CONTENT_VIEW,
-					new Card.OnLongCardClickListener() {
-						@Override
-						public boolean onLongClick(Card card, View view) {
-							// Toast.makeText(
-							// getContext(),
-							// "Card id=" + card.getId()
-							// + "LONG Click on Content Area",
-							// Toast.LENGTH_SHORT).show();
-							return true;
-						}
-					});
+			// Set on Click listener
+			card.setOnClickListener(new Card.OnCardClickListener() {
+				@Override
+				public void onClick(Card card, View view) {
+					Toast.makeText(getActivity(), "Clickable card",
+							Toast.LENGTH_SHORT).show();
 
-			// Set a clickListener on ContentArea
-			card.addPartialOnClickListener(Card.CLICK_LISTENER_CONTENT_VIEW,
-					new Card.OnCardClickListener() {
-						@Override
-						public void onClick(Card card, View view) {
-							Toast.makeText(
-									getContext(),
-									"Card id=" + card.getId()
-											+ "Click on Content Area",
-									Toast.LENGTH_SHORT).show();
+				}
+			});
 
-							int id1 = Integer.parseInt(card.getId());
-							String date1 = cursor.getString(2);
-							String time1 = cursor.getString(2);
-							String content = cursor.getString(3);
-							String endTime = cursor
-									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndTime);
-							String endDate = cursor
-									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndDate);
-							String LocationName = cursor
-									.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
+			card.setOnLongClickListener(new Card.OnLongCardClickListener() {
+				@Override
+				public boolean onLongClick(Card card, View view) {
+					// TODO Auto-generated method stubs
+					// 透過ID查詢備忘錄資訊
+					//Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI, RemindmeTaskCursor.IndexColumns.KEY_ID);
+					
+					
+					
+					
+					cursor.moveToPosition(Integer.parseInt(card.getId())-1);
+						
+						
+						int id1 = Integer.parseInt(cursor.getString(0));
+						String date1 = cursor.getString(1);
+						String time1 = cursor.getString(2);
+						String content = cursor.getString(3);
+//						int on_off = cursor.getInt(4);
+//						int alarm = cursor.getInt(5);
+//						int created = cursor.getInt(6);
 
-							Bundle b = new Bundle();
-							b.putInt("_id", id1);
-							b.putString("date1", date1);
-							b.putString("time1", time1);
-							b.putString("content", content);
-							b.putString("LocationName", LocationName);
-							b.putString("endDate", endDate);
-							b.putString("endTime", endTime);
-
-							Intent intent = new Intent();
-							intent.setClass(getActivity(),
-									RemindmeTaskEditor.class);
-							startActivity(intent);
-						}
-					});
-
-			// Set a clickListener on Header Area
-			card.addPartialOnClickListener(Card.CLICK_LISTENER_HEADER_VIEW,
-					new Card.OnCardClickListener() {
-						@Override
-						public void onClick(Card card, View view) {
-							Toast.makeText(
-									getActivity(),
-									"Card id=" + card.getId()
-											+ "Click on Header Area",
-									Toast.LENGTH_LONG).show();
-						}
-					});
+					
+						
+						
+						Bundle b = new Bundle();
+						b.putInt("_id", id1);
+						b.putString("date1", date1);
+						b.putString("time1", time1);
+						b.putString("content", content);
+					
+						// 將備忘錄資訊添加到Intent
+						Intent intent = new Intent();
+						intent.putExtra("b", b);
+						// 啟動備忘錄詳細資訊Activity
+						intent.setClass(getActivity(), RemindmeTaskEditor.class);
+						startActivity(intent);
+					
+					
+					
+					return false;
+				
+				}
+				});
 
 			return card;
 		}
 
 		private void setCardFromCursor(MyCursorCard card, Cursor cursor) {
+
 			// 準備常數
 			CommonUtils.debugMsg(0, "prepare data from cursor...");
 			boolean Extrainfo = cursor
@@ -318,40 +292,40 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// 距離與地點資訊
 			CommonUtils.debugMsg(0, "dintence=" + dintence);
-			if (dintence==null) {
+			if (dintence == null) {
 				card.LocationName = LocationName;
 			} else {
-				//if (Double.valueOf(dintence) < 1) {
-				//	card.LocationName = LocationName + " - 距離 "
-					//		+ Double.valueOf(dintence) * 1000 + " 公尺";
-		//		} else {
-					card.LocationName = LocationName + " - 距離 "
-							+ dintence  + " 公里";
+				// if (Double.valueOf(dintence) < 1) {
+				// card.LocationName = LocationName + " - 距離 "
+				// + Double.valueOf(dintence) * 1000 + " 公尺";
+				// } else {
+				card.LocationName = LocationName + " - 距離 " + dintence + " 公里";
 
-			//	}
+				// }
 			}
 
 			// 可展開額外資訊欄位
 			CommonUtils.debugMsg(0, "isExtrainfo=" + Extrainfo);
-//			card.Notifications = "dbId="
-//					+ cursor.getString(0)
-//					+ ",w="
-//					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
-			if (!Extrainfo) {
-				card.resourceIdThumb = R.drawable.outline_star_act;
-				// 額外資訊提示 - 第四行
+			// card.Notifications = "dbId="
+			// + cursor.getString(0)
+			// + ",w="
+			// +
+			// cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+			// if (!Extrainfo) {
+			card.resourceIdThumb = R.drawable.outline_star_act;
+			// 額外資訊提示 - 第四行
 
-				// This provides a simple (and useless) expand area
-				CardExpand expand = new CardExpand(getActivity());
-				// Set inner title in Expand Area
-				String aa="dbId="
-						+ cursor.getString(0)
-						+ ",w="
-						+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
-				
-				expand.setTitle(aa);
-				card.addCardExpand(expand);
-			}
+			// This provides a simple (and useless) expand area
+			CardExpand expand = new CardExpand(getActivity());
+			// Set inner title in Expand Area
+			String aa = "dbId="
+					+ cursor.getString(0)
+					+ ",w="
+					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+
+			expand.setTitle(aa);
+			card.addCardExpand(expand);
+			// }
 			// card.Notifications = cursor.getString(0);
 
 			// 依照權重給予卡片顏色
@@ -363,6 +337,25 @@ public class ListCursorCardFragment extends BaseFragment implements
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
 			}
 
+		}
+
+		/* (non-Javadoc)
+		 * @see se.emilsjolander.stickylistheaders.StickyListHeadersAdapter#getHeaderView(int, android.view.View, android.view.ViewGroup)
+		 */
+		@Override
+		public View getHeaderView(int position, View convertView,
+				ViewGroup parent) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/* (non-Javadoc)
+		 * @see se.emilsjolander.stickylistheaders.StickyListHeadersAdapter#getHeaderId(int)
+		 */
+		@Override
+		public long getHeaderId(int position) {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 	}
 
@@ -410,22 +403,18 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		public MyCursorCard(Context context) {
 			super(context, R.layout.card_cursor_inner_content);
-		}
-
-		/**********************/
-		/**
-		 * @param clickListenerContentView
-		 *            /** @param onLongCardClickListener
-		 **/
-		/**********************/
-		public void addPartialOnClickListener(int clickListenerContentView,
-				OnLongCardClickListener onLongCardClickListener) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View view) {
+
+			// on click expand card info
+			ViewToClickToExpand viewToClickToExpand = ViewToClickToExpand
+					.builder().highlightView(true).setupView(getCardView())
+					.setupCardElement(CardElementUI.MAIN_CONTENT);
+			setViewToClickToExpand(viewToClickToExpand);
+
 			// Retrieve elements
 			TextView mTitleTextView = (TextView) parent
 					.findViewById(R.id.card_cursor_main_inner_title);
@@ -444,16 +433,6 @@ public class ListCursorCardFragment extends BaseFragment implements
 				mThirdTitleTextView.setText(Notifications);
 
 		}
-	}
-
-	@Override
-	public void onGPSUpdate(Location location) {
-		// TODO Auto-generated method stub
-
-		// 緯度
-		Latitude = location.getLatitude();
-		Longitude = location.getLongitude();
-
 	}
 
 }
