@@ -5,7 +5,7 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Handler;
 
-public class LocationProvider implements GPSCallback {
+public class LocationGetter implements GPSCallback {
 	public double Lat;
 	public double Lon;
 	public double Speed;
@@ -13,7 +13,7 @@ public class LocationProvider implements GPSCallback {
 	public static boolean isGpsStrat = false;
 	private Context context;
 	private Handler handler = null;
-	private static PriorityProvider UpdatePriority;
+	private static PriorityCalculator UpdatePriority;
 	private String updatePeriod;
 	private boolean UseOnceTime;
 	public static String timePeriod;
@@ -27,7 +27,7 @@ public class LocationProvider implements GPSCallback {
 		CommonUtils.debugMsg(0, "LocationProvider onGPSUpdate");
 	}
 
-	public LocationProvider(Context context) {
+	public LocationGetter(Context context) {
 		this.context = context;
 		gpsManager = new GPSManager();
 	}
@@ -61,7 +61,7 @@ public class LocationProvider implements GPSCallback {
 	
 	public void UpdatePriority(){
 		handler = new Handler();
-		UpdatePriority = new PriorityProvider(context);
+		UpdatePriority = new PriorityCalculator(context);
 		//this.time=time;
 
 		updatePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
@@ -72,7 +72,7 @@ public class LocationProvider implements GPSCallback {
 	
 	public void UpdateOncePriority(){
 		handler = new Handler();
-		UpdatePriority = new PriorityProvider(context);
+		UpdatePriority = new PriorityCalculator(context);
 		handler.post(GpsTime);
 		UseOnceTime =true;
 	}
@@ -114,7 +114,7 @@ public class LocationProvider implements GPSCallback {
 					CommonUtils.debugMsg(0, "已經開啟GPS但是還沒拿到資料:"
 							+ Lat + "," + Lon);
 				} else {
-					startNetWorkListening(LocationProvider.this);
+					startNetWorkListening(LocationGetter.this);
 
 					// isGpsStrat = true;
 					handler.postDelayed(this, 1000);

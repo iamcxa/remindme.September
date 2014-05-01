@@ -4,8 +4,8 @@
 package me.iamcxa.remindme.service;
 
 import me.iamcxa.remindme.provider.GPSManager;
-import me.iamcxa.remindme.provider.LocationProvider;
-import me.iamcxa.remindme.provider.PriorityProvider;
+import me.iamcxa.remindme.provider.LocationGetter;
+import me.iamcxa.remindme.provider.PriorityCalculator;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeMainActivity;
@@ -37,10 +37,10 @@ public class TaskSortingService extends Service {
 	private static boolean isGpsStrat = false;
 	private String msg = null;
 	private static Notification noti;
-	private static PriorityProvider UpdatePriority;
+	private static PriorityCalculator UpdatePriority;
 	private String timePeriod;
 
-	private static LocationProvider UpdataLocation;
+	private static LocationGetter UpdataLocation;
 
 	@Override
 	public void onDestroy() {
@@ -65,7 +65,7 @@ public class TaskSortingService extends Service {
 		CommonUtils.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
-		UpdataLocation = new LocationProvider(getApplicationContext());
+		UpdataLocation = new LocationGetter(getApplicationContext());
 		
 		UpdataLocation.UpdatePriority();
 

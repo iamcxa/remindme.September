@@ -20,7 +20,7 @@ package me.iamcxa.remindme.cardfragment;
 
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
+import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import me.iamcxa.remindme.editor.RemindmeTaskEditor;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
@@ -57,7 +57,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 	private static MyCursorCardAdapter mAdapter;
 	private static CardListView mListView;
-	private static String[] projection = RemindmeTaskCursor.PROJECTION;
+	private static String[] projection = TaskCursor.PROJECTION;
 	private static String selection = null;
 	private static String sortOrder = CommonUtils.DEFAULT_SORT_ORDER;
 	private static String[] selectionArgs;
@@ -149,8 +149,8 @@ public class ListCursorCardFragment extends BaseFragment implements
 			CardHeader header = new CardHeader(getActivity());
 
 			// Set visible the expand/collapse button
-			// header.setButtonExpandVisible(true);
-			header.setOtherButtonVisible(true);
+			 header.setButtonExpandVisible(true);
+		//	header.setOtherButtonVisible(true);
 			header.setOtherButtonDrawable(R.drawable.ic_action_labels);
 			// Add a callback
 			header.setOtherButtonClickListener(new CardHeader.OnClickCardHeaderOtherButtonListener() {
@@ -178,7 +178,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 			String aa = "dbId="
 					+ cursor.getString(0)
 					+ ",w="
-					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+					+ cursor.getString(CommonUtils.TaskCursor.KeyIndex.Priority);
 
 			expand.setTitle(aa);
 			card.addCardExpand(expand);
@@ -221,22 +221,22 @@ public class ListCursorCardFragment extends BaseFragment implements
 			// 準備常數
 			CommonUtils.debugMsg(0, "prepare data from cursor...");
 			boolean Extrainfo = cursor
-					.isNull(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
+					.isNull(CommonUtils.TaskCursor.KeyIndex.Other);
 			int CID = cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.KEY_ID);
+					.getInt(CommonUtils.TaskCursor.KeyIndex.KEY_ID);
 			String dintence = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Distance);
+					.getString(CommonUtils.TaskCursor.KeyIndex.Distance);
 			String startTime = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.StartTime);
+					.getString(CommonUtils.TaskCursor.KeyIndex.StartTime);
 			String endTime = "";// cursor.getString(5);
 			String endDate = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndDate);
+					.getString(CommonUtils.TaskCursor.KeyIndex.EndDate);
 			String LocationName = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
+					.getString(CommonUtils.TaskCursor.KeyIndex.LocationName);
 			String extraInfo = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
+					.getString(CommonUtils.TaskCursor.KeyIndex.Other);
 			String PriorityWeight = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+					.getString(CommonUtils.TaskCursor.KeyIndex.Priority);
 			long dayLeft = CommonUtils.getDaysLeft(endDate, 2);
 			// int dayLeft = Integer.parseInt("" + dayLeftLong);
 
@@ -247,7 +247,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 			// 卡片標題 - first line
 			CommonUtils.debugMsg(0, CID + " set Tittle...");
 			card.mainHeader = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Tittle);
+					.getString(CommonUtils.TaskCursor.KeyIndex.Tittle);
 
 			// 時間日期 - sec line
 			CommonUtils.debugMsg(0, CID + " set Date/Time...");
@@ -296,7 +296,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 			// + cursor.getString(0)
 			// + ",w="
 			// +
-			// cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+			// cursor.getString(CommonUtils.TaskCursor.KeyIndex.PriorityWeight);
 			// if (!Extrainfo) {
 			card.resourceIdThumb = R.drawable.outline_star_act;
 			// 額外資訊提示 - 第四行
@@ -306,10 +306,10 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 			// 依照權重給予卡片顏色
 			if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 6000) {
+					.getInt(CommonUtils.TaskCursor.KeyIndex.Priority) > 6000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
 			} else if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 3000) {
+					.getInt(CommonUtils.TaskCursor.KeyIndex.Priority) > 3000) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
 			}
 
@@ -322,7 +322,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 		// Use this code to delete items on DB
 		ContentResolver resolver = getActivity().getContentResolver();
 		long noDeleted = resolver.delete(CommonUtils.CONTENT_URI,
-				CommonUtils.RemindmeTaskCursor.KeyColumns.KEY_ID + " = ? ",
+				CommonUtils.TaskCursor.KeyColumns.KEY_ID + " = ? ",
 				new String[] { card.getId() });
 
 		mAdapter.notifyDataSetChanged();
@@ -390,19 +390,32 @@ public class ListCursorCardFragment extends BaseFragment implements
 	private void OpenTaskReader(Cursor cursor, String ID, Card card) {
 		cursor.moveToPosition(Integer.parseInt(card.getId()) - 1);
 
-		int id1 = Integer.parseInt(cursor.getString(0));
-		String date1 = cursor.getString(1);
-		String time1 = cursor.getString(2);
-		String content = cursor.getString(3);
-		// int on_off = cursor.getInt(4);
-		// int alarm = cursor.getInt(5);
-		// int created = cursor.getInt(6);
+		int id = Integer.parseInt(cursor.getString(0));
+		String tittle = cursor.getString(1);
+		String endDate = cursor.getString(3);
+		String endTime = cursor.getString(TaskCursor.KeyIndex.EndDate);
+		 String isRepeat = cursor.getString(TaskCursor.KeyIndex.Is_Repeat);
+		 String IsFixed = cursor.getString(TaskCursor.KeyIndex.Is_Fixed);
+		 String isAllDay = cursor.getString(TaskCursor.KeyIndex.Is_AllDay);
+		 String LocationName = cursor.getString(TaskCursor.KeyIndex.LocationName);
+		 String Coordinate = cursor.getString(TaskCursor.KeyIndex.Coordinate);
+		 String Collaborator = cursor.getString(TaskCursor.KeyIndex.Collaborator);
+		 String CREATED = cursor.getString(TaskCursor.KeyIndex.CREATED);
+		 String CONTENT = cursor.getString(TaskCursor.KeyIndex.CONTENT);
 
 		Bundle b = new Bundle();
-		b.putInt("_id", id1);
-		b.putString("date1", date1);
-		b.putString("time1", time1);
-		b.putString("content", content);
+		b.putInt("_id", id);
+		b.putString("tittle", tittle);
+		b.putString("endDate", endDate);
+		b.putString("endTime", endTime);
+		b.putString("isRepeat", isRepeat);
+		b.putString("IsFixed", IsFixed);
+		b.putString("isAllDay", isAllDay);
+		b.putString("LocationName", LocationName);
+		b.putString("Coordinate", Coordinate);
+		b.putString("Collaborator", Collaborator);
+		b.putString("CREATED", CREATED);
+		b.putString("CONTENT", CONTENT);
 
 		// 將備忘錄資訊添加到Intent
 		Intent intent = new Intent();

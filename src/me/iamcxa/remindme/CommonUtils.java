@@ -125,9 +125,9 @@ public class CommonUtils {
 	}
 
 	// 內部類別
-	public static final class RemindmeTaskCursor implements BaseColumns {
+	public static final class TaskCursor implements BaseColumns {
 
-		private RemindmeTaskCursor() {
+		private TaskCursor() {
 		}
 
 		// 查詢欄位陣列
@@ -141,7 +141,7 @@ public class CommonUtils {
 				KeyColumns.Is_Repeat, // 6
 				KeyColumns.Is_AllDay,// 7
 				KeyColumns.LocationName, // 8
-				KeyColumns.Coordinates,// 9
+				KeyColumns.Coordinate,// 9
 				KeyColumns.Distance,// 10
 				KeyColumns.CONTENT,// 11
 				KeyColumns.CREATED,// 12
@@ -149,25 +149,27 @@ public class CommonUtils {
 				KeyColumns.Is_Hide_ON,// 14
 				KeyColumns.Is_PW_ON,// 15
 				KeyColumns.Password,// 16
-				KeyColumns.PriorityWeight,// 17
-				KeyColumns.Collaborators,// 18
+				KeyColumns.Priority,// 17
+				KeyColumns.Collaborator,// 18
 				KeyColumns.CalendarID,// 19
 				KeyColumns.GoogleCalSyncID,// 20
-				KeyColumns.other // 21
+				KeyColumns.Other, // 21
+				KeyColumns.Level, 
+				KeyColumns.Is_Fixed 
 		};
 		
 		// 查詢欄位陣列
 		public static final String[] PROJECTION_GPS = new String[] {
 				KeyColumns.KEY_ID, // 0
 				KeyColumns.LocationName, // 1
-				KeyColumns.Coordinates,// 2
+				KeyColumns.Coordinate,// 2
 				KeyColumns.Distance,// 3
-				KeyColumns.PriorityWeight,// 4
+				KeyColumns.Priority,// 4
 				KeyColumns.EndDate,// 5
 				KeyColumns.EndTime,// 6
 		};
 
-		public static class IndexColumns {
+		public static class KeyIndex {
 			public static final int KEY_ID = 0;
 			public static final int Tittle = 1;
 			public static final int StartDate = 2;
@@ -177,7 +179,7 @@ public class CommonUtils {
 			public static final int Is_Repeat = 6;
 			public static final int Is_AllDay = 7;
 			public static final int LocationName = 8;
-			public static final int Coordinates = 9;
+			public static final int Coordinate = 9;
 			public static final int Distance = 10;
 			public static final int CONTENT = 11;
 			public static final int CREATED = 12;
@@ -185,12 +187,13 @@ public class CommonUtils {
 			public static final int Is_Hide_ON = 14;
 			public static final int Is_PW_ON = 15;
 			public static final int Password = 16;
-			public static final int PriorityWeight = 17;
-			public static final int Collaborators = 18;
+			public static final int Priority = 17;
+			public static final int Collaborator = 18;
 			public static final int CalendarID = 19;
 			public static final int GoogleCalSyncID = 20;
-			public static final int other = 21;
-			// public static final int AlarmSoundPath = "AlarmSoundPath";
+			public static final int Other = 21;
+			public static final int Level = 22;
+			public static final int Is_Fixed = 23;
 		}
 
 		// 其他欄位常數
@@ -200,7 +203,7 @@ public class CommonUtils {
 			// 01 需要同步之 Google calender日曆ID
 			public static final String GoogleCalSyncID = "GoogleCalSyncID";
 			// 02 事件標題
-			public static final String Tittle = "tittle";
+			public static final String Tittle = "Tittle";
 			// 03 開始與結束時間
 			public static final String StartTime = "StartTime";
 			public static final String EndTime = "EndTime";
@@ -212,9 +215,9 @@ public class CommonUtils {
 			// 06 開關 - 是否為全天事件
 			public static final String Is_AllDay = "Is_AllDay";
 			// 07 事件地點（名稱）
-			public static final String LocationName = "TaskLocationName";
+			public static final String LocationName = "LocationName";
 			// 08 事件座標
-			public static final String Coordinates = "Coordinates";
+			public static final String Coordinate = "Coordinate";
 			// 09 事件與當下使用者地點之距離
 			public static final String Distance = "Distance";
 			// 10 日曆本身之ID(備用)
@@ -232,11 +235,15 @@ public class CommonUtils {
 			// 16 密碼
 			public static final String Password = "password";
 			// 17 即時權重
-			public static final String PriorityWeight = "PriorityWeight";
+			public static final String Priority = "Priority";
 			// 18 協作者GMAIL
-			public static final String Collaborators = "Collaborators";
+			public static final String Collaborator = "Collaborator";
 			// 19 備用
-			public static final String other = "other";
+			public static final String Other = "other";
+			// 20 優先層級
+			public static final String Level = "Level";
+			// 21 是否固定高優先權
+			public static final String Is_Fixed = "Is_fixed";
 			// 18 提醒之聲音檔案路徑
 			// public static final String AlarmSoundPath = "AlarmSoundPath";
 		}

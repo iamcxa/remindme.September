@@ -6,7 +6,7 @@ package me.iamcxa.remindme.database;
 import java.util.HashMap;
 
 import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
+import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -30,7 +30,7 @@ public class TaskDbProvider extends ContentProvider {
 	// 資料庫名稱常數
 	public static final String DATABASE_NAME = "Remindme_Task.db";
 	// 資料庫版本常數
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 	// 資料表名稱常數
 	public static final String TASK_LIST_TABLE_NAME = "RemindmeTask";
 	// 查詢欄位集合
@@ -54,48 +54,51 @@ public class TaskDbProvider extends ContentProvider {
 			db.execSQL("CREATE TABLE "
 					+ TASK_LIST_TABLE_NAME
 					+ " ("
-					+ RemindmeTaskCursor.KeyColumns.KEY_ID // 0
+					+ TaskCursor.KeyColumns.KEY_ID // 0
 					+ " INTEGER PRIMARY KEY autoincrement,"
-					+ RemindmeTaskCursor.KeyColumns.Tittle // 2
+					+ TaskCursor.KeyColumns.Tittle // 2
 					+ " TEXT," // 2
-					+ RemindmeTaskCursor.KeyColumns.StartDate
+					+ TaskCursor.KeyColumns.StartDate
 					+ " TEXT," 
-					+ RemindmeTaskCursor.KeyColumns.EndDate
+					+ TaskCursor.KeyColumns.EndDate
 					+ " TEXT," 
-					+ RemindmeTaskCursor.KeyColumns.StartTime // 3
+					+ TaskCursor.KeyColumns.StartTime // 3
 					+ " TEXT,"
-					+ RemindmeTaskCursor.KeyColumns.EndTime
+					+ TaskCursor.KeyColumns.EndTime
 					+ " TEXT," 
-					+ RemindmeTaskCursor.KeyColumns.Is_Repeat
+					+ TaskCursor.KeyColumns.Is_Repeat
 					+ " INTEGER,"
-					+ RemindmeTaskCursor.KeyColumns.Is_AllDay
+					+ TaskCursor.KeyColumns.Is_AllDay
 					+ " INTEGER," 
-					+ RemindmeTaskCursor.KeyColumns.LocationName
+					+ TaskCursor.KeyColumns.LocationName
 					+ " TEXT," 
-					+ RemindmeTaskCursor.KeyColumns.Coordinates
+					+ TaskCursor.KeyColumns.Coordinate
 					+ " TEXT," 
-					+ RemindmeTaskCursor.KeyColumns.Distance
+					+ TaskCursor.KeyColumns.Distance
 					+ " TEXT," 
-					+ RemindmeTaskCursor.KeyColumns.CONTENT
+					+ TaskCursor.KeyColumns.CONTENT
 					+ " TEXT," // 13
-					+ RemindmeTaskCursor.KeyColumns.CREATED
+					+ TaskCursor.KeyColumns.CREATED
 					+ " TEXT," // 14
-					+ RemindmeTaskCursor.KeyColumns.Is_Alarm_ON
+					+ TaskCursor.KeyColumns.Is_Alarm_ON
 					+ " INTEGER,"// 15
-					+ RemindmeTaskCursor.KeyColumns.Is_Hide_ON
+					+ TaskCursor.KeyColumns.Is_Hide_ON
 					+ " INTEGER," // 16
-					+ RemindmeTaskCursor.KeyColumns.Is_PW_ON
+					+ TaskCursor.KeyColumns.Is_PW_ON
 					+ " INTEGER," // 17
-					+ RemindmeTaskCursor.KeyColumns.Password
+					+ TaskCursor.KeyColumns.Password
 					+ " TEXT," // 18
-					+ RemindmeTaskCursor.KeyColumns.PriorityWeight
+					+ TaskCursor.KeyColumns.Priority
 					+ " INTEGER," // 19
-					+ RemindmeTaskCursor.KeyColumns.Collaborators + " TEXT," // 20
-					+ RemindmeTaskCursor.KeyColumns.GoogleCalSyncID 
+					+ TaskCursor.KeyColumns.Collaborator + " TEXT," // 20
+					+ TaskCursor.KeyColumns.GoogleCalSyncID 
 					+ " TEXT,"
-					+ RemindmeTaskCursor.KeyColumns.CalendarID
+					+ TaskCursor.KeyColumns.CalendarID
 					+ " TEXT," // 12
-					+ RemindmeTaskCursor.KeyColumns.other + " TEXT" // 21
+					+ TaskCursor.KeyColumns.Other + " TEXT," // 21
+					+ TaskCursor.KeyColumns.Level + " TEXT," // 21
+					+ TaskCursor.KeyColumns.Is_Fixed + " TEXT" // 21				
+					
 					+ ");");
 		}
 
@@ -184,7 +187,7 @@ public class TaskDbProvider extends ContentProvider {
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 		// 保存資料返回欄位ID
 		long rowId = db.insert(TASK_LIST_TABLE_NAME,
-				RemindmeTaskCursor.KeyColumns.CONTENT, values);
+				TaskCursor.KeyColumns.CONTENT, values);
 		if (rowId > 0) {
 			Uri taskUri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI,
 					rowId);
@@ -265,49 +268,53 @@ public class TaskDbProvider extends ContentProvider {
 		// 添加查詢欄位
 		sTaskListProjectionMap.put(BaseColumns._ID, BaseColumns._ID);
 		sTaskListProjectionMap.put(
-				RemindmeTaskCursor.KeyColumns.GoogleCalSyncID,
-				RemindmeTaskCursor.KeyColumns.GoogleCalSyncID);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.CalendarID,
-				RemindmeTaskCursor.KeyColumns.CalendarID);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Tittle,
-				RemindmeTaskCursor.KeyColumns.Tittle);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.StartDate,
-				RemindmeTaskCursor.KeyColumns.StartDate);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.EndDate,
-				RemindmeTaskCursor.KeyColumns.EndDate);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.StartTime,
-				RemindmeTaskCursor.KeyColumns.StartTime);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.EndTime,
-				RemindmeTaskCursor.KeyColumns.EndDate);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.LocationName,
-				RemindmeTaskCursor.KeyColumns.LocationName);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Distance,
-				RemindmeTaskCursor.KeyColumns.Distance);
+				TaskCursor.KeyColumns.GoogleCalSyncID,
+				TaskCursor.KeyColumns.GoogleCalSyncID);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.CalendarID,
+				TaskCursor.KeyColumns.CalendarID);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Tittle,
+				TaskCursor.KeyColumns.Tittle);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.StartDate,
+				TaskCursor.KeyColumns.StartDate);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.EndDate,
+				TaskCursor.KeyColumns.EndDate);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.StartTime,
+				TaskCursor.KeyColumns.StartTime);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.EndTime,
+				TaskCursor.KeyColumns.EndDate);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.LocationName,
+				TaskCursor.KeyColumns.LocationName);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Distance,
+				TaskCursor.KeyColumns.Distance);
 		sTaskListProjectionMap.put(
-				RemindmeTaskCursor.KeyColumns.PriorityWeight,
-				RemindmeTaskCursor.KeyColumns.PriorityWeight);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Is_Repeat,
-				RemindmeTaskCursor.KeyColumns.Is_Repeat);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Is_AllDay,
-				RemindmeTaskCursor.KeyColumns.Is_AllDay);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.CONTENT,
-				RemindmeTaskCursor.KeyColumns.CONTENT);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.CREATED,
-				RemindmeTaskCursor.KeyColumns.CREATED);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Is_Alarm_ON,
-				RemindmeTaskCursor.KeyColumns.Is_Alarm_ON);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Is_Hide_ON,
-				RemindmeTaskCursor.KeyColumns.Is_Hide_ON);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Is_PW_ON,
-				RemindmeTaskCursor.KeyColumns.Is_PW_ON);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Password,
-				RemindmeTaskCursor.KeyColumns.Password);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.other,
-				RemindmeTaskCursor.KeyColumns.other);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Collaborators,
-				RemindmeTaskCursor.KeyColumns.Collaborators);
-		sTaskListProjectionMap.put(RemindmeTaskCursor.KeyColumns.Coordinates,
-				RemindmeTaskCursor.KeyColumns.Coordinates);
+				TaskCursor.KeyColumns.Priority,
+				TaskCursor.KeyColumns.Priority);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Is_Repeat,
+				TaskCursor.KeyColumns.Is_Repeat);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Is_AllDay,
+				TaskCursor.KeyColumns.Is_AllDay);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.CONTENT,
+				TaskCursor.KeyColumns.CONTENT);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.CREATED,
+				TaskCursor.KeyColumns.CREATED);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Is_Alarm_ON,
+				TaskCursor.KeyColumns.Is_Alarm_ON);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Is_Hide_ON,
+				TaskCursor.KeyColumns.Is_Hide_ON);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Is_PW_ON,
+				TaskCursor.KeyColumns.Is_PW_ON);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Password,
+				TaskCursor.KeyColumns.Password);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Other,
+				TaskCursor.KeyColumns.Other);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Collaborator,
+				TaskCursor.KeyColumns.Collaborator);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Coordinate,
+				TaskCursor.KeyColumns.Coordinate);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Level,
+				TaskCursor.KeyColumns.Level);
+		sTaskListProjectionMap.put(TaskCursor.KeyColumns.Is_Fixed,
+				TaskCursor.KeyColumns.Is_Fixed);
 
 	}
 }

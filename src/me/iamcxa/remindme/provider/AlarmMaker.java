@@ -17,14 +17,12 @@ import android.widget.TextView;
 /**
  * @author iamcxa 提醒方法
  */
-public class AlarmProvider extends Activity {
+public class AlarmMaker extends Activity {
 	public static final int ID = 1;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
-		super.onCreate(savedInstanceState);		
 
 		setContentView(R.layout.alertdialoglayout);
 		// 取得Button﹜TextView實例

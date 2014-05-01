@@ -1,13 +1,9 @@
 package me.iamcxa.remindme.database;
-import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.database.TaskDbProvider.DatabaseHelper;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 
 public class TaskDbEditor {
 	private Context context;

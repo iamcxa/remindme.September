@@ -4,40 +4,29 @@
 package me.iamcxa.remindme.provider;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-
 import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
+import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import me.iamcxa.remindme.database.TaskDbEditor;
-import me.iamcxa.remindme.database.TaskDbProvider;
-import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 /**
  * @author cxa
  * 
  */
-public class PriorityProvider {
+public class PriorityCalculator {
 
 	private double Lat;
 	private double Lon;
-	public static String[] projection = RemindmeTaskCursor.PROJECTION_GPS;
-	public static String selection = RemindmeTaskCursor.KeyColumns.Coordinates
-			+ " <> \"\" AND " + RemindmeTaskCursor.KeyColumns.Coordinates
+	public static String[] projection = TaskCursor.PROJECTION_GPS;
+	public static String selection = TaskCursor.KeyColumns.Coordinate
+			+ " <> \"\" AND " + TaskCursor.KeyColumns.Coordinate
 			+ " NOT LIKE \"null%\"";
-	public static String sortOrder = RemindmeTaskCursor._ID;
+	public static String sortOrder = TaskCursor._ID;
 	public static String[] selectionArgs;
 	// private ArrayList<String> coordinatesList = new ArrayList<String>();
 	// private ArrayList<String> distanceList = new ArrayList<String>();
@@ -50,7 +39,7 @@ public class PriorityProvider {
 	private Context context;
     private static TaskDbEditor load;
 	
-	public PriorityProvider(Context context){
+	public PriorityCalculator(Context context){
 		this.context=context;
 		load = new TaskDbEditor(context);
 	}
@@ -73,12 +62,12 @@ public class PriorityProvider {
 		for (i = 0; i < data.getCount(); i++) {
 			CommonUtils.debugMsg(0, "GetDistance data.move@" + i);
 			// idList.add("" +
-			// data.getInt(RemindmeTaskCursor.IndexColumns.KEY_ID));
+			// data.getInt(TaskCursor.IndexColumns.KEY_ID));
 			// WeightsList.add("" + data.getInt(4));
 
 			CommonUtils.debugMsg(0, "GetDistance LatLon1=" + data.getString(2)
 					+ " / LatLon2=" + Lat + "," + Lon);
-			Distance = DistanceProvider.Distance(data.getString(2), Lat, Lon);
+			Distance = DistanceCalculator.Distance(data.getString(2), Lat, Lon);
 			endDate = data.getString(5);
 			endTime = data.getString(6);
 			dayLeft = CommonUtils.getDaysLeft(endDate + " " + endTime, 1);
@@ -164,9 +153,9 @@ public class PriorityProvider {
 
 			values.clear();
 
-			values.put(RemindmeTaskCursor.KeyColumns.Distance,
+			values.put(TaskCursor.KeyColumns.Distance,
 					((Distance)));
-			values.put(RemindmeTaskCursor.KeyColumns.PriorityWeight,
+			values.put(TaskCursor.KeyColumns.Priority,
 					newPriorityWeight);
 
 			// н╫зя

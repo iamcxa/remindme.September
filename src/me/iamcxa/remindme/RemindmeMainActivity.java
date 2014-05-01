@@ -10,8 +10,8 @@ import me.iamcxa.remindme.editor.RemindmeTaskEditor;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
 import me.iamcxa.remindme.fragment.CardFragmentLoader1;
 import me.iamcxa.remindme.fragment.CardFragmentLoader2;
-import me.iamcxa.remindme.provider.LocationProvider;
-import me.iamcxa.remindme.provider.PriorityProvider;
+import me.iamcxa.remindme.provider.LocationGetter;
+import me.iamcxa.remindme.provider.PriorityCalculator;
 import me.iamcxa.remindme.service.TaskSortingService;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -221,10 +221,10 @@ public class RemindmeMainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// 設定卡片
-				ListCursorCardFragment.setSelection( CommonUtils.RemindmeTaskCursor.KeyColumns.PriorityWeight
+				ListCursorCardFragment.setSelection( CommonUtils.TaskCursor.KeyColumns.Priority
 						+ " DESC");
-			//	ListCursorCardFragmentTime.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.EndDate;
-				//ListCursorCardFragmentLocal.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.Distance;
+			//	ListCursorCardFragmentTime.sortOrder = CommonUtils.TaskCursor.KeyColumns.EndDate;
+				//ListCursorCardFragmentLocal.sortOrder = CommonUtils.TaskCursor.KeyColumns.Distance;
 				ListCursorCardFragment.setSelection(null);
 				//ListCursorCardFragmentTime.selection = "TaskLocationName = \"\"";
 				//ListCursorCardFragmentLocal.selection = "TaskLocationName <> \"\"";
@@ -336,7 +336,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			Toast.makeText(getApplication(), item.getTitle(),
 					Toast.LENGTH_SHORT).show();
 			
-			LocationProvider UpdataLocation = new LocationProvider(getApplicationContext());
+			LocationGetter UpdataLocation = new LocationGetter(getApplicationContext());
 			UpdataLocation.UpdateOncePriority();
 			
 			return false;

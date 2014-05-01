@@ -115,22 +115,22 @@ public class CursorCardAdapter {
 			// 準備常數
 			CommonUtils.debugMsg(0, "prepare data from cursor...");
 			boolean NoLocation = cursor
-					.isNull(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
+					.isNull(CommonUtils.TaskCursor.KeyIndex.LocationName);
 			boolean NoExtrainfo = cursor
-					.isNull(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
+					.isNull(CommonUtils.TaskCursor.KeyIndex.Other);
 			int CID = cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.KEY_ID);
+					.getInt(CommonUtils.TaskCursor.KeyIndex.KEY_ID);
 			String dintence = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Distance);
+					.getString(CommonUtils.TaskCursor.KeyIndex.Distance);
 			String startTime = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.StartTime);
+					.getString(CommonUtils.TaskCursor.KeyIndex.StartTime);
 			String endTime = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndTime);
+					.getString(CommonUtils.TaskCursor.KeyIndex.EndTime);
 			String endDate = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.EndDate);
+					.getString(CommonUtils.TaskCursor.KeyIndex.EndDate);
 			String LocationName = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.LocationName);
-			String extraInfo=cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.other);
+					.getString(CommonUtils.TaskCursor.KeyIndex.LocationName);
+			String extraInfo=cursor.getString(CommonUtils.TaskCursor.KeyIndex.Other);
 			long dayLeft = CommonUtils.getDaysLeft(endDate,2);
 			// int dayLeft = Integer.parseInt("" + dayLeftLong);
 
@@ -141,7 +141,7 @@ public class CursorCardAdapter {
 			// 卡片標題 - first line
 			CommonUtils.debugMsg(0, CID + " set Tittle...");
 			card.mainHeader = cursor
-					.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.Tittle);
+					.getString(CommonUtils.TaskCursor.KeyIndex.Tittle);
 
 			// 時間日期 - sec line
 			CommonUtils.debugMsg(0, CID + " set Date/Time...");
@@ -178,12 +178,12 @@ public class CursorCardAdapter {
 			}
 			
 			CommonUtils.debugMsg(0, "isExtrainfo="+ NoExtrainfo );
-			card.Notifications = cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.CalendarID);
+			card.Notifications = cursor.getString(CommonUtils.TaskCursor.KeyIndex.CalendarID);
 			// 可展開額外資訊欄位
 			if (NoExtrainfo==false) {
 				card.resourceIdThumb = R.drawable.outline_star_act;
 				// 額外資訊提示 - 第四行
-				card.Notifications = cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.CalendarID);
+				card.Notifications = cursor.getString(CommonUtils.TaskCursor.KeyIndex.CalendarID);
 
 				// This provides a simple (and useless) expand area
 				CardExpand expand = new CardExpand(getContext());
@@ -194,10 +194,10 @@ public class CursorCardAdapter {
 			
 			// 依照權重給予卡片顏色
 			if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 200) {
+					.getInt(CommonUtils.TaskCursor.KeyIndex.Priority) > 200) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
 			} else if (cursor
-					.getInt(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight) > 100) {
+					.getInt(CommonUtils.TaskCursor.KeyIndex.Priority) > 100) {
 				card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
 			}
 
@@ -210,7 +210,7 @@ public class CursorCardAdapter {
 	 * // Use this code to delete items on DB ContentResolver resolver =
 	 * getActivity().getContentResolver(); long noDeleted =
 	 * resolver.delete(CommonUtils.CONTENT_URI,
-	 * CommonUtils.RemindmeTaskCursor.KeyColumns.KEY_ID + " = ? ", new String[]
+	 * CommonUtils.TaskCursor.KeyColumns.KEY_ID + " = ? ", new String[]
 	 * { card.getId() });
 	 * 
 	 * // mAdapter.notifyDataSetChanged();

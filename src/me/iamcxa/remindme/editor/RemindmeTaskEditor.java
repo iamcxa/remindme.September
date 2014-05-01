@@ -14,9 +14,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor.GpsSetting;
-import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor.KeyColumns;
+import me.iamcxa.remindme.CommonUtils.TaskCursor;
+import me.iamcxa.remindme.CommonUtils.TaskCursor.GpsSetting;
+import me.iamcxa.remindme.CommonUtils.TaskCursor.KeyColumns;
 import me.iamcxa.remindme.R.color;
 import me.iamcxa.remindme.R.id;
 import me.iamcxa.remindme.R.layout;
@@ -65,21 +65,20 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import me.iamcxa.remindme.provider.WorkaroundMapFragment;
 
-
 /**
  * @author cxa
  * 
  */
 
-public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallback {
+public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback {
 
-	//宣告GPS模組
-	private static  GPSManager gpsManager = null;
-	
-	//宣告pick
+	// 宣告GPS模組
+	private static GPSManager gpsManager = null;
+
+	// 宣告pick
 	private static GoogleMap map;
-	
-	private static EditText tittlEditText;
+
+	private static EditText EditTextTittle;
 
 	// 備忘錄訊息列表
 	private ListView listView;
@@ -102,15 +101,14 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private static TextView contentDesc;
 
 	private static TextView locationTittle;
-	
 
 	private static Button Search;
-	
+
 	private static ImageButton OK;
-	
+
 	private static EditText SearchText;
-	
-	private static String LastTimeSearchName="";
+
+	private static String LastTimeSearchName = "";
 	// 是否開啟提醒
 	private int on_off = 0;
 	// 是否聲音警告
@@ -127,25 +125,23 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	// 保存內容、日期與時間字串
 	private static String content = null;
 
-	private String switcher;
+	private static String switcher;
 
-	private String date1;
-
-	private String time1;
-
-	private static String locationName;
+	private static String endDate,endTime,tittle;
 	
-	//經緯度
+	private static String locationName;
+
+	// 經緯度
 	private static Double Latitude;
 	private static Double Longitude;
 	private static ScrollView main_scrollview;
-	
-	private Handler  GpsTimehandler = new Handler();
-	//gps使用時間
+
+	private Handler GpsTimehandler = new Handler();
+	// gps使用時間
 	private static int GpsUseTime = 0;
-	//是否有搜尋過地點
-	private static  Boolean isdidSearch = false;
-	private static  Boolean isDraped = false;
+	// 是否有搜尋過地點
+	private static Boolean isdidSearch = false;
+	private static Boolean isDraped = false;
 	// 備忘錄ID
 	private int id1;
 	// 多選框
@@ -158,26 +154,39 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		Bundle b = intent.getBundleExtra("b");
 		if (b != null) {
 			id1 = b.getInt("id");
+			tittle = b.getString("tittle");
+			endDate = b.getString("endDate");
+			endTime = b.getString("endTime");
+			String isRepeat = b.getString("isRepeat");
+			String IsFixed = b.getString("IsFixed");
+			String isAllDay = b.getString("isAllDay");
+			String LocationName = b.getString("LocationName");
+			String Coordinate = b.getString("Coordinate");
+			String Collaborator = b.getString("Collaborator");
 			content = b.getString("content");
-			date1 = b.getString("date1");
-			time1 = b.getString("time1");
-//			on_off = b.getInt("on_off");
-//			alarm = b.getInt("alarm");
-
-//			if (date1 != null && date1.length() > 0) {
-//				String[] strs = date1.split("/");
-//				mYear = Integer.parseInt(strs[0]);
-//				mMonth = Integer.parseInt(strs[1]);
-//				mDay = Integer.parseInt(strs[2]);
-//			}
-//
-//			if (time1 != null && time1.length() > 0) {
-//				String[] strs = time1.split(":");
-//				mHour = Integer.parseInt(strs[0]);
-//				mMinute = Integer.parseInt(strs[1]);
-//			}
+			String CREATED = b.getString("CREATED");
+			
+			 if (endDate != null && endDate.length() > 0) {
+			 String[] strs = endDate.split("/");
+			 mYear = Integer.parseInt(strs[0]);
+			 mMonth = Integer.parseInt(strs[1]);
+			 mDay = Integer.parseInt(strs[2]);
+			 }
+			
+			 if (endTime != null && endTime.length() > 0) {
+			 String[] strs = endTime.split(":");
+			 mHour = Integer.parseInt(strs[0]);
+			 mMinute = Integer.parseInt(strs[1]);
+			 }
+			 
+			 EditTextTittle.setText(tittle);
+			 
+			 
 		}
-		Toast.makeText(getApplicationContext(), id1+","+content+","+date1+","+time1, Toast.LENGTH_LONG).show();
+		
+		Toast.makeText(getApplicationContext(),
+				id1 + "," + content + "," + endDate + "," + endTime,
+				Toast.LENGTH_LONG).show();
 
 	}
 
@@ -189,48 +198,50 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_editor);
-		SearchText = (EditText)findViewById(R.id.SearchText);
-		Search = (Button)findViewById(R.id.Search);
-		OK = (ImageButton)findViewById(R.id.OK);
+		SearchText = (EditText) findViewById(R.id.SearchText);
+		Search = (Button) findViewById(R.id.Search);
+		OK = (ImageButton) findViewById(R.id.OK);
 		Search.setOnClickListener(SearchPlace);
 		OK.setOnClickListener(SearchPlace);
 		gpsManager = new GPSManager();
 		gpsManager.startGpsListening(getApplicationContext());
-	    gpsManager.setGPSCallback(RemindmeTaskEditor.this);
-	    GpsSetting.GpsStatus =true;
-	    GpsUseTime=0;
-	    GpsTimehandler.post(GpsTime);
-	    
-//	    map = ((MapFragment) getFragmentManager()
-//				 .findFragmentById(R.id.map)).getMap();
-	    map = ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-	    main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
- 
-       ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).setListener(new WorkaroundMapFragment.OnTouchListener() {
-          @Override
-          public void onTouch() {
-        	  main_scrollview.requestDisallowInterceptTouchEvent(true);
-          }
-       	});
+		gpsManager.setGPSCallback(RemindmeTaskEditor.this);
+		GpsSetting.GpsStatus = true;
+		GpsUseTime = 0;
+		GpsTimehandler.post(GpsTime);
+
+		// map = ((MapFragment) getFragmentManager()
+		// .findFragmentById(R.id.map)).getMap();
+		map = ((WorkaroundMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map)).getMap();
+		main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
+
+		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
+				R.id.map))
+				.setListener(new WorkaroundMapFragment.OnTouchListener() {
+					@Override
+					public void onTouch() {
+						main_scrollview
+								.requestDisallowInterceptTouchEvent(true);
+					}
+				});
 		map.setMyLocationEnabled(true);
-        map.clear();
-        LatLng nowLoacation;
-		if(gpsManager.LastLocation()!=null)
-		{
-			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(), gpsManager.LastLocation().getLongitude());
-	        map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,map.getMaxZoomLevel()-4)));
-		}
-		else
-		{
+		map.clear();
+		LatLng nowLoacation;
+		if (gpsManager.LastLocation() != null) {
+			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
+					gpsManager.LastLocation().getLongitude());
+			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+					map.getMaxZoomLevel() - 4)));
+		} else {
 			nowLoacation = new LatLng(23.6978, 120.961);
-			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,map.getMinZoomLevel()+7)));
+			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+					map.getMinZoomLevel() + 7)));
 		}
-        map.addMarker(new MarkerOptions()
-                .title("當前位置")
-                .draggable(true)
-                .position(nowLoacation));
-        
-        map.setOnCameraChangeListener(listener);
+		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
+				.position(nowLoacation));
+
+		map.setOnCameraChangeListener(listener);
 		// 取得Intent
 		final Intent intent = getIntent();
 		// 設定Uri
@@ -248,10 +259,10 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		 */
 
 		// 標題輸入欄位
-		tittlEditText = (EditText) findViewById(R.id.editTextTittle);
-		tittlEditText.setHint("您能輸入\"123 9. 星巴克 裝文青 \"快速設定");
-		tittlEditText.setTextSize(textsize(5));
-		tittlEditText.setHintTextColor(R.color.background_window);
+		EditTextTittle = (EditText) findViewById(R.id.editTextTittle);
+		// EditTextTittle.setHint("您能輸入\"123 9. 星巴克 裝文青 \"快速設定");
+		// EditTextTittle.setTextSize(textsize(5));
+		// EditTextTittle.setHintTextColor(R.color.background_window);
 
 		// 取得Calendar實例
 		final Calendar c = Calendar.getInstance();
@@ -290,7 +301,8 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	// ListView Adatper，該類別實作列表的每一項透過自定視圖實現
 	static class ViewAdapter extends BaseAdapter {
 		// 列表內容
-		String[] strs = { "截止日", "提醒時間", "備註"};
+		String[] strs = { "截止日", "提醒時間", "備註" };
+
 		// 取得列表數量
 		// @Override
 		@Override
@@ -340,7 +352,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 				dateTittle = (TextView) textView.findViewById(R.id.name);
 				dateDesc = (TextView) textView.findViewById(R.id.desc);
 				dateTittle.setText(strs[position]);
-				//dateDesc.setText(mYear + "/" + mMonth + "/" + mDay);
+				// dateDesc.setText(mYear + "/" + mMonth + "/" + mDay);
 				return textView;
 				// 提醒時間
 			case 1:
@@ -351,7 +363,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 				timeTittle = (TextView) textView.findViewById(R.id.name);
 				timeDesc = (TextView) textView.findViewById(R.id.desc);
 				timeTittle.setText(strs[position]);
-				//timeDesc.setText(mHour + ":" + mMinute);
+				// timeDesc.setText(mHour + ":" + mMinute);
 				return textView;
 				// 提醒內容
 			case 2:
@@ -466,11 +478,9 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	 * 設定提示日期對話方塊
 	 */
 	private void showDialog1(String msg, String tittle, int target) {
-		View v = li
-				.inflate(R.layout.activity_task_editor_parts_textedit, null);
+		View v = li.inflate(R.layout.activity_task_editor_parts_textedit, null);
 		final TextView editTextTittle = (TextView) v.findViewById(R.id.name);
-		final EditText editTextbox = (EditText) v
-				.findViewById(R.id.editTexbox);
+		final EditText editTextbox = (EditText) v.findViewById(R.id.editTexbox);
 		editTextTittle.setText(tittle + target);
 
 		switch (target) {
@@ -491,7 +501,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 						content = editTextbox.getText().toString();
 
 						contentDesc.setText(switcher);
-						//locationDesc.setText(switcher);
+						// locationDesc.setText(switcher);
 					}
 				}).show();
 
@@ -536,26 +546,25 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 			values.clear();
 
 			// 存入標題
-			values.put(RemindmeTaskCursor.KeyColumns.Tittle, tittlEditText
-					.getText().toString());
+			values.put(TaskCursor.KeyColumns.Tittle, EditTextTittle.getText()
+					.toString());
 			// 存入日期
-			values.put(RemindmeTaskCursor.KeyColumns.StartDate,
-					curDate.toString());
-			values.put(RemindmeTaskCursor.KeyColumns.EndDate, dateDesc
-					.getText().toString());
+			values.put(TaskCursor.KeyColumns.StartDate, curDate.toString());
+			values.put(TaskCursor.KeyColumns.EndDate, dateDesc.getText()
+					.toString());
 			// save the selected value of time
-			values.put(RemindmeTaskCursor.KeyColumns.StartTime,
-					curDate.toString());
-			values.put(RemindmeTaskCursor.KeyColumns.EndTime, timeDesc
-					.getText().toString());
+			values.put(TaskCursor.KeyColumns.StartTime, curDate.toString());
+			values.put(TaskCursor.KeyColumns.EndTime, timeDesc.getText()
+					.toString());
 			// save contents
-			values.put(RemindmeTaskCursor.KeyColumns.CONTENT, contentDesc
-					.getText().toString());
+			values.put(TaskCursor.KeyColumns.CONTENT, contentDesc.getText()
+					.toString());
 			// save the name string of location
-			values.put(RemindmeTaskCursor.KeyColumns.LocationName, SearchText
-					.getText().toString());
-			values.put(RemindmeTaskCursor.KeyColumns.Coordinates,Latitude+","+Longitude);
-			values.put(RemindmeTaskCursor.KeyColumns.PriorityWeight,1000);
+			values.put(TaskCursor.KeyColumns.LocationName, SearchText.getText()
+					.toString());
+			values.put(TaskCursor.KeyColumns.Coordinate, Latitude + ","
+					+ Longitude);
+			values.put(TaskCursor.KeyColumns.Priority, 1000);
 			// save the value of loaction picker
 			/*
 			 * values.put(RemindmeTasks.EndDate, dateDesc.getText().toString());
@@ -632,65 +641,70 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
-//			Toast.makeText(getApplicationContext(), dateDesc.getText()+"2"+timeDesc.getText(), Toast.LENGTH_SHORT).show();
-			if(dateDesc.getText().equals("") && timeDesc.getText().equals("") 
-					&& contentDesc.getText().equals("") && SearchText.getText().toString().equals(""))
-			{
-				String[] StringArray= tittlEditText.getText().toString().split(" ");
+			// Toast.makeText(getApplicationContext(),
+			// dateDesc.getText()+"2"+timeDesc.getText(),
+			// Toast.LENGTH_SHORT).show();
+			if (dateDesc.getText().equals("") && timeDesc.getText().equals("")
+					&& contentDesc.getText().equals("")
+					&& SearchText.getText().toString().equals("")) {
+				String[] StringArray = EditTextTittle.getText().toString()
+						.split(" ");
 				try {
 					int i = Integer.parseInt(StringArray[0]);
-					//System.out.println(i);
-				} catch(Exception e) {
-					tittlEditText.setText("3 "+StringArray[0]);
-				} 
-				String[] QuickTitle = QuickInput.QuickInput(tittlEditText.getText().toString());
-				for (int a=0 ;a<QuickTitle.length;a++) {
-					if(QuickTitle[a]!=null){
-						switch (a) {
-						case 1:
-							String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
-							try {
-								mHour = Integer.parseInt(Time[0]);
-								mMinute = Integer.parseInt(Time[1]);
-								timeDesc.setText(mHour + ":" + mMinute);
-								
-							} catch (Exception e) {
-								Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-							}
-							break;
-						case 2:
-							SearchText.setText(QuickTitle[2]);
-							break;
-						case 3:
-							tittlEditText.setText(QuickTitle[3]);
-							break;
-						case 4:
-							contentDesc.setText(QuickTitle[4]);
-							break;
-						default:
-							break;
-						}
-					}
+					// System.out.println(i);
+				} catch (Exception e) {
+					EditTextTittle.setText("3 " + StringArray[0]);
 				}
+				// String[] QuickTitle =
+				// QuickInput.QuickInput(EditTextTittle.getText().toString());
+				// for (int a=0 ;a<QuickTitle.length;a++) {
+				// if(QuickTitle[a]!=null){
+				// switch (a) {
+				// case 1:
+				// String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
+				// try {
+				// mHour = Integer.parseInt(Time[0]);
+				// mMinute = Integer.parseInt(Time[1]);
+				// timeDesc.setText(mHour + ":" + mMinute);
+				//
+				// } catch (Exception e) {
+				// Toast.makeText(getApplicationContext(), e.toString(),
+				// Toast.LENGTH_SHORT).show();
+				// }
+				// break;
+				// case 2:
+				// SearchText.setText(QuickTitle[2]);
+				// break;
+				// case 3:
+				// EditTextTittle.setText(QuickTitle[3]);
+				// break;
+				// case 4:
+				// contentDesc.setText(QuickTitle[4]);
+				// break;
+				// default:
+				// break;
+				// }
+				// }
+				// }
 			}
-			if(!isdidSearch && !SearchText.getText().toString().equals(""))
-			{
-				//SearchPlace();
-				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),SearchText.getText().toString());
-				if(LoacationAddress.GeocodingApiLatLngGet()!=null)
-				{
+			if (!isdidSearch && !SearchText.getText().toString().equals("")) {
+				// SearchPlace();
+				GeocodingAPI LoacationAddress = new GeocodingAPI(
+						getApplicationContext(), SearchText.getText()
+								.toString());
+				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
 					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
 					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 				}
 			}
-			if(isDraped && !SearchText.getText().toString().equals(""))
-			{
+			if (isDraped && !SearchText.getText().toString().equals("")) {
 				Longitude = map.getCameraPosition().target.longitude;
 				Latitude = map.getCameraPosition().target.latitude;
-				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
-				if(LoacationAddress.GeocodingApiAddressGet()!=null)
-				{
-					SearchText.setText(LoacationAddress.GeocodingApiAddressGet());
+				GeocodingAPI LoacationAddress = new GeocodingAPI(
+						getApplicationContext(), Latitude + "," + Longitude);
+				if (LoacationAddress.GeocodingApiAddressGet() != null) {
+					SearchText.setText(LoacationAddress
+							.GeocodingApiAddressGet());
 				}
 			}
 			saveOrUpdate();
@@ -722,149 +736,152 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 
 	};
 
-	//GPS位置抓到時會更新位置
+	// GPS位置抓到時會更新位置
 	@Override
 	public void onGPSUpdate(Location location) {
 		// TODO Auto-generated method stub
 		Double Longitude = location.getLongitude();
-		//緯度
-		Double Latitude =  location.getLatitude();
-		
-		//textView1.setText("經緯度:"+Latitude+","+Longitude);
-		//拿到經緯度後馬上關閉
-//		Toast.makeText(getApplicationContext(), "關閉GPS"+location, Toast.LENGTH_LONG).show();
-		
-		if(GpsSetting.GpsStatus)
-		{
+		// 緯度
+		Double Latitude = location.getLatitude();
+
+		// textView1.setText("經緯度:"+Latitude+","+Longitude);
+		// 拿到經緯度後馬上關閉
+		// Toast.makeText(getApplicationContext(), "關閉GPS"+location,
+		// Toast.LENGTH_LONG).show();
+
+		if (GpsSetting.GpsStatus) {
 			GpsSetting.GpsStatus = false;
 			gpsManager.stopListening();
-	        gpsManager.setGPSCallback(null);
-	        gpsManager = null;
-		}
-		else{
+			gpsManager.setGPSCallback(null);
+			gpsManager = null;
+		} else {
 			GpsSetting.GpsStatus = false;
 		}
-        LatLng nowLoacation = new LatLng(Latitude, Longitude);
+		LatLng nowLoacation = new LatLng(Latitude, Longitude);
 
-        map.setMyLocationEnabled(true);
-       
-        map.clear();
-        
-        map.animateCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,map.getMaxZoomLevel()-4)));
+		map.setMyLocationEnabled(true);
 
-        map.addMarker(new MarkerOptions()
-                .title("目前位置")
-                .position(nowLoacation));
-        
-        //GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
-       // textView2.setText(textView2.getText()+" "+LoacationAddress.GeocodingApiAddressGet());
+		map.clear();
+
+		map.animateCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+				map.getMaxZoomLevel() - 4)));
+
+		map.addMarker(new MarkerOptions().title("目前位置").position(nowLoacation));
+
+		// GeocodingAPI LoacationAddress = new
+		// GeocodingAPI(getApplicationContext(),Latitude+","+Longitude);
+		// textView2.setText(textView2.getText()+" "+LoacationAddress.GeocodingApiAddressGet());
 	}
-	
-	
-	private Button.OnClickListener SearchPlace = new Button.OnClickListener(){
+
+	private Button.OnClickListener SearchPlace = new Button.OnClickListener() {
 		@Override
-		public void onClick(View v){
-			//宣告GPSManager
-		    switch (v.getId()) {
+		public void onClick(View v) {
+			// 宣告GPSManager
+			switch (v.getId()) {
 			case R.id.OK:
-		        //textView2.setText(textView2.getText()+"\n"+LoacationAddress.GeocodingApiAddressGet());  //獲取地址
-		        //textView2.setText(textView2.getText()+"\n"+LoacationAddress.GeocodingApiLatLngGet());  //獲取經緯度
-				if(!isdidSearch || !SearchText.getText().toString().equals(LastTimeSearchName))
-				{
+				// textView2.setText(textView2.getText()+"\n"+LoacationAddress.GeocodingApiAddressGet());
+				// //獲取地址
+				// textView2.setText(textView2.getText()+"\n"+LoacationAddress.GeocodingApiLatLngGet());
+				// //獲取經緯度
+				if (!isdidSearch
+						|| !SearchText.getText().toString()
+								.equals(LastTimeSearchName)) {
 					SearchPlace();
-					isdidSearch=true;
+					isdidSearch = true;
 					LastTimeSearchName = SearchText.getText().toString();
 				}
-				GeocodingAPI LoacationAddress = new GeocodingAPI(getApplicationContext(),map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude);
-				if(LoacationAddress.GeocodingApiLatLngGet()!=null)
-				{
+				GeocodingAPI LoacationAddress = new GeocodingAPI(
+						getApplicationContext(),
+						map.getCameraPosition().target.latitude + ","
+								+ map.getCameraPosition().target.longitude);
+				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
 					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
 					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 				}
-				//locationDesc = LoacationAddress.GeocodingApiAddressGet();
-				//Toast.makeText(getApplicationContext(), "獲取經緯度"+map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude+"\n地址:"+locationName, Toast.LENGTH_SHORT).show();
-				
-			break;
+				// locationDesc = LoacationAddress.GeocodingApiAddressGet();
+				// Toast.makeText(getApplicationContext(),
+				// "獲取經緯度"+map.getCameraPosition().target.latitude+","+map.getCameraPosition().target.longitude+"\n地址:"+locationName,
+				// Toast.LENGTH_SHORT).show();
+
+				break;
 			case R.id.Search:
-				//textView2.setText(map.getMyLocation().toString());  //可用網路抓到GPS位置
-					if(!SearchText.getText().toString().equals(LastTimeSearchName))
-					{
-						SearchPlace();
-						isdidSearch=true;
-						LastTimeSearchName = SearchText.getText().toString();
-					}
-			break;
+				// textView2.setText(map.getMyLocation().toString());
+				// //可用網路抓到GPS位置
+				if (!SearchText.getText().toString().equals(LastTimeSearchName)) {
+					SearchPlace();
+					isdidSearch = true;
+					LastTimeSearchName = SearchText.getText().toString();
+				}
+				break;
 
 			default:
 				break;
 			}
 		}
 	};
-	
-	//地圖移動時更新指針位置
+
+	// 地圖移動時更新指針位置
 	private GoogleMap.OnCameraChangeListener listener = new GoogleMap.OnCameraChangeListener() {
-		
+
 		@Override
 		public void onCameraChange(CameraPosition position) {
 			// TODO Auto-generated method stub
 			map.clear();
-			LatLng now = new LatLng(position.target.latitude, position.target.longitude);
-			map.addMarker(new MarkerOptions()
-            .title("目的地")
-            .position(now));
-			if(isdidSearch)
-				isDraped =true;
+			LatLng now = new LatLng(position.target.latitude,
+					position.target.longitude);
+			map.addMarker(new MarkerOptions().title("目的地").position(now));
+			if (isdidSearch)
+				isDraped = true;
 		}
 	};
-	
+
 	private Runnable GpsTime = new Runnable() {
-	    @Override
+		@Override
 		public void run() {
-		 GpsUseTime++;
-	     // Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取    lastlocation. 
-	     if( GpsUseTime > GpsSetting.TIMEOUT_SEC ){
-	    	 if(GpsSetting.GpsStatus){
-	    		 gpsManager.stopListening();
-	    	     gpsManager.startNetWorkListening(getApplicationContext());
-	    		 GpsSetting.GpsStatus =true;
-//	    		 Toast.makeText(getApplicationContext(), "關閉GPS", Toast.LENGTH_LONG).show();
-	    	 }
-	      }else
-	      {
-	    	  GpsTimehandler.postDelayed(this, 1000);
-	      }
-	    }
-	}; 
-	
-	private void SearchPlace(){
-		if(!SearchText.getText().toString().equals("")){
+			GpsUseTime++;
+			// Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取
+			// lastlocation.
+			if (GpsUseTime > GpsSetting.TIMEOUT_SEC) {
+				if (GpsSetting.GpsStatus) {
+					gpsManager.stopListening();
+					gpsManager.startNetWorkListening(getApplicationContext());
+					GpsSetting.GpsStatus = true;
+					// Toast.makeText(getApplicationContext(), "關閉GPS",
+					// Toast.LENGTH_LONG).show();
+				}
+			} else {
+				GpsTimehandler.postDelayed(this, 1000);
+			}
+		}
+	};
+
+	private void SearchPlace() {
+		if (!SearchText.getText().toString().equals("")) {
 			GeocodingAPI LoacationAddress2 = null;
 			LatLng SearchLocation = null;
-			LoacationAddress2 = new GeocodingAPI(getApplicationContext(),SearchText.getText().toString());
-			//textView2.setText("");
-			//locationName=LoacationAddress2.GeocodingApiAddressGet();
-	        //textView2.setText(textView2.getText()+"\n"+Address);
-	        SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
-	        //textView2.setText(textView2.getText()+"\n"+SearchLocation);
-	        if(SearchLocation!=null)
-	        {
-		        map.animateCamera((CameraUpdateFactory.newLatLngZoom(SearchLocation,map.getMaxZoomLevel()-4)));
-		        map.addMarker(new MarkerOptions()
-	            .title("搜尋的位置")
-	            .snippet(locationName)
-	            .position(SearchLocation));
-	        }
-	        else
-	        {
-	        	Toast.makeText(getApplicationContext(), "查無地點哦,換個詞試試看", Toast.LENGTH_SHORT).show();
-	        }
+			LoacationAddress2 = new GeocodingAPI(getApplicationContext(),
+					SearchText.getText().toString());
+			// textView2.setText("");
+			// locationName=LoacationAddress2.GeocodingApiAddressGet();
+			// textView2.setText(textView2.getText()+"\n"+Address);
+			SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
+			// textView2.setText(textView2.getText()+"\n"+SearchLocation);
+			if (SearchLocation != null) {
+				map.animateCamera((CameraUpdateFactory.newLatLngZoom(
+						SearchLocation, map.getMaxZoomLevel() - 4)));
+				map.addMarker(new MarkerOptions().title("搜尋的位置")
+						.snippet(locationName).position(SearchLocation));
+			} else {
+				Toast.makeText(getApplicationContext(), "查無地點哦,換個詞試試看",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
-	
-	private int textsize(int size){
-   	 DisplayMetrics dm = this.getResources().getDisplayMetrics();
-   	 return (int)(size*dm.density);
-   }
+
+	private int textsize(int size) {
+		DisplayMetrics dm = this.getResources().getDisplayMetrics();
+		return (int) (size * dm.density);
+	}
 }
 
 // * CLASS JUST FOR THE CUSTOM ALERT DIALOG
