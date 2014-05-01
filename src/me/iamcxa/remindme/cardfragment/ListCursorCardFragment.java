@@ -18,27 +18,21 @@
 
 package me.iamcxa.remindme.cardfragment;
 
-
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.RemindmeTaskCursor;
 import me.iamcxa.remindme.editor.RemindmeTaskEditor;
-import me.iamcxa.remindme.provider.GPSCallback;
-import me.iamcxa.remindme.provider.GPSManager;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -50,8 +44,8 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand.CardElementUI;
-import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardListView;
+import it.gmariotti.cardslib.library.view.CardView;
 
 /**
  * List with Cursor Example
@@ -61,19 +55,19 @@ import it.gmariotti.cardslib.library.view.CardListView;
 public class ListCursorCardFragment extends BaseFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 
-	private MyCursorCardAdapter mAdapter;
-	private CardListView mListView;
-	public static String[] projection = RemindmeTaskCursor.PROJECTION;
-	public static String selection = null;
-	public static String sortOrder = CommonUtils.DEFAULT_SORT_ORDER;
-	public static String[] selectionArgs;
-	public GPSManager gpsManager = new GPSManager();
-	Double Latitude;
-	Double Longitude;
+	private static MyCursorCardAdapter mAdapter;
+	private static CardListView mListView;
+	private static String[] projection = RemindmeTaskCursor.PROJECTION;
+	private static String selection = null;
+	private static String sortOrder = CommonUtils.DEFAULT_SORT_ORDER;
+	private static String[] selectionArgs;
+	private static Cursor cursor;
+	private static Double Latitude;
+	private static Double Longitude;
 
-	/**********************/
+	/********************/
 	/** Initialization **/
-	/**********************/
+	/********************/
 	private void init() {
 		mAdapter = new MyCursorCardAdapter(getActivity());
 		mListView = (CardListView) getActivity().findViewById(
@@ -138,7 +132,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 	/*******************************/
 	/** Class MyCursorCardAdapter **/
 	/*******************************/
-	public class MyCursorCardAdapter extends CardCursorAdapter   implements StickyListHeadersAdapter {
+	public class MyCursorCardAdapter extends CardCursorAdapter {
 
 		public MyCursorCardAdapter(Context context) {
 			super(context);
@@ -149,24 +143,45 @@ public class ListCursorCardFragment extends BaseFragment implements
 			MyCursorCard card = new MyCursorCard(super.getContext());
 			setCardFromCursor(card, cursor);
 			card.setClickable(true);
+			card.setExpanded(true);
 
 			// Create a CardHeader
 			CardHeader header = new CardHeader(getActivity());
 
+			// Set visible the expand/collapse button
+			// header.setButtonExpandVisible(true);
+			header.setOtherButtonVisible(true);
+			header.setOtherButtonDrawable(R.drawable.ic_action_labels);
+			// Add a callback
+			header.setOtherButtonClickListener(new CardHeader.OnClickCardHeaderOtherButtonListener() {
+				@Override
+				public void onButtonItemClick(Card card, View view) {
+					Toast.makeText(getActivity(), "Click on Other Button",
+							Toast.LENGTH_LONG).show();
+					ViewToClickToExpand viewToClickToExpand = ViewToClickToExpand
+							.builder().highlightView(true).setupView(getCardListView())
+							.setupCardElement(CardElementUI.HEADER);
+					card.setViewToClickToExpand(viewToClickToExpand);
+					
+				}
+			});
+
 			// Set the header title
 			header.setTitle(card.mainHeader);
-			header.setPopupMenu(R.menu.card_popup,
-					new CardHeader.OnClickCardHeaderPopupMenuListener() {
-						@Override
-						public void onMenuItemClick(BaseCard card, MenuItem item) {
-
-							removeCard((Card) card);
-
-						}
-					});
 
 			// Add Header to card
 			card.addCardHeader(header);
+
+			// This provides a simple (and useless) expand area
+			CardExpand expand = new CardExpand(getActivity());
+			// Set inner title in Expand Area
+			String aa = "dbId="
+					+ cursor.getString(0)
+					+ ",w="
+					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
+
+			expand.setTitle(aa);
+			card.addCardExpand(expand);
 
 			// Add Thumbnail to card
 			final CardThumbnail thumb = new CardThumbnail(getActivity());
@@ -179,6 +194,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 				public void onClick(Card card, View view) {
 					Toast.makeText(getActivity(), "Clickable card",
 							Toast.LENGTH_SHORT).show();
+					OpenTaskReader(cursor, card.getId(), card);
 
 				}
 			});
@@ -187,45 +203,15 @@ public class ListCursorCardFragment extends BaseFragment implements
 				@Override
 				public boolean onLongClick(Card card, View view) {
 					// TODO Auto-generated method stubs
-					// 透過ID查詢備忘錄資訊
-					//Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI, RemindmeTaskCursor.IndexColumns.KEY_ID);
-					
-					
-					
-					
-					cursor.moveToPosition(Integer.parseInt(card.getId())-1);
-						
-						
-						int id1 = Integer.parseInt(cursor.getString(0));
-						String date1 = cursor.getString(1);
-						String time1 = cursor.getString(2);
-						String content = cursor.getString(3);
-//						int on_off = cursor.getInt(4);
-//						int alarm = cursor.getInt(5);
-//						int created = cursor.getInt(6);
+					Toast.makeText(getActivity(), "setOnLongClickListener",
+							Toast.LENGTH_SHORT).show();
 
-					
-						
-						
-						Bundle b = new Bundle();
-						b.putInt("_id", id1);
-						b.putString("date1", date1);
-						b.putString("time1", time1);
-						b.putString("content", content);
-					
-						// 將備忘錄資訊添加到Intent
-						Intent intent = new Intent();
-						intent.putExtra("b", b);
-						// 啟動備忘錄詳細資訊Activity
-						intent.setClass(getActivity(), RemindmeTaskEditor.class);
-						startActivity(intent);
-					
-					
-					
+					ShowLongClickMenu();
+
 					return false;
-				
+
 				}
-				});
+			});
 
 			return card;
 		}
@@ -315,16 +301,6 @@ public class ListCursorCardFragment extends BaseFragment implements
 			card.resourceIdThumb = R.drawable.outline_star_act;
 			// 額外資訊提示 - 第四行
 
-			// This provides a simple (and useless) expand area
-			CardExpand expand = new CardExpand(getActivity());
-			// Set inner title in Expand Area
-			String aa = "dbId="
-					+ cursor.getString(0)
-					+ ",w="
-					+ cursor.getString(CommonUtils.RemindmeTaskCursor.IndexColumns.PriorityWeight);
-
-			expand.setTitle(aa);
-			card.addCardExpand(expand);
 			// }
 			// card.Notifications = cursor.getString(0);
 
@@ -339,24 +315,6 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		}
 
-		/* (non-Javadoc)
-		 * @see se.emilsjolander.stickylistheaders.StickyListHeadersAdapter#getHeaderView(int, android.view.View, android.view.ViewGroup)
-		 */
-		@Override
-		public View getHeaderView(int position, View convertView,
-				ViewGroup parent) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		/* (non-Javadoc)
-		 * @see se.emilsjolander.stickylistheaders.StickyListHeadersAdapter#getHeaderId(int)
-		 */
-		@Override
-		public long getHeaderId(int position) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
 	}
 
 	private void removeCard(Card card) {
@@ -392,7 +350,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 	/************************/
 	/** Class MyCursorCard **/
 	/************************/
-	public class MyCursorCard extends Card {
+	private static class MyCursorCard extends Card {
 
 		String DateTime;
 		String LocationName;
@@ -408,13 +366,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		@Override
 		public void setupInnerViewElements(ViewGroup parent, View view) {
-
-			// on click expand card info
-			ViewToClickToExpand viewToClickToExpand = ViewToClickToExpand
-					.builder().highlightView(true).setupView(getCardView())
-					.setupCardElement(CardElementUI.MAIN_CONTENT);
-			setViewToClickToExpand(viewToClickToExpand);
-
+			
 			// Retrieve elements
 			TextView mTitleTextView = (TextView) parent
 					.findViewById(R.id.card_cursor_main_inner_title);
@@ -435,4 +387,112 @@ public class ListCursorCardFragment extends BaseFragment implements
 		}
 	}
 
+	private void OpenTaskReader(Cursor cursor, String ID, Card card) {
+		cursor.moveToPosition(Integer.parseInt(card.getId()) - 1);
+
+		int id1 = Integer.parseInt(cursor.getString(0));
+		String date1 = cursor.getString(1);
+		String time1 = cursor.getString(2);
+		String content = cursor.getString(3);
+		// int on_off = cursor.getInt(4);
+		// int alarm = cursor.getInt(5);
+		// int created = cursor.getInt(6);
+
+		Bundle b = new Bundle();
+		b.putInt("_id", id1);
+		b.putString("date1", date1);
+		b.putString("time1", time1);
+		b.putString("content", content);
+
+		// 將備忘錄資訊添加到Intent
+		Intent intent = new Intent();
+		intent.putExtra("b", b);
+		// 啟動備忘錄詳細資訊Activity
+		intent.setClass(getActivity(), RemindmeTaskEditor.class);
+		startActivity(intent);
+
+	}
+
+	private AlertDialog ShowLongClickMenu() {
+
+		return new AlertDialog.Builder(getActivity())
+				.setTitle("請選擇...")
+				.setItems(R.array.CardOnLongClickDialogString,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								switch (which) {
+								case 0:// 修改
+
+									break;
+								case 1:// 刪除
+
+									break;
+								case 2:// 提高優先
+
+									break;
+								case 3:// 降低優先
+
+									break;
+								case 5:// 分享
+
+									break;
+								}
+
+								//
+								/* User clicked so do some stuff */
+								String[] items = getResources().getStringArray(
+										R.array.CardOnLongClickDialogString);
+								new AlertDialog.Builder(getActivity())
+										.setMessage(
+												"You selected: " + which
+														+ " , " + items[which])
+										.show();
+								//
+
+							}
+						}).show();
+
+	}
+
+	public static Double getLongitude() {
+		return Longitude;
+	}
+
+	public static void setLongitude(Double longitude) {
+		Longitude = longitude;
+	}
+
+	public static Double getLatitude() {
+		return Latitude;
+	}
+
+	public static void setLatitude(Double latitude) {
+		Latitude = latitude;
+	}
+
+	public static String[] getProjection() {
+		return projection;
+	}
+
+	public static void setProjection(String[] projection) {
+		ListCursorCardFragment.projection = projection;
+	}
+
+	public static String getSortOrder() {
+		return sortOrder;
+	}
+
+	public static void setSortOrder(String sortOrders) {
+		ListCursorCardFragment.sortOrder = sortOrders;
+	}
+
+	public static String getSelection() {
+		return selection;
+	}
+
+	public static void setSelection(String selections) {
+		ListCursorCardFragment.selection = selections;
+	}
 }

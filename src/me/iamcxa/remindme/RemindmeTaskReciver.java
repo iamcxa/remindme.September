@@ -8,7 +8,7 @@ import android.content.Intent;
 /**
  * @author iamcxa 定時提醒廣播
  */
-public class RemindmeReciver extends BroadcastReceiver {
+public class RemindmeTaskReciver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 

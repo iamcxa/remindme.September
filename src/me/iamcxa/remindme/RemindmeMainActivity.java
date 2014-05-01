@@ -221,11 +221,11 @@ public class RemindmeMainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// 設定卡片
-				ListCursorCardFragment.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.PriorityWeight
-						+ " DESC";
+				ListCursorCardFragment.setSelection( CommonUtils.RemindmeTaskCursor.KeyColumns.PriorityWeight
+						+ " DESC");
 			//	ListCursorCardFragmentTime.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.EndDate;
 				//ListCursorCardFragmentLocal.sortOrder = CommonUtils.RemindmeTaskCursor.KeyColumns.Distance;
-				ListCursorCardFragment.selection = null;
+				ListCursorCardFragment.setSelection(null);
 				//ListCursorCardFragmentTime.selection = "TaskLocationName = \"\"";
 				//ListCursorCardFragmentLocal.selection = "TaskLocationName <> \"\"";
 

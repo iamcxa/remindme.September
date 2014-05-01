@@ -57,5 +57,19 @@
     </string-array>
     <string name="PowerUsageOptionDefaultValue">0</string>
     <string name="PowerUsageOptionTittle">位置偵測模式</string>
+    <string-array name="CardOnLongClickDialogString">
+        <item >修改</item>
+        <item >刪除</item>s
+        <item >提高優先權</item>
+        <item >降低優先權</item>
+        <item >分享</item>
+    </string-array>
+        <string-array name="CardOnLongClickDialogValue">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
+        <item >3</item>
+        <item >4</item>
+    </string-array>
     
 </resources>

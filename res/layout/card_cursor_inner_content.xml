@@ -46,7 +46,8 @@
         android:maxLines="1"
         android:text="card_cursor_main_inner_subtitle"
         android:textColor="@color/card_SubTittle"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/card_cursor_main_inner_thirdtitle"

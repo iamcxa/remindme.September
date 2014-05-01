@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ *******************************************************************************
   ~   Copyright (c) 2013-2014 Gabriele Mariotti.
@@ -18,17 +17,14 @@
   ~  *****************************************************************************
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:card="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <it.gmariotti.cardslib.library.view.CardListView
-        android:id="@+id/carddemo_list_cursor"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:paddingTop="10dp"
-        card:list_card_layout_resourceID="@layout/card_list_cursor_layout" />
+    <item android:drawable="@drawable/ic_menu_expand_card_dark_pressed"
+          android:state_pressed="true"/>
+    <item android:drawable="@drawable/ic_menu_expand_card_dark_pressed"
+          android:state_focused="true"/>
+    <item android:drawable="@drawable/ic_menu_expand_card_dark_pressed"
+          android:state_selected="true"/>
+    <item android:drawable="@drawable/ic_menu_expand_card_dark_normal"/>
 
-</LinearLayout>
+</selector>

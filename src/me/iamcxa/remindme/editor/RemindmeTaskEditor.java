@@ -188,7 +188,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_event_editor);
+		setContentView(R.layout.activity_task_editor);
 		SearchText = (EditText)findViewById(R.id.SearchText);
 		Search = (Button)findViewById(R.id.Search);
 		OK = (ImageButton)findViewById(R.id.OK);
@@ -318,7 +318,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// 自定示圖layout
 			View textView = li.inflate(
-					R.layout.activity_event_editor_parts_textview, null);
+					R.layout.activity_task_editor_parts_textview, null);
 			// View editView =
 			// li.inflate(R.layout.activity_event_editor_parts_editview, null);
 			switch (position) {
@@ -467,7 +467,7 @@ public class RemindmeTaskEditor extends FragmentActivity  implements  GPSCallbac
 	 */
 	private void showDialog1(String msg, String tittle, int target) {
 		View v = li
-				.inflate(R.layout.activity_event_editor_parts_textedit, null);
+				.inflate(R.layout.activity_task_editor_parts_textedit, null);
 		final TextView editTextTittle = (TextView) v.findViewById(R.id.name);
 		final EditText editTextbox = (EditText) v
 				.findViewById(R.id.editTexbox);
