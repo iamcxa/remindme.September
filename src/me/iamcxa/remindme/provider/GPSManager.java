@@ -123,15 +123,6 @@ public class GPSManager
                 	GPSManager.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, GPSManager.gpsMinTime,
                                         GPSManager.gpsMinDistance, GPSManager.locationListener);
                 	return true;
-                	
-//                	GPSManager.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, GPSManager.gpsMinTime,
-//                            GPSManager.gpsMinDistance, GPSManager.locationListener);
-//                	return true;
-                	
-               // }
-               // else{
-               // 	return false;
-               // }
                 
         }
         

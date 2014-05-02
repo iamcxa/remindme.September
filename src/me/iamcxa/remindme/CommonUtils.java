@@ -133,6 +133,17 @@ public class CommonUtils {
 		}
 
 	}
+	
+	public static class GpsSetting {
+		// GPS超時關閉改用wifi
+		public static final int TIMEOUT_SEC = 5;
+		// Gps狀態
+		public static boolean GpsStatus = false;
+		
+		//移動距離
+		public static final double GpsTolerateErrorDistance = 1.5;
+
+	}
 
 	// 內部類別
 	public static final class TaskCursor implements BaseColumns {
@@ -254,14 +265,6 @@ public class CommonUtils {
 			public static final String Is_Fixed = "Is_fixed";
 			// 18 提醒之聲音檔案路徑
 			// public static final String AlarmSoundPath = "AlarmSoundPath";
-		}
-
-		public static class GpsSetting {
-			// GPS超時關閉改用wifi
-			public static final int TIMEOUT_SEC = 5;
-			// Gps狀態
-			public static boolean GpsStatus = false;
-
 		}
 	}
 }

@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.CommonUtils.TaskCursor;
-import me.iamcxa.remindme.CommonUtils.TaskCursor.GpsSetting;
 import me.iamcxa.remindme.CommonUtils.TaskCursor.KeyColumns;
 import me.iamcxa.remindme.R.color;
 import me.iamcxa.remindme.R.id;
@@ -206,7 +205,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		gpsManager = new GPSManager();
 		gpsManager.startGpsListening(getApplicationContext());
 		gpsManager.setGPSCallback(RemindmeTaskEditor.this);
-		GpsSetting.GpsStatus = true;
+		CommonUtils.GpsSetting.GpsStatus = true;
 		GpsUseTime = 0;
 		GpsTimehandler.post(GpsTime);
 
@@ -644,49 +643,49 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			// Toast.makeText(getApplicationContext(),
 			// dateDesc.getText()+"2"+timeDesc.getText(),
 			// Toast.LENGTH_SHORT).show();
-			if (dateDesc.getText().equals("") && timeDesc.getText().equals("")
-					&& contentDesc.getText().equals("")
-					&& SearchText.getText().toString().equals("")) {
-				String[] StringArray = EditTextTittle.getText().toString()
-						.split(" ");
-				try {
-					int i = Integer.parseInt(StringArray[0]);
-					// System.out.println(i);
-				} catch (Exception e) {
-					EditTextTittle.setText("3 " + StringArray[0]);
-				}
-				// String[] QuickTitle =
-				// QuickInput.QuickInput(EditTextTittle.getText().toString());
-				// for (int a=0 ;a<QuickTitle.length;a++) {
-				// if(QuickTitle[a]!=null){
-				// switch (a) {
-				// case 1:
-				// String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
-				// try {
-				// mHour = Integer.parseInt(Time[0]);
-				// mMinute = Integer.parseInt(Time[1]);
-				// timeDesc.setText(mHour + ":" + mMinute);
-				//
-				// } catch (Exception e) {
-				// Toast.makeText(getApplicationContext(), e.toString(),
-				// Toast.LENGTH_SHORT).show();
-				// }
-				// break;
-				// case 2:
-				// SearchText.setText(QuickTitle[2]);
-				// break;
-				// case 3:
-				// EditTextTittle.setText(QuickTitle[3]);
-				// break;
-				// case 4:
-				// contentDesc.setText(QuickTitle[4]);
-				// break;
-				// default:
-				// break;
-				// }
-				// }
-				// }
-			}
+//			if (dateDesc.getText().equals("") && timeDesc.getText().equals("")
+//					&& contentDesc.getText().equals("")
+//					&& SearchText.getText().toString().equals("")) {
+//				String[] StringArray = EditTextTittle.getText().toString()
+//						.split(" ");
+//				try {
+//					int i = Integer.parseInt(StringArray[0]);
+//					// System.out.println(i);
+//				} catch (Exception e) {
+//					EditTextTittle.setText("3 " + StringArray[0]);
+//				}
+//				// String[] QuickTitle =
+//				// QuickInput.QuickInput(EditTextTittle.getText().toString());
+//				// for (int a=0 ;a<QuickTitle.length;a++) {
+//				// if(QuickTitle[a]!=null){
+//				// switch (a) {
+//				// case 1:
+//				// String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
+//				// try {
+//				// mHour = Integer.parseInt(Time[0]);
+//				// mMinute = Integer.parseInt(Time[1]);
+//				// timeDesc.setText(mHour + ":" + mMinute);
+//				//
+//				// } catch (Exception e) {
+//				// Toast.makeText(getApplicationContext(), e.toString(),
+//				// Toast.LENGTH_SHORT).show();
+//				// }
+//				// break;
+//				// case 2:
+//				// SearchText.setText(QuickTitle[2]);
+//				// break;
+//				// case 3:
+//				// EditTextTittle.setText(QuickTitle[3]);
+//				// break;
+//				// case 4:
+//				// contentDesc.setText(QuickTitle[4]);
+//				// break;
+//				// default:
+//				// break;
+//				// }
+//				// }
+//				// }
+//			}
 			if (!isdidSearch && !SearchText.getText().toString().equals("")) {
 				// SearchPlace();
 				GeocodingAPI LoacationAddress = new GeocodingAPI(
@@ -749,13 +748,13 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		// Toast.makeText(getApplicationContext(), "關閉GPS"+location,
 		// Toast.LENGTH_LONG).show();
 
-		if (GpsSetting.GpsStatus) {
-			GpsSetting.GpsStatus = false;
+		if (CommonUtils.GpsSetting.GpsStatus) {
+			CommonUtils.GpsSetting.GpsStatus = false;
 			gpsManager.stopListening();
 			gpsManager.setGPSCallback(null);
 			gpsManager = null;
 		} else {
-			GpsSetting.GpsStatus = false;
+			CommonUtils.GpsSetting.GpsStatus = false;
 		}
 		LatLng nowLoacation = new LatLng(Latitude, Longitude);
 
@@ -841,11 +840,11 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			GpsUseTime++;
 			// Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取
 			// lastlocation.
-			if (GpsUseTime > GpsSetting.TIMEOUT_SEC) {
-				if (GpsSetting.GpsStatus) {
+			if (GpsUseTime > CommonUtils.GpsSetting.TIMEOUT_SEC) {
+				if (CommonUtils.GpsSetting.GpsStatus) {
 					gpsManager.stopListening();
 					gpsManager.startNetWorkListening(getApplicationContext());
-					GpsSetting.GpsStatus = true;
+					CommonUtils.GpsSetting.GpsStatus = true;
 					// Toast.makeText(getApplicationContext(), "關閉GPS",
 					// Toast.LENGTH_LONG).show();
 				}
@@ -878,10 +877,6 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 	}
 
-	private int textsize(int size) {
-		DisplayMetrics dm = this.getResources().getDisplayMetrics();
-		return (int) (size * dm.density);
-	}
 }
 
 // * CLASS JUST FOR THE CUSTOM ALERT DIALOG
