@@ -19,28 +19,38 @@ int array miscicons 0x7f0d0005
 int array playicons 0x7f0d0003
 int array systemicons 0x7f0d0002
 int array wallpapers 0x7f0d0014
-int attr adSize 0x7f010000
-int attr adSizes 0x7f010001
-int attr adUnitId 0x7f010002
-int attr cameraBearing 0x7f010004
-int attr cameraTargetLat 0x7f010005
-int attr cameraTargetLng 0x7f010006
-int attr cameraTilt 0x7f010007
-int attr cameraZoom 0x7f010008
-int attr card_header_layout_resourceID 0x7f010013
-int attr card_layout_resourceID 0x7f010011
-int attr card_shadow_layout_resourceID 0x7f010012
-int attr card_thumbnail_layout_resourceID 0x7f010014
-int attr list_card_layout_resourceID 0x7f010015
-int attr mapType 0x7f010003
-int attr uiCompass 0x7f010009
-int attr uiRotateGestures 0x7f01000a
-int attr uiScrollGestures 0x7f01000b
-int attr uiTiltGestures 0x7f01000c
-int attr uiZoomControls 0x7f01000d
-int attr uiZoomGestures 0x7f01000e
-int attr useViewLifecycle 0x7f01000f
-int attr zOrderOnTop 0x7f010010
+int attr adSize 0x7f01000a
+int attr adSizes 0x7f01000b
+int attr adUnitId 0x7f01000c
+int attr cameraBearing 0x7f01000e
+int attr cameraTargetLat 0x7f01000f
+int attr cameraTargetLng 0x7f010010
+int attr cameraTilt 0x7f010011
+int attr cameraZoom 0x7f010012
+int attr card_header_layout_resourceID 0x7f01001d
+int attr card_layout_resourceID 0x7f01001b
+int attr card_shadow_layout_resourceID 0x7f01001c
+int attr card_thumbnail_layout_resourceID 0x7f01001e
+int attr column_count 0x7f010002
+int attr column_count_landscape 0x7f010004
+int attr column_count_portrait 0x7f010003
+int attr grid_paddingBottom 0x7f010009
+int attr grid_paddingLeft 0x7f010006
+int attr grid_paddingRight 0x7f010007
+int attr grid_paddingTop 0x7f010008
+int attr hasStickyHeaders 0x7f010000
+int attr isDrawingListUnderStickyHeader 0x7f010001
+int attr item_margin 0x7f010005
+int attr list_card_layout_resourceID 0x7f01001f
+int attr mapType 0x7f01000d
+int attr uiCompass 0x7f010013
+int attr uiRotateGestures 0x7f010014
+int attr uiScrollGestures 0x7f010015
+int attr uiTiltGestures 0x7f010016
+int attr uiZoomControls 0x7f010017
+int attr uiZoomGestures 0x7f010018
+int attr useViewLifecycle 0x7f010019
+int attr zOrderOnTop 0x7f01001a
 int bool config_apexskin 0x7f0c0004
 int bool config_iconpack 0x7f0c0003
 int bool dock_reflections 0x7f0c0002
@@ -707,7 +717,7 @@ int style list_card_UndoBar 0x7f0b001a
 int style list_card_UndoBarButton 0x7f0b001c
 int style list_card_UndoBarMessage 0x7f0b001b
 int style scan_description 0x7f0b0022
-int[] styleable AdsAttrs { 0x7f010000, 0x7f010001, 0x7f010002 }
+int[] styleable AdsAttrs { 0x7f01000a, 0x7f01000b, 0x7f01000c }
 int styleable AdsAttrs_adSize 0
 int styleable AdsAttrs_adSizes 1
 int styleable AdsAttrs_adUnitId 2
@@ -715,7 +725,7 @@ int[] styleable ForegroundLinearLayout { 0x01010109, 0x01010200, 0x01010405 }
 int styleable ForegroundLinearLayout_android_foreground 0
 int styleable ForegroundLinearLayout_android_foregroundGravity 1
 int styleable ForegroundLinearLayout_android_foregroundInsidePadding 2
-int[] styleable MapAttrs { 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010 }
+int[] styleable MapAttrs { 0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011, 0x7f010012, 0x7f010013, 0x7f010014, 0x7f010015, 0x7f010016, 0x7f010017, 0x7f010018, 0x7f010019, 0x7f01001a }
 int styleable MapAttrs_cameraBearing 1
 int styleable MapAttrs_cameraTargetLat 2
 int styleable MapAttrs_cameraTargetLng 3
@@ -730,7 +740,40 @@ int styleable MapAttrs_uiZoomControls 10
 int styleable MapAttrs_uiZoomGestures 11
 int styleable MapAttrs_useViewLifecycle 12
 int styleable MapAttrs_zOrderOnTop 13
-int[] styleable card_options { 0x7f010011, 0x7f010012, 0x7f010013, 0x7f010014, 0x7f010015 }
+int[] styleable StaggeredGridView { 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009 }
+int styleable StaggeredGridView_column_count 0
+int styleable StaggeredGridView_column_count_landscape 2
+int styleable StaggeredGridView_column_count_portrait 1
+int styleable StaggeredGridView_grid_paddingBottom 7
+int styleable StaggeredGridView_grid_paddingLeft 4
+int styleable StaggeredGridView_grid_paddingRight 5
+int styleable StaggeredGridView_grid_paddingTop 6
+int styleable StaggeredGridView_item_margin 3
+int[] styleable StickyListHeadersListView { 0x0101007f, 0x010100d5, 0x010100d6, 0x010100d7, 0x010100d8, 0x010100d9, 0x010100de, 0x010100e0, 0x010100eb, 0x010100fb, 0x010100fc, 0x010100fe, 0x01010100, 0x01010101, 0x01010129, 0x0101012a, 0x0101012b, 0x01010226, 0x010102c1, 0x01010335, 0x010103a5, 0x7f010000, 0x7f010001 }
+int styleable StickyListHeadersListView_android_cacheColorHint 13
+int styleable StickyListHeadersListView_android_choiceMode 16
+int styleable StickyListHeadersListView_android_clipToPadding 8
+int styleable StickyListHeadersListView_android_divider 14
+int styleable StickyListHeadersListView_android_dividerHeight 15
+int styleable StickyListHeadersListView_android_drawSelectorOnTop 10
+int styleable StickyListHeadersListView_android_fadingEdgeLength 7
+int styleable StickyListHeadersListView_android_fastScrollAlwaysVisible 19
+int styleable StickyListHeadersListView_android_fastScrollEnabled 17
+int styleable StickyListHeadersListView_android_listSelector 9
+int styleable StickyListHeadersListView_android_overScrollMode 18
+int styleable StickyListHeadersListView_android_padding 1
+int styleable StickyListHeadersListView_android_paddingBottom 5
+int styleable StickyListHeadersListView_android_paddingLeft 2
+int styleable StickyListHeadersListView_android_paddingRight 4
+int styleable StickyListHeadersListView_android_paddingTop 3
+int styleable StickyListHeadersListView_android_requiresFadingEdge 20
+int styleable StickyListHeadersListView_android_scrollbarStyle 0
+int styleable StickyListHeadersListView_android_scrollbars 6
+int styleable StickyListHeadersListView_android_scrollingCache 11
+int styleable StickyListHeadersListView_android_transcriptMode 12
+int styleable StickyListHeadersListView_hasStickyHeaders 21
+int styleable StickyListHeadersListView_isDrawingListUnderStickyHeader 22
+int[] styleable card_options { 0x7f01001b, 0x7f01001c, 0x7f01001d, 0x7f01001e, 0x7f01001f }
 int styleable card_options_card_header_layout_resourceID 2
 int styleable card_options_card_layout_resourceID 0
 int styleable card_options_card_shadow_layout_resourceID 1

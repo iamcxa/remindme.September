@@ -339,6 +339,8 @@ public class RemindmeMainActivity extends FragmentActivity {
 			LocationGetter UpdataLocation = new LocationGetter(getApplicationContext());
 			UpdataLocation.UpdateOncePriority();
 			
+		ListCursorCardFragment.getmAdapter().notifyDataSetChanged();
+			
 			return false;
 		}
 	};

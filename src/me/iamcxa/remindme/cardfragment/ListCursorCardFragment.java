@@ -40,6 +40,14 @@ public class ListCursorCardFragment extends BaseFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 
 	private static MyCursorCardAdapter mAdapter;
+	public static MyCursorCardAdapter getmAdapter() {
+		return mAdapter;
+	}
+
+	public static void setmAdapter(MyCursorCardAdapter mAdapter) {
+		ListCursorCardFragment.mAdapter = mAdapter;
+	}
+
 	private static CardListView mListView;
 	private static String[] projection = TaskCursor.PROJECTION;
 	private static String selection = null;
