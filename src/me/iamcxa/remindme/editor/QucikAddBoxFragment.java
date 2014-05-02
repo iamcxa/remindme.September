@@ -1,7 +1,7 @@
 /*
  * 
  */
-package me.iamcxa.remindme.fragment;
+package me.iamcxa.remindme.editor;
 
 import me.iamcxa.remindme.R;
 import android.support.v4.app.Fragment;

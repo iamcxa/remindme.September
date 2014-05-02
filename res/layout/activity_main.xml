@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="me.iamcxa.remindme.fragment.QucikAddBoxFragment"
+        android:name="me.iamcxa.remindme.editor.QucikAddBoxFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
