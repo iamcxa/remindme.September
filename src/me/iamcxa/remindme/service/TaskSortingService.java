@@ -87,8 +87,11 @@ public class TaskSortingService extends Service {
 				.setSmallIcon(R.drawable.remindme_logo).setLargeIcon(bm)
 				.setNumber(notifyID).setSubText(msg).setWhen(when)
 				.setContentIntent(contentIntent).build();
+		
+		//使notifcation不被刪除
+		noti.flags =Notification.FLAG_NO_CLEAR;
+		
 		nNotificationManager.notify(notifyID, noti);
-
 		CommonUtils.debugMsg(0, "service started");
 	}
 	
