@@ -6,6 +6,7 @@ package me.iamcxa.remindme;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.R.string;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -34,24 +35,34 @@ public class CommonUtils {
 
 	// 預設排序常數
 	public static final String DEFAULT_SORT_ORDER = "created DESC";
-	
-	//廣播接收器
+
+	// 廣播接收器
 	public static final String BC_ACTION = "me.iamcxa.remindme.TaskReceiver";
 
 	// SharedPreferences preferences;
 	public static SharedPreferences mPreferences;
-	
+
 	// debug msg TAG
 	public static final String debugMsgTag = "debugmsg";
 
 	// debug msg on/off, read from Shared Preferences XML file
-	public static boolean isDebugMsgOn(){
+	public static boolean isDebugMsgOn() {
 		return CommonUtils.mPreferences.getBoolean("isDebugMsgOn", true);
 	}
 
 	// isServiceOn
-	public static boolean isServiceOn(){
+	public static boolean isServiceOn() {
 		return CommonUtils.mPreferences.getBoolean("isServiceOn", true);
+	};
+
+	// isServiceOn
+	public static boolean isSortingOn() {
+		return CommonUtils.mPreferences.getBoolean("isSortingOn", true);
+	};
+
+	// isServiceOn
+	public static String getUpdatePeriod(){
+		return CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
 	};
 
 	private CommonUtils() {
@@ -59,7 +70,7 @@ public class CommonUtils {
 
 	/***********************/
 	/** debug msg section **/
-	/***********************/	
+	/***********************/
 	public static final void debugMsg(int section, String msgs) {
 		if (isDebugMsgOn()) {
 			switch (section) {
@@ -78,21 +89,20 @@ public class CommonUtils {
 		}
 
 	}
-	
-	
+
 	/***********************/
 	/** getDaysLeft **/
 	/***********************/
 	@SuppressLint("SimpleDateFormat")
-	public static long getDaysLeft(String TaskDate,int Option) {
+	public static long getDaysLeft(String TaskDate, int Option) {
 
 		// 定義時間格式
 		// java.text.SimpleDateFormat sdf = new
-		SimpleDateFormat sdf=null ;
-		if(Option==1){
-			 sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-		}else if(Option==2) {
-			 sdf = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat sdf = null;
+		if (Option == 1) {
+			sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		} else if (Option == 2) {
+			sdf = new SimpleDateFormat("yyyy/MM/dd");
 		}
 
 		// 取得現在時間
@@ -154,10 +164,8 @@ public class CommonUtils {
 				KeyColumns.CalendarID,// 19
 				KeyColumns.GoogleCalSyncID,// 20
 				KeyColumns.Other, // 21
-				KeyColumns.Level, 
-				KeyColumns.Is_Fixed 
-		};
-		
+				KeyColumns.Level, KeyColumns.Is_Fixed };
+
 		// 查詢欄位陣列
 		public static final String[] PROJECTION_GPS = new String[] {
 				KeyColumns.KEY_ID, // 0
@@ -247,14 +255,13 @@ public class CommonUtils {
 			// 18 提醒之聲音檔案路徑
 			// public static final String AlarmSoundPath = "AlarmSoundPath";
 		}
-		
-		public static class GpsSetting{
-			//GPS超時關閉改用wifi
+
+		public static class GpsSetting {
+			// GPS超時關閉改用wifi
 			public static final int TIMEOUT_SEC = 5;
-			//Gps狀態
-			public static boolean GpsStatus=false;
-			
-			
+			// Gps狀態
+			public static boolean GpsStatus = false;
+
 		}
 	}
 }

@@ -16,8 +16,9 @@ public class LocationGetter implements GPSCallback {
 	private static PriorityCalculator UpdatePriority;
 	private String updatePeriod;
 	private boolean UseOnceTime;
-	public static String timePeriod;
-	
+	private static String timePeriod;
+	private static boolean isSortingOn;
+
 	@Override
 	public void onGPSUpdate(Location location) {
 		// TODO Auto-generated method stub
@@ -43,13 +44,13 @@ public class LocationGetter implements GPSCallback {
 		gpsManager.setGPSCallback(gpsCallBack);
 		CommonUtils.debugMsg(0, "LocationProvider startNetWorkListening");
 	}
-	
+
 	public void startGpsListening(GPSCallback gpsCallBack) {
 		gpsManager.startGpsListening(context);
 		gpsManager.setGPSCallback(gpsCallBack);
 		CommonUtils.debugMsg(0, "LocationProvider startNetWorkListening");
 	}
-	
+
 	public boolean getGpsStatus() {
 		if ((Lon > 0) && (Lat > 0)) {
 			isGpsStrat = true;
@@ -58,71 +59,93 @@ public class LocationGetter implements GPSCallback {
 		}
 		return isGpsStrat;
 	}
-	
-	public void UpdatePriority(){
+
+	public void UpdatePriority() {
 		handler = new Handler();
 		UpdatePriority = new PriorityCalculator(context);
-		//this.time=time;
 
-		updatePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
-		
+		updatePeriod = CommonUtils.getUpdatePeriod();
+
 		handler.postDelayed(GpsTime, Long.parseLong(updatePeriod));
-		UseOnceTime =false;
+		UseOnceTime = false;
 	}
-	
-	public void UpdateOncePriority(){
+
+	public void UpdateOncePriority() {
 		handler = new Handler();
 		UpdatePriority = new PriorityCalculator(context);
 		handler.post(GpsTime);
-		UseOnceTime =true;
+		UseOnceTime = true;
 	}
-	
-	
-	public void CloseUpdatePriority(){
+
+	public void CloseUpdatePriority() {
 		handler.removeCallbacks(GpsTime);
 	}
-	
-	
-	
+
+	public static boolean getIsSortingOn() {
+		return isSortingOn;
+	}
+
+	public static void setIsSortingOn(boolean isSortingOn) {
+		LocationGetter.isSortingOn = isSortingOn;
+	}
+
+	public static String getTimePeriod() {
+		return timePeriod;
+	}
+
+	public static void setTimePeriod(String timePeriod) {
+		LocationGetter.timePeriod = timePeriod;
+	}
+
 	private Runnable GpsTime = new Runnable() {
 		@Override
 		public void run() {
-			
-			CommonUtils.debugMsg(0, "service GpsTime run");	
 
-			if (Lat != 0 && Lon != 0) {
+			CommonUtils.debugMsg(0, "service GpsTime start");
 
-				// isGpsStrat = false;
-				stopListening();
+			setIsSortingOn(CommonUtils.isSortingOn());			
 
-				UpdatePriority
-						.SetLatLng(Lat, Lon);
-				UpdatePriority.ProcessData(UpdatePriority.loadData());
-				if(UseOnceTime){
-					CloseUpdatePriority();
+			CommonUtils.debugMsg(0, "service preferance isSortingOn="+getIsSortingOn());
+
+			if (getIsSortingOn() == true) {
+
+				if ((Lat != 0 && Lon != 0)) {
+
+					// isGpsStrat = false;
 					stopListening();
-				}
-				else{
-					updatePeriod = CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
-					handler.postDelayed(this, Long.parseLong(updatePeriod));
-				}
-			
-			} else {
-				if (getGpsStatus()) {
-					handler.postDelayed(this, 1000);
 
-					CommonUtils.debugMsg(0, "已經開啟GPS但是還沒拿到資料:"
-							+ Lat + "," + Lon);
+					UpdatePriority.SetLatLng(Lat, Lon);
+					UpdatePriority.ProcessData(UpdatePriority.loadData());
+					if (UseOnceTime) {
+						CloseUpdatePriority();
+						stopListening();
+					} else {
+						updatePeriod = CommonUtils.mPreferences.getString(
+								"GetPriorityPeriod", "5000");
+						handler.postDelayed(this, Long.parseLong(updatePeriod));
+					}
+
 				} else {
-					startNetWorkListening(LocationGetter.this);
+					if (getGpsStatus()) {
+						handler.postDelayed(this, 1000);
 
-					// isGpsStrat = true;
-					handler.postDelayed(this, 1000);
+						CommonUtils.debugMsg(0, "已經開啟GPS但是還沒拿到資料:" + Lat + ","
+								+ Lon);
+					} else {
+						startNetWorkListening(LocationGetter.this);
 
-					// make log
-					CommonUtils.debugMsg(0, "開啟GPS:" + Lat + ","
-							+ Lon);
+						// isGpsStrat = true;
+						handler.postDelayed(this, 1000);
+
+						// make log
+						CommonUtils.debugMsg(0, "開啟GPS:" + Lat + "," + Lon);
+					}
 				}
+
+			}else{
+
+				CommonUtils.debugMsg(0, "service GpsTime stop because isSortingOn=False");
+
 			}
 		}
 	};

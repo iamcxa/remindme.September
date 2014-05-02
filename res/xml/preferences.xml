@@ -20,6 +20,12 @@
             android:key="isServiceOn"
             android:summary="True of False"
             android:title="service開關" />
+        <SwitchPreference
+               android:defaultValue="true"
+            android:enabled="true"
+            android:key="isSortingOn"
+            android:summary="True of False"
+            android:title="智慧排序開關" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Category 2" >
         <EditTextPreference

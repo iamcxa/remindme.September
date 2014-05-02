@@ -8,11 +8,11 @@ package it.gmariotti.cardslib.library;
 
 public final class R {
 	public static final class attr {
-		public static final int card_header_layout_resourceID = 0x7f010002;
-		public static final int card_layout_resourceID = 0x7f010000;
-		public static final int card_shadow_layout_resourceID = 0x7f010001;
-		public static final int card_thumbnail_layout_resourceID = 0x7f010003;
-		public static final int list_card_layout_resourceID = 0x7f010004;
+		public static final int card_header_layout_resourceID = 0x7f010004;
+		public static final int card_layout_resourceID = 0x7f010002;
+		public static final int card_shadow_layout_resourceID = 0x7f010003;
+		public static final int card_thumbnail_layout_resourceID = 0x7f010005;
+		public static final int list_card_layout_resourceID = 0x7f010006;
 	}
 	public static final class color {
 		public static final int card_activated = 0x7f050006;
@@ -192,7 +192,7 @@ public final class R {
 		public static final int ForegroundLinearLayout_android_foreground = 0;
 		public static final int ForegroundLinearLayout_android_foregroundGravity = 1;
 		public static final int ForegroundLinearLayout_android_foregroundInsidePadding = 2;
-		public static final int[] card_options = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 };
+		public static final int[] card_options = { 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006 };
 		public static final int card_options_card_header_layout_resourceID = 2;
 		public static final int card_options_card_layout_resourceID = 0;
 		public static final int card_options_card_shadow_layout_resourceID = 1;
