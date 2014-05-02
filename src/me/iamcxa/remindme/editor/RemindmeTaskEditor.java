@@ -143,7 +143,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	private static Boolean isdidSearch = false;
 	private static Boolean isDraped = false;
 	// 備忘錄ID
-	private int id1;
+	private int taskId;
 	// 多選框
 	private CheckedTextView ctv1, ctv2;
 	// 存取佈局實例
@@ -153,7 +153,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	private void init(Intent intent) {
 		Bundle b = intent.getBundleExtra("b");
 		if (b != null) {
-			id1 = b.getInt("id");
+			taskId = b.getInt("taskId");
 			tittle = b.getString("tittle");
 			endDate = b.getString("endDate");
 			endTime = b.getString("endTime");
@@ -185,7 +185,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 		
 		Toast.makeText(getApplicationContext(),
-				id1 + "," + content + "," + endDate + "," + endTime,
+				taskId + "," + content + "," + endDate + "," + endTime,
 				Toast.LENGTH_LONG).show();
 
 	}
@@ -576,9 +576,9 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			 * values.put(RemindmeTasks.Is_Hide_ON, ctv2.isChecked() ? 1 : 0);
 			 */
 			// 修改
-			if (id1 != 0) {
+			if (taskId != 0) {
 				Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI,
-						id1);
+						taskId);
 				getContentResolver().update(uri, values, null, null);
 				Toast.makeText(this, "事項更新成功！" + curDate.toString(),
 						Toast.LENGTH_SHORT).show();
