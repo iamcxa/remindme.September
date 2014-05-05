@@ -40,8 +40,8 @@ public class ListviewFragment extends Fragment implements
 
 		adapter = new SimpleCursorAdapter(getActivity(),
 				android.R.layout.simple_list_item_2, null,
-				new String[] { TaskCursor.KeyColumns.KEY_ID,
-						TaskCursor.KeyColumns.Tittle }, new int[] {
+				new String[] { TaskCursor.KEY.KEY_ID,
+						TaskCursor.KEY.TITTLE }, new int[] {
 						android.R.id.text1, android.R.id.text2 }, 0);
 
 		// 將備忘錄資訊顯示到ListView

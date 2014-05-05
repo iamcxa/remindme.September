@@ -23,8 +23,8 @@ public class PriorityCalculator {
 	private double Lat;
 	private double Lon;
 	public static String[] projection = TaskCursor.PROJECTION_GPS;
-	public static String selection = TaskCursor.KeyColumns.Coordinate
-			+ " <> \"\" AND " + TaskCursor.KeyColumns.Coordinate
+	public static String selection = TaskCursor.KEY.COORDINATE
+			+ " <> \"\" AND " + TaskCursor.KEY.COORDINATE
 			+ " NOT LIKE \"null%\"";
 	public static String sortOrder = TaskCursor._ID;
 	public static String[] selectionArgs;
@@ -153,9 +153,9 @@ public class PriorityCalculator {
 
 			values.clear();
 
-			values.put(TaskCursor.KeyColumns.Distance,
+			values.put(TaskCursor.KEY.DISTANCE,
 					((Distance)));
-			values.put(TaskCursor.KeyColumns.Priority,
+			values.put(TaskCursor.KEY.PRIORITY,
 					newPriorityWeight);
 
 			// н╫зя

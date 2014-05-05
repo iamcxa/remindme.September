@@ -112,7 +112,7 @@ public class LocationGetter implements GPSCallback {
 
 			CommonUtils.debugMsg(0, "service GpsTime start");
 
-			setIsSortingOn(CommonUtils.isSortingOn());			
+			setIsSortingOn(CommonUtils.IS_SORTING_ON());			
 
 			CommonUtils.debugMsg(0, "service preferance isSortingOn="+getIsSortingOn());
 

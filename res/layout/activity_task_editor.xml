@@ -20,14 +20,14 @@
 
     <LinearLayout
         android:id="@+id/relativeLayout1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:background="@color/background_tab_pressed"
         android:orientation="vertical"
-        android:scrollbars="vertical"
-        android:background="@color/background_tab_pressed" >
+        android:scrollbars="vertical" >
 
         <EditText
             android:id="@+id/editTextTittle"
@@ -52,11 +52,17 @@
 
             <requestFocus />
         </EditText>
+
+        <CheckBox
+            android:id="@+id/checkBoxIsFixed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CheckBox" />
 		    
         <ListView
             android:id="@+id/listView1"
             android:layout_width="fill_parent"
-            android:layout_height="245dp"
+            android:layout_height="wrap_content"
             android:background="@color/background_window"
             android:drawSelectorOnTop="true" >
         </ListView>

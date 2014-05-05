@@ -10,6 +10,7 @@ import android.R.string;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -43,26 +44,26 @@ public class CommonUtils {
 	public static SharedPreferences mPreferences;
 
 	// debug msg TAG
-	public static final String debugMsgTag = "debugmsg";
+	public static final String DEBUG_MSG_TAG= "debugmsg";
 
 	// debug msg on/off, read from Shared Preferences XML file
-	public static boolean isDebugMsgOn() {
+	public static boolean IS_DEBUG_MSG_ON() {
 		return CommonUtils.mPreferences.getBoolean("isDebugMsgOn", true);
 	}
 
 	// isServiceOn
-	public static boolean isServiceOn() {
+	public static boolean IS_SERVICE_ON() {
 		return CommonUtils.mPreferences.getBoolean("isServiceOn", true);
 	};
 
 	// isServiceOn
-	public static boolean isSortingOn() {
+	public static boolean IS_SORTING_ON() {
 		return CommonUtils.mPreferences.getBoolean("isSortingOn", true);
 	};
 
 	// isServiceOn
-	public static String getUpdatePeriod(){
-		return CommonUtils.mPreferences.getString("GetPriorityPeriod","5000");
+	public static String getUpdatePeriod() {
+		return CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
 	};
 
 	private CommonUtils() {
@@ -72,16 +73,16 @@ public class CommonUtils {
 	/** debug msg section **/
 	/***********************/
 	public static final void debugMsg(int section, String msgs) {
-		if (isDebugMsgOn()) {
+		if (IS_DEBUG_MSG_ON()) {
 			switch (section) {
 			case 0:
-				Log.w(debugMsgTag, " " + msgs);
+				Log.w(DEBUG_MSG_TAG, " " + msgs);
 				break;
 			case 1:
-				Log.w(debugMsgTag, "thread ID=" + msgs);
+				Log.w(DEBUG_MSG_TAG, "thread ID=" + msgs);
 				break;
 			case 999:
-				Log.w(debugMsgTag, "時間計算失敗!," + msgs);
+				Log.w(DEBUG_MSG_TAG, "時間計算失敗!," + msgs);
 				break;
 			default:
 				break;
@@ -133,14 +134,14 @@ public class CommonUtils {
 		}
 
 	}
-	
+
 	public static class GpsSetting {
 		// GPS超時關閉改用wifi
 		public static final int TIMEOUT_SEC = 5;
 		// Gps狀態
 		public static boolean GpsStatus = false;
-		
-		//移動距離
+
+		// 移動距離
 		public static final double GpsTolerateErrorDistance = 1.5;
 
 	}
@@ -152,119 +153,74 @@ public class CommonUtils {
 		}
 
 		// 查詢欄位陣列
-		public static final String[] PROJECTION = new String[] {
-				KeyColumns.KEY_ID, // 0
-				KeyColumns.Tittle, // 1
-				KeyColumns.StartDate, // 2
-				KeyColumns.EndDate,// 3
-				KeyColumns.StartTime, // 4
-				KeyColumns.EndTime,// 5
-				KeyColumns.Is_Repeat, // 6
-				KeyColumns.Is_AllDay,// 7
-				KeyColumns.LocationName, // 8
-				KeyColumns.Coordinate,// 9
-				KeyColumns.Distance,// 10
-				KeyColumns.CONTENT,// 11
-				KeyColumns.CREATED,// 12
-				KeyColumns.Is_Alarm_ON, // 13
-				KeyColumns.Is_Hide_ON,// 14
-				KeyColumns.Is_PW_ON,// 15
-				KeyColumns.Password,// 16
-				KeyColumns.Priority,// 17
-				KeyColumns.Collaborator,// 18
-				KeyColumns.CalendarID,// 19
-				KeyColumns.GoogleCalSyncID,// 20
-				KeyColumns.Other, // 21
-				KeyColumns.Level, KeyColumns.Is_Fixed };
+		public static final String[] PROJECTION = new String[] { KEY.KEY_ID, // 0
+				KEY.TITTLE, // 1
+				KEY.END_DATE,// 3
+				KEY.END_TIME,// 5
+				KEY.IS_REPERT, // 6
+				KEY.LOCATION_NAME, // 8
+				KEY.COORDINATE,// 9
+				KEY.DISTANCE,// 10
+				KEY.CONTENT,// 11
+				KEY.CREATED,// 12
+				KEY.PRIORITY,// 17
+				KEY.COLLABORATOR,// 18
+				KEY.CAL_ID,// 19
+				KEY.GOOGOLE_CAL_SYNC_ID,// 20
+				KEY.OTHER, // 21
+				KEY.LEVEL, KEY.IS_FIXED };
 
 		// 查詢欄位陣列
 		public static final String[] PROJECTION_GPS = new String[] {
-				KeyColumns.KEY_ID, // 0
-				KeyColumns.LocationName, // 1
-				KeyColumns.Coordinate,// 2
-				KeyColumns.Distance,// 3
-				KeyColumns.Priority,// 4
-				KeyColumns.EndDate,// 5
-				KeyColumns.EndTime,// 6
+				KEY.KEY_ID, // 0
+				KEY.LOCATION_NAME, // 1
+				KEY.COORDINATE,// 2
+				KEY.DISTANCE,// 3
+				KEY.PRIORITY,// 4
+				KEY.END_DATE,// 5
+				KEY.END_TIME,// 6
+				KEY.CREATED,// 6
 		};
 
-		public static class KeyIndex {
+		public static class KEY_INDEX {
 			public static final int KEY_ID = 0;
-			public static final int Tittle = 1;
-			public static final int StartDate = 2;
-			public static final int EndDate = 3;
-			public static final int StartTime = 4;
-			public static final int EndTime = 5;
-			public static final int Is_Repeat = 6;
-			public static final int Is_AllDay = 7;
-			public static final int LocationName = 8;
-			public static final int Coordinate = 9;
-			public static final int Distance = 10;
-			public static final int CONTENT = 11;
-			public static final int CREATED = 12;
-			public static final int Is_Alarm_ON = 13;
-			public static final int Is_Hide_ON = 14;
-			public static final int Is_PW_ON = 15;
-			public static final int Password = 16;
-			public static final int Priority = 17;
-			public static final int Collaborator = 18;
-			public static final int CalendarID = 19;
-			public static final int GoogleCalSyncID = 20;
-			public static final int Other = 21;
-			public static final int Level = 22;
-			public static final int Is_Fixed = 23;
+			public static final int TITTLE = 1;
+			public static final int CREATED = 2;
+			public static final int END_DATE = 3;
+			public static final int END_TIME = 4;
+			public static final int CONTENT = 5;
+			public static final int LOCATION_NAME = 6;
+			public static final int COORDINATE = 7;
+			public static final int DISTANCE = 8;
+			public static final int LEVEL = 9;
+			public static final int PRIORITY = 10;
+			public static final int COLLABORATOR = 11;
+			public static final int CAL_ID = 12;
+			public static final int GOOGOLE_CAL_SYNC_ID = 13;
+			public static final int OTHER = 14;
+			public static final int IS_FIXED = 15;
+			public static final int IS_REPEAT = 16;
 		}
 
 		// 其他欄位常數
-		public static class KeyColumns {
-			// 00 index ID
+		public static class KEY {
 			public static final String KEY_ID = "_id";
-			// 01 需要同步之 Google calender日曆ID
-			public static final String GoogleCalSyncID = "GoogleCalSyncID";
-			// 02 事件標題
-			public static final String Tittle = "Tittle";
-			// 03 開始與結束時間
-			public static final String StartTime = "StartTime";
-			public static final String EndTime = "EndTime";
-			// 04 開始與結束日期
-			public static final String StartDate = "StartDate";
-			public static final String EndDate = "EndDate";
-			// 05 開關 - 事件是否重複
-			public static final String Is_Repeat = "Is_Repeat";
-			// 06 開關 - 是否為全天事件
-			public static final String Is_AllDay = "Is_AllDay";
-			// 07 事件地點（名稱）
-			public static final String LocationName = "LocationName";
-			// 08 事件座標
-			public static final String Coordinate = "Coordinate";
-			// 09 事件與當下使用者地點之距離
-			public static final String Distance = "Distance";
-			// 10 日曆本身之ID(備用)
-			public static final String CalendarID = "CalendarID";
-			// 11 事件內容（文字）
-			public static final String CONTENT = "content";
-			// 12 建立時間
-			public static final String CREATED = "created";
-			// 13 開關 - 是否提醒
-			public static final String Is_Alarm_ON = "Is_Alarm_ON";
-			// 14 開關 - 事件是否隱藏
-			public static final String Is_Hide_ON = "Is_Hide_ON";
-			// 15 開關 - 是否加密
-			public static final String Is_PW_ON = "Is_PW_ON";
-			// 16 密碼
-			public static final String Password = "password";
-			// 17 即時權重
-			public static final String Priority = "Priority";
-			// 18 協作者GMAIL
-			public static final String Collaborator = "Collaborator";
-			// 19 備用
-			public static final String Other = "other";
-			// 20 優先層級
-			public static final String Level = "Level";
-			// 21 是否固定高優先權
-			public static final String Is_Fixed = "Is_fixed";
-			// 18 提醒之聲音檔案路徑
-			// public static final String AlarmSoundPath = "AlarmSoundPath";
+			public static final String TITTLE = "TITTLE";
+			public static final String CREATED = "CREATED";
+			public static final String END_TIME = "END_TIME";
+			public static final String END_DATE = "END_DATE";
+			public static final String CONTENT = "CONTENT";
+			public static final String LOCATION_NAME = "LOCATION_NAME";
+			public static final String COORDINATE = "COORDINATE";
+			public static final String DISTANCE = "DISTANCE";
+			public static final String LEVEL = "LEVEL";
+			public static final String PRIORITY = "PRIORITY";
+			public static final String COLLABORATOR = "COLLABORATOR";
+			public static final String CAL_ID = "CAL_ID";
+			public static final String GOOGOLE_CAL_SYNC_ID = "GOOGOLE_CAL_SYNC_ID";
+			public static final String OTHER = "OTHER";
+			public static final String IS_FIXED = "IS_FIXED";;
+			public static final String IS_REPERT = "IS_REPERT";
 		}
 	}
 }

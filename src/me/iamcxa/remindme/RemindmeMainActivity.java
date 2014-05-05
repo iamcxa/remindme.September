@@ -117,7 +117,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 	/** StartService LOCALE **/
 	/**********************/
 	public void StartService() {
-		if (CommonUtils.isServiceOn()) {
+		if (CommonUtils.IS_SERVICE_ON()) {
 			Intent intent = new Intent(this, TaskSortingService.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startService(intent);
@@ -221,7 +221,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// 設定卡片
-				ListCursorCardFragment.setSelection( CommonUtils.TaskCursor.KeyColumns.Priority
+				ListCursorCardFragment.setSelection( CommonUtils.TaskCursor.KEY.PRIORITY
 						+ " DESC");
 			//	ListCursorCardFragmentTime.sortOrder = CommonUtils.TaskCursor.KeyColumns.EndDate;
 				//ListCursorCardFragmentLocal.sortOrder = CommonUtils.TaskCursor.KeyColumns.Distance;

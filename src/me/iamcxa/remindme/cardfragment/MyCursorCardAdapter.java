@@ -35,16 +35,18 @@ import me.iamcxa.remindme.cardfragment.SetCardFromCursor;
 /*******************************/
 public class MyCursorCardAdapter extends CardCursorAdapter {
 	private static SetCardFromCursor mSetCardFromCursor;
-	private static ReadCardOnClick mReadCardOnClick;
+	private static OnClickCard mReadCardOnClick;
 
 	public MyCursorCardAdapter(Context context) {
 		super(context);
-
 	}
 
 	@Override
 	protected Card getCardFromCursor(final Cursor cursor) {
 		MyCursorCard card = new MyCursorCard(super.getContext());
+		
+		mReadCardOnClick = new OnClickCard(getContext(), cursor, card);
+		mReadCardOnClick.setMyCursorCardAdapter(this);
 
 		mSetCardFromCursor = new SetCardFromCursor(getContext(), cursor, card);
 		mSetCardFromCursor.setIt();
@@ -80,7 +82,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		CardExpand expand = new CardExpand(getContext());
 		// Set inner title in Expand Area
 		String aa = "dbId=" + cursor.getString(0) + ",w="
-				+ cursor.getString(CommonUtils.TaskCursor.KeyIndex.Priority)
+				+ cursor.getString(CommonUtils.TaskCursor.KEY_INDEX.PRIORITY)
 				+ "cardID="+card.getId();
 
 		expand.setTitle(aa);
@@ -96,8 +98,8 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 			@Override
 			public void onClick(Card card, View view) {
 
-				mReadCardOnClick = new ReadCardOnClick(getContext(), cursor, card);
-				mReadCardOnClick.readIt();
+				
+				mReadCardOnClick.readIt(card.getId());
 
 			}
 		});
@@ -242,9 +244,9 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 		// Use this code to delete items on DB
 		ContentResolver resolver = getContext().getContentResolver();
-		@SuppressWarnings("unused")
+		
 		long noDeleted = resolver.delete(CommonUtils.CONTENT_URI,
-				CommonUtils.TaskCursor.KeyColumns.KEY_ID + " = ? ",
+				CommonUtils.TaskCursor.KEY.KEY_ID + " = ? ",
 				new String[] { this.getCardFromCursor(getCursor()).getId() });
 
 		this.notifyDataSetChanged();

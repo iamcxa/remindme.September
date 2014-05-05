@@ -60,14 +60,14 @@ public class TaskSortingService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		setNotification();
-		
 		CommonUtils.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		UpdataLocation = new LocationGetter(getApplicationContext());
 		
 		UpdataLocation.UpdatePriority();
+		
+		setNotification();
 
 	}
 
@@ -98,7 +98,7 @@ public class TaskSortingService extends Service {
 	private void Stopself(){
 		
 		
-		if (!CommonUtils.isServiceOn()) {
+		if (!CommonUtils.IS_SERVICE_ON()) {
 			CommonUtils.debugMsg(0, "service Stopself");
 			this.stopSelf();
 		}

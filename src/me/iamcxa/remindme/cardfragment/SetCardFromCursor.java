@@ -21,36 +21,38 @@ public class SetCardFromCursor {
 
 	public void setIt() {
 		// 準備常數
-		//card.setId(cursor.getString(0));
+		// card.setId(cursor.getString(0));
+		card.setId(String.valueOf(cursor.getPosition()));
+		
 
 		CommonUtils.debugMsg(0, "prepare data from cursor...");
 		boolean Extrainfo = cursor
-				.isNull(CommonUtils.TaskCursor.KeyIndex.Other);
-		int CID = cursor.getInt(CommonUtils.TaskCursor.KeyIndex.KEY_ID);
+				.isNull(CommonUtils.TaskCursor.KEY_INDEX.OTHER);
+		int CID = cursor.getInt(CommonUtils.TaskCursor.KEY_INDEX.KEY_ID);
 		String dintence = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.Distance);
-		String startTime = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.StartTime);
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.DISTANCE);
+		String created = cursor
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.CREATED);
 		String endTime = "";// cursor.getString(5);
 		String endDate = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.EndDate);
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.END_DATE);
 		String LocationName = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.LocationName);
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.LOCATION_NAME);
 		String extraInfo = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.Other);
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.OTHER);
 		String PriorityWeight = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.Priority);
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.PRIORITY);
 		long dayLeft = CommonUtils.getDaysLeft(endDate, 2);
 		// int dayLeft = Integer.parseInt("" + dayLeftLong);
 
 		// give a ID.
 		CommonUtils.debugMsg(0, "set ID...Card id=" + CID);
-		card.setId("" + CID);
+		//card.setId("" + CID);
 
 		// 卡片標題 - first line
 		CommonUtils.debugMsg(0, CID + " set Tittle...");
 		card.mainHeader = cursor
-				.getString(CommonUtils.TaskCursor.KeyIndex.Tittle);
+				.getString(CommonUtils.TaskCursor.KEY_INDEX.TITTLE);
 
 		// 時間日期 - sec line
 		CommonUtils.debugMsg(0, CID + " set Date/Time...");
@@ -72,11 +74,13 @@ public class SetCardFromCursor {
 
 		// 小圖標顯示 - 判斷是否存有地點資訊
 		CommonUtils.debugMsg(0, "Location=\"" + LocationName + "\"");
-		if ((LocationName.length()) > 1) {
-			card.resourceIdThumb = R.drawable.map_marker;
-		} else {
-			card.resourceIdThumb = R.drawable.tear_of_calendar;
-			card.LocationName = null;
+		if (LocationName != null) {
+			if ((LocationName.length()) > 1) {
+				card.resourceIdThumb = R.drawable.map_marker;
+			} else {
+				card.resourceIdThumb = R.drawable.tear_of_calendar;
+				card.LocationName = null;
+			}
 		}
 
 		// 距離與地點資訊
@@ -84,13 +88,13 @@ public class SetCardFromCursor {
 		if (dintence == null) {
 			card.LocationName = LocationName;
 		} else {
-			if (Double.valueOf(dintence) < 1) {
-				card.LocationName = LocationName + " - 距離 "
-						+ Double.valueOf(dintence) * 1000 + " 公尺";
-			} else {
+//			if (Double.valueOf(dintence) < 1) {
+//				card.LocationName = LocationName + " - 距離 "
+//						+ Double.valueOf(dintence) * 1000 + " 公尺";
+//			} else {
 				card.LocationName = LocationName + " - 距離 " + dintence + " 公里";
 
-			}
+//			}
 		}
 
 		// 可展開額外資訊欄位
@@ -99,7 +103,7 @@ public class SetCardFromCursor {
 		// + cursor.getString(0)
 		// + ",w="
 		// +
-		cursor.getString(CommonUtils.TaskCursor.KeyIndex.Priority);
+		cursor.getString(CommonUtils.TaskCursor.KEY_INDEX.PRIORITY);
 		if (!Extrainfo) {
 			card.resourceIdThumb = R.drawable.outline_star_act;
 			// 額外資訊提示 - 第四行
@@ -108,9 +112,9 @@ public class SetCardFromCursor {
 		card.Notifications = cursor.getString(0);
 
 		// 依照權重給予卡片顏色
-		if (cursor.getInt(CommonUtils.TaskCursor.KeyIndex.Priority) > 6000) {
+		if (cursor.getInt(CommonUtils.TaskCursor.KEY_INDEX.PRIORITY) > 6000) {
 			card.setBackgroundResourceId(R.drawable.demo_card_selector_color5);
-		} else if (cursor.getInt(CommonUtils.TaskCursor.KeyIndex.Priority) > 3000) {
+		} else if (cursor.getInt(CommonUtils.TaskCursor.KEY_INDEX.PRIORITY) > 3000) {
 			card.setBackgroundResourceId(R.drawable.demo_card_selector_color3);
 		}
 	}
