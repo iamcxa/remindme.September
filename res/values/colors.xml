@@ -33,11 +33,14 @@
     <color name="card_expand_title_color">#B3B2B2</color>
 
     <!-- Used by selector -->
-    <!--<color name="card_pressed">#7E0099CC</color>-->
+    <!-- <color name="card_pressed">#7E0099CC</color> -->
     <color name="card_activated">#CFE9F3</color>
     <color name="card_pressed_kitkat">#10000000</color>
     <color name="card_activated_kitkat">#ADE1F4</color>
     <color name="card_unpressed">#FFFFFFFF</color>
     <color name="card_pressed">#668ABD25</color>
+    
+    <!-- task_editor_parts -->
+    <color name="task_editor_parts_layout_textview_color">#88333333</color>
 
 </resources>

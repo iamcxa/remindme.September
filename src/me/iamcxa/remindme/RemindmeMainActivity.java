@@ -26,6 +26,7 @@ import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
@@ -68,6 +69,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		// 設定：layout視圖
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
 		CommonUtils.debugMsg(0, "=========================");

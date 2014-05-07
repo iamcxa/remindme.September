@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:text="地點"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/task_editor_parts_layout_textview_color" />
+
+        <Button
+            android:id="@+id/buttonSetDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right_button"
+            android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right_button"
+            android:text="Button" />
+
+    </LinearLayout>
+    

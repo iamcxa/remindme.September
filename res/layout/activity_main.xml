@@ -13,17 +13,16 @@
         android:name="me.iamcxa.remindme.cardfragment.ListCursorCardFragment"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/fragment2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/fragment2" />
 
     <fragment
         android:id="@+id/fragment2"
         android:name="me.iamcxa.remindme.editor.QucikAddBoxFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
 

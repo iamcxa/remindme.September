@@ -57,12 +57,12 @@
             android:id="@+id/checkBoxIsFixed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CheckBox" />
+            android:text="在適當的時候提醒我" />
 		    
         <ListView
             android:id="@+id/listView1"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="278dp"
             android:background="@color/background_window"
             android:drawSelectorOnTop="true" >
         </ListView>

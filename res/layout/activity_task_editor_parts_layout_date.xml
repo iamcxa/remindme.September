@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
+            android:text="到期日"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/task_editor_parts_layout_textview_color" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/buttonSetDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right_button"
+                android:layout_weight="1.00"
+                android:minHeight="32dp"
+                android:text="設定日期" />
+
+            <ImageButton
+                android:id="@+id/imageButtonResetDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/task_editor_parts_layout_mini_Right_imagebutton"
+                android:layout_weight="0.15"
+                android:background="@color/actionbar_text"
+                android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    

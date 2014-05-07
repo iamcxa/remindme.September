@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_window"
+        android:orientation="vertical" >
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/multiAutoCompleteTextView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/task_editor_parts_layout_margin_Top_Bottom"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
+            android:background="?android:attr/editTextBackground"
+            android:ems="10"
+            android:hint="工作標題"
+            android:textColor="@color/task_editor_parts_layout_textview_color" >
+
+            <requestFocus />
+        </MultiAutoCompleteTextView>
+
+    </LinearLayout>
+    
