@@ -7,7 +7,7 @@
         android:orientation="vertical" >
 
         <MultiAutoCompleteTextView
-            android:id="@+id/multiAutoCompleteTextView1"
+            android:id="@+id/multiAutoCompleteTextViewTittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/task_editor_parts_layout_margin_Top_Bottom"

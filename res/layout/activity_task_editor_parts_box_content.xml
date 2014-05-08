@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/actionbar_text"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
+            android:text="說明"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/task_editor_parts_layout_textview_color" />
+
+        <MultiAutoCompleteTextView
+            android:id="@+id/multiAutoCompleteTextViewContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:background="?android:attr/editTextBackground"
+            android:ems="10"
+            android:hint="工作說明"
+            android:textColor="@color/task_editor_parts_layout_textview_color" >
+
+            <requestFocus />
+        </MultiAutoCompleteTextView>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.00"
+            android:scaleType="fitXY"
+            android:src="@drawable/tab_unselected_pressed_irdark" />
+
+    </LinearLayout>
+    
