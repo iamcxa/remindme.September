@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right_button"
-                android:layout_weight="1.00"
+                android:layout_weight="0.6"
                 android:minHeight="32dip"
                 android:text="設定日期" />
 
@@ -34,12 +34,12 @@
                 android:id="@+id/buttonSetTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.6"
                 android:minHeight="32dip"
                 android:text="時間..." />
 
             <ImageButton
-                android:id="@+id/imageButtonResetDate"
+                android:id="@+id/imageButtonCancelDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -50,16 +50,10 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView1"
+        <include
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
-            android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1.00"
-            android:scaleType="fitXY"
-            android:src="@drawable/tab_unselected_pressed_irdark" />
+            android:layout_height="wrap_content"
+            layout="@layout/activity_task_editor_parts_box_baseline" />
 
     </LinearLayout>
     
