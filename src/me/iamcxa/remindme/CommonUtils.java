@@ -20,6 +20,7 @@ import android.util.Log;
  */
 public class CommonUtils {
 
+
 	// 授權常數
 	public static final String AUTHORITY = "me.iamcxa.remindme";
 
@@ -51,21 +52,21 @@ public class CommonUtils {
 		return CommonUtils.mPreferences.getBoolean("isDebugMsgOn", true);
 	}
 
-	// isServiceOn
+	// IS_SERVICE_ON - 背景服務開關
 	public static boolean IS_SERVICE_ON() {
 		return CommonUtils.mPreferences.getBoolean("isServiceOn", true);
 	};
 
-	// isServiceOn
+	// IS_SORTING_ON - 智慧優先開關
 	public static boolean IS_SORTING_ON() {
 		return CommonUtils.mPreferences.getBoolean("isSortingOn", true);
 	};
 
-	// isServiceOn
+	// getUpdatePeriod - 更新間隔
 	public static String getUpdatePeriod() {
 		return CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
 	};
-
+	
 	private CommonUtils() {
 	}
 

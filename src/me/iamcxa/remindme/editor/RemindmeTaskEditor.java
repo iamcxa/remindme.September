@@ -67,6 +67,7 @@ import me.iamcxa.remindme.provider.WorkaroundMapFragment;
 
 public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback {
 
+	/************************************** 變常數區塊開始 *******************************************/
 	private static SaveOrUpdate mSaveOrUpdate;
 
 	// 宣告GPS模組
@@ -93,6 +94,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	private static TextView dateDesc;
 	private static TextView timeDesc;
 	private static TextView contentDesc;
+	
 	// Button
 	private static Button Search;
 	private static Button buttonPickFile;
@@ -139,11 +141,9 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	private static Boolean isDraped = false;
 	// 備忘錄ID
 	private int taskId;
-	// 存取佈局實例
-	private static LayoutInflater li;
+	/************************************** 變常數區塊結束 *******************************************/
 
-	public View vv;
-
+	/************************************* Activity週期開始 ******************************************/
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -169,50 +169,17 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		init(getIntent());
 	}
 
-	private void setGPS() {
-		gpsManager = new GPSManager();
-		gpsManager.startGpsListening(getApplicationContext());
-		gpsManager.setGPSCallback(RemindmeTaskEditor.this);
-		CommonUtils.GpsSetting.GpsStatus = true;
-		GpsUseTime = 0;
-		GpsTimehandler.post(GpsTime);
-	}
+	// 儲存或修改備忘錄資訊
+	@Override
+	protected void onPause() {
+		super.onPause();
+		locationName = null;
+		content = null;
+	};
 
-	private void setMAP() {
-		// map = ((MapFragment) getFragmentManager()
-		// .findFragmentById(R.id.map)).getMap();
-		map = ((WorkaroundMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map)).getMap();
-		main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
+	/************************************* Activity週期結束 ******************************************/
 
-		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
-				R.id.map))
-				.setListener(new WorkaroundMapFragment.OnTouchListener() {
-					@Override
-					public void onTouch() {
-						main_scrollview
-								.requestDisallowInterceptTouchEvent(true);
-					}
-				});
-		map.setMyLocationEnabled(true);
-		map.clear();
-		LatLng nowLoacation;
-		if (gpsManager.LastLocation() != null) {
-			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
-					gpsManager.LastLocation().getLongitude());
-			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
-					map.getMaxZoomLevel() - 4)));
-		} else {
-			nowLoacation = new LatLng(23.6978, 120.961);
-			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
-					map.getMinZoomLevel() + 7)));
-		}
-		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
-				.position(nowLoacation));
-
-		map.setOnCameraChangeListener(listener);
-	}
-
+	/************************************* 設定畫面元件開始 ******************************************/
 	private void setComponents() {
 		// 取得Calendar實例
 		final Calendar c = Calendar.getInstance();
@@ -266,6 +233,54 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		OK = (ImageButton) findViewById(R.id.OK);
 		// OK.setOnlickListener(SearchPlace);
 	}
+	/************************************* 設定畫面元件結束 ******************************************/
+
+	/************************************** 副程式區塊開始 ******************************************/
+	private void setGPS() {
+		gpsManager = new GPSManager();
+		gpsManager.startGpsListening(getApplicationContext());
+		gpsManager.setGPSCallback(RemindmeTaskEditor.this);
+		CommonUtils.GpsSetting.GpsStatus = true;
+		GpsUseTime = 0;
+		GpsTimehandler.post(GpsTime);
+	}
+
+	private void setMAP() {
+		// map = ((MapFragment) getFragmentManager()
+		// .findFragmentById(R.id.map)).getMap();
+		map = ((WorkaroundMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map)).getMap();
+		main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
+
+		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
+				R.id.map))
+				.setListener(new WorkaroundMapFragment.OnTouchListener() {
+					@Override
+					public void onTouch() {
+						main_scrollview
+								.requestDisallowInterceptTouchEvent(true);
+					}
+				});
+		map.setMyLocationEnabled(true);
+		map.clear();
+		LatLng nowLoacation;
+		if (gpsManager.LastLocation() != null) {
+			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
+					gpsManager.LastLocation().getLongitude());
+			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+					map.getMaxZoomLevel() - 4)));
+		} else {
+			nowLoacation = new LatLng(23.6978, 120.961);
+			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+					map.getMinZoomLevel() + 7)));
+		}
+		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
+				.position(nowLoacation));
+
+		map.setOnCameraChangeListener(listener);
+	}
+
+	/************************************** 副程式區塊結束 ******************************************/
 
 	private Button.OnClickListener btnActionEditorButton = new Button.OnClickListener() {
 		@Override
@@ -281,7 +296,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 				break;
 			case R.id.buttonSetLocation:
 				// 設定提醒時間
-				showDialog1(null, null, TIME_DIALOG_ID);
+				showDialogLocationPicker();
 				break;
 			}
 		}
@@ -325,31 +340,14 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 				Toast.LENGTH_LONG).show();
 	}
 
-	// 顯示對話方塊
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-		// 顯示日期對話方塊
-		case DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mDateSetListener, mYear,
-					mMonth - 1, mDay);
-			// 顯示時間對話方塊
-		case TIME_DIALOG_ID:
-			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute,
-					false);
-		}
-		return null;
-	}
-
 	// 設定通知提示
 	private void setAlarm(boolean flag) {
-		final String BC_ACTION = "com.amaker.ch17.TaskReceiver";
 		// 取得AlarmManager實例
 		final AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		// 實例化Intent
 		Intent intent = new Intent();
 		// 設定Intent action屬性
-		intent.setAction(BC_ACTION);
+		intent.setAction(CommonUtils.BC_ACTION);
 		intent.putExtra("msg", content);
 		// 實例化PendingIntent
 		final PendingIntent pi = PendingIntent.getBroadcast(
@@ -366,38 +364,21 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 	}
 
-	/*
-	 * 設定提示日期對話方塊
-	 */
-	private void showDialog1(String msg, String tittle, int target) {
-		View v = li.inflate(
-				R.layout.activity_task_editor_parts_dialog_location, null);
-		final TextView editTextTittle = (TextView) v.findViewById(R.id.name);
-		final EditText editTextbox = (EditText) v.findViewById(R.id.editTexbox);
-		editTextTittle.setText(tittle + target);
-
-		switch (target) {
-		case 2:
-			switcher = content;
-			break;
-		default:
-			break;
+	/************************************** 對話方塊開始 *******************************************/
+	// 顯示對話方塊
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		// 顯示日期對話方塊
+		case DATE_DIALOG_ID:
+			return new DatePickerDialog(this, mDateSetListener, mYear,
+					mMonth - 1, mDay);
+			// 顯示時間對話方塊
+		case TIME_DIALOG_ID:
+			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute,
+					false);
 		}
-
-		editTextbox.setText(switcher);
-
-		new AlertDialog.Builder(this).setView(v).setMessage(msg)
-				.setCancelable(false)
-				.setPositiveButton("確定", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						content = editTextbox.getText().toString();
-
-						contentDesc.setText(switcher);
-						// locationDesc.setText(switcher);
-					}
-				}).show();
-
+		return null;
 	}
 
 	// 時間選擇對話方塊
@@ -408,8 +389,8 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			mMinute = minute;
 			if (String.valueOf(mMinute).length() == 1) {
 				buttonSetTime.setText(mHour + ":0" + mMinute);
-			}else{
-			buttonSetTime.setText(mHour + ":" + mMinute);
+			} else {
+				buttonSetTime.setText(mHour + ":" + mMinute);
 			}
 		}
 	};
@@ -425,15 +406,9 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			buttonSetDate.setText(mYear + "/" + (mMonth + 1) + "/" + mDay);
 		}
 	};
+	/************************************** 對話方塊結束 *******************************************/
 
-	// 儲存或修改備忘錄資訊
-	@Override
-	protected void onPause() {
-		super.onPause();
-		locationName = null;
-		content = null;
-	};
-
+	/************************************** ActionBar開始 ******************************************/
 	// This is the action bar menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -470,9 +445,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		return super.onOptionsItemSelected(item);
 	}
 
-	/*
-	 * 
-	 */
+	// 按鈕監聽器:btnActionAddClick
 	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 		@Override
 		public boolean onMenuItemClick(MenuItem item) {
@@ -564,9 +537,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 
 	};
 
-	/*
-	 * 
-	 */
+	// 按鈕監聽器:btnActionCancelClick
 	private MenuItem.OnMenuItemClickListener btnActionCancelClick = new MenuItem.OnMenuItemClickListener() {
 
 		@Override
@@ -585,7 +556,9 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 
 	};
+	/************************************** ActionBar結束 ******************************************/
 
+	/************************************** 地點選擇器開始 ******************************************/
 	// GPS位置抓到時會更新位置
 	@Override
 	public void onGPSUpdate(Location location) {
@@ -609,7 +582,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 		LatLng nowLoacation = new LatLng(Latitude, Longitude);
 
-		map.setMyLocationEnabled(true);
+		// map.setMyLocationEnabled(true);
 
 		map.clear();
 
@@ -623,6 +596,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		// textView2.setText(textView2.getText()+" "+LoacationAddress.GeocodingApiAddressGet());
 	}
 
+	// 按鈕按下監聽器
 	private Button.OnClickListener SearchPlace = new Button.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -685,6 +659,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 	};
 
+	// gps事件
 	private Runnable GpsTime = new Runnable() {
 		@Override
 		public void run() {
@@ -705,6 +680,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 	};
 
+	// 搜尋地點
 	private void SearchPlace() {
 		if (!SearchText.getText().toString().equals("")) {
 			GeocodingAPI LoacationAddress2 = null;
@@ -728,6 +704,24 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		}
 	}
 
+	// 地圖對話方塊
+	private void showDialogLocationPicker() {
+		// 存取佈局實例
+		LayoutInflater li = getLayoutInflater();
+
+		View v = li.inflate(
+				R.layout.activity_task_editor_parts_dialog_location, null);
+
+		new AlertDialog.Builder(this).setView(v).setMessage("jj")
+				.setCancelable(false)
+				.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+
+					}
+				}).show();
+
+	}
+	/************************************** 地點選擇器結束 ******************************************/
 }
 
 // * CLASS JUST FOR THE CUSTOM ALERT DIALOG
