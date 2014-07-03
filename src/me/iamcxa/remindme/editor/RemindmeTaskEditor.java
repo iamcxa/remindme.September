@@ -11,14 +11,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import commonVar.MainVar;
+import commonVar.MainVar.TaskCursor;
+import commonVar.EditorVar;
 
-import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.GeocodingAPI;
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -53,7 +53,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -75,110 +74,104 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	// 宣告pick
 	private static GoogleMap map;
 
-	// 顯示日期、時間對話方塊常數
-	private static int mYear;
-	private static int mMonth;
-	private static int mDay;
-	private static int mHour;
-	private static int mMinute;
-	static final int DATE_DIALOG_ID = 0;
-	static final int TIME_DIALOG_ID = 1;
+	// 備忘錄訊息列表
+	private ListView listView;
 
-	// EditText
+
 	private static EditText EditTextTittle;
 	private static EditText SearchText;
-	private static MultiAutoCompleteTextView boxTittle;
-	private static MultiAutoCompleteTextView boxContent;
+	private static EditText datePicker, timePicker, contentBox, locationBox;
 
-	private static TextView dateDesc;
+	// 日期顯示TextView
+	private static TextView dateTittle;
+	private static TextView dateDesc, locationDesc;
+	// 時間顯示TextView
+	private static TextView timeTittle;
 	private static TextView timeDesc;
+	// 提醒內容TextView
+	private static TextView contentTittle;
 	private static TextView contentDesc;
-	// Button
+	private static TextView locationTittle;
+
 	private static Button Search;
-	private static Button buttonPickFile;
-	private static Button buttonSetDate;
-	private static Button buttonSetTime;
-	private static Button buttonSetLocation;
-	private static Button buttonTakePhoto;
 
-	private static ImageButton cancelLocation;
-	private static ImageButton cancelDateTime;
-	private static ImageButton cancelAttachment;
-
-	// ImageButton
 	private static ImageButton OK;
-	// 是否開啟提醒
-	private int on_off = 0;
-	// String
-	// 保存內容、日期與時間字串
-	private static String tittle = null;
-	private static String content = null;
-	private static String switcher = null;
-	private static String endDate = null, endTime = null;
-	private static String locationName = null;
-	private static String isRepeat = null;
-	private static String isFixed = null;
-	private static String coordinate = null;
-	private static String collaborator = null;
-	private static String created = null;
-	private static String LastTimeSearchName = "";
-	private static String is_Fixed = null;
 
-	// 經緯度
-	private static Double Latitude;
-	private static Double Longitude;
 	private static ScrollView main_scrollview;
 
 	private static CheckBox checkBoxIsFixed;
 
 	private Handler GpsTimehandler = new Handler();
-	// gps使用時間
-	private static int GpsUseTime = 0;
-	// 是否有搜尋過地點
-	private static Boolean isdidSearch = false;
-	private static Boolean isDraped = false;
-	// 備忘錄ID
-	private int taskId;
+
+
+	// 多選框
+	private CheckedTextView ctv1, ctv2;
 	// 存取佈局實例
 	private static LayoutInflater li;
 
-	public View vv;
+	// 初始化方法
+	private void init(Intent intent) {
+		Bundle b = intent.getBundleExtra("b");
+		if (b != null) {
+			EditorVar.taskId = b.getInt("taskId");
+			EditorVar.tittle = b.getString("tittle");
+			EditorVar.created = b.getString("created");
+			EditorVar.endDate = b.getString("endDate");
+			EditorVar.endTime = b.getString("endTime");
+			EditorVar.content = b.getString("content");
+			EditorVar.isRepeat = b.getString("isRepeat");
+			EditorVar.isFixed = b.getString("isFixed");
+			EditorVar.locationName = b.getString("locationName");
+			EditorVar.coordinate = b.getString("coordinate");
+			EditorVar.collaborator = b.getString("collaborator");
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_task_editor);
+			if (EditorVar.endDate != null && EditorVar.endDate.length() > 0) {
+				String[] strs = EditorVar.endDate.split("/");
+				EditorVar.mYear = Integer.parseInt(strs[0]);
+				EditorVar.mMonth = Integer.parseInt(strs[1]) - 1;
+				EditorVar.mDay = Integer.parseInt(strs[2]);
+			}
 
-		setComponents();
-		setGPS();
-		// setMAP();
+			if (EditorVar.endTime != null && EditorVar.endTime.length() > 0) {
+				String[] strs = EditorVar.endTime.split(":");
+				EditorVar.mHour = Integer.parseInt(strs[0]);
+				EditorVar.mMinute = Integer.parseInt(strs[1]);
+			}
 
-		// 取得Intent
-		final Intent intent = getIntent();
-		// 設定Uri
-		if (intent.getData() == null) {
-			intent.setData(CommonUtils.CONTENT_URI);
+			EditTextTittle.setText(EditorVar.tittle);
+
 		}
 
+		Toast.makeText(getApplicationContext(),
+				EditorVar.taskId + "," +
+						EditorVar.content + "," +
+						EditorVar.endDate + "," +
+						EditorVar.endTime,
+						Toast.LENGTH_LONG).show();
+
 	}
 
+	public View vv;
+
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void onResume() {
-		super.onResume();
-		// 初始化列表
-		init(getIntent());
-	}
+	protected void onCreate(Bundle savedInstanceState) {
 
-	private void setGPS() {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_task_editor);
+		checkBoxIsFixed = (CheckBox) findViewById(R.id.checkBoxIsFixed);
+		SearchText = (EditText) findViewById(R.id.SearchText);
+		Search = (Button) findViewById(R.id.Search);
+		OK = (ImageButton) findViewById(R.id.OK);
+		Search.setOnClickListener(SearchPlace);
+		OK.setOnClickListener(SearchPlace);
 		gpsManager = new GPSManager();
 		gpsManager.startGpsListening(getApplicationContext());
 		gpsManager.setGPSCallback(RemindmeTaskEditor.this);
-		CommonUtils.GpsSetting.GpsStatus = true;
-		GpsUseTime = 0;
+		MainVar.GpsSetting.GpsStatus = true;
+		EditorVar.GpsUseTime = 0;
 		GpsTimehandler.post(GpsTime);
-	}
 
-	private void setMAP() {
 		// map = ((MapFragment) getFragmentManager()
 		// .findFragmentById(R.id.map)).getMap();
 		map = ((WorkaroundMapFragment) getSupportFragmentManager()
@@ -191,7 +184,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 					@Override
 					public void onTouch() {
 						main_scrollview
-								.requestDisallowInterceptTouchEvent(true);
+						.requestDisallowInterceptTouchEvent(true);
 					}
 				});
 		map.setMyLocationEnabled(true);
@@ -211,131 +204,210 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 				.position(nowLoacation));
 
 		map.setOnCameraChangeListener(listener);
-	}
+		// 取得Intent
+		final Intent intent = getIntent();
+		// 設定Uri
+		if (intent.getData() == null) {
+			intent.setData(MainVar.CONTENT_URI);
+		}
 
-	private void setComponents() {
+		/*
+		 * //String[] ops={"旅行","交易","購物","提醒","特急"};
+		 * 
+		 * // spinner spinnerTag=(Spinner)findViewById(R.id.spinnerTag);
+		 * ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<String>(this,
+		 * android.R.layout.simple_spinner_item,ops);
+		 * spinnerTag.setAdapter(spinnerAdapter); spinnerTag.setPrompt("選擇類型");
+		 */
+
+		// 標題輸入欄位
+		EditTextTittle = (EditText) findViewById(R.id.editTextTittle);
+		// EditTextTittle.setHint("您能輸入\"123 9. 星巴克 裝文青 \"快速設定");
+		// EditTextTittle.setTextSize(textsize(5));
+		// EditTextTittle.setHintTextColor(R.color.background_window);
+
 		// 取得Calendar實例
 		final Calendar c = Calendar.getInstance();
 
 		// 取得目前日期、時間
-		mYear = c.get(Calendar.YEAR);
-		mMonth = (c.get(Calendar.MONTH));
-		mDay = c.get(Calendar.DAY_OF_MONTH);
-		mHour = c.get(Calendar.HOUR_OF_DAY);
-		mMinute = c.get(Calendar.MINUTE);
+		EditorVar.mYear = c.get(Calendar.YEAR);
+		EditorVar.mMonth = (c.get(Calendar.MONTH));
+		EditorVar.mDay = c.get(Calendar.DAY_OF_MONTH);
+		EditorVar.mHour = c.get(Calendar.HOUR_OF_DAY);
+		EditorVar.mMinute = c.get(Calendar.MINUTE);
 
-		setEditorComponent();
-		setLocationPicker();
+		// 取得ListView
+		listView = (ListView) (findViewById(R.id.listView1));
+		// 實例化LayoutInflater
+		li = getLayoutInflater();
+		// 設定ListView Adapter
+		try {
+			listView.setAdapter(new ViewAdapter());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		// 可多選
+		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
+		// 回應列表單擊事件
+		listView.setOnItemClickListener(ViewAdapterClickListener);
 	}
 
-	// 編輯器主畫面物件
-	private void setEditorComponent() {
-		// 輸入欄位
-		boxTittle = (MultiAutoCompleteTextView) findViewById(R.id.multiAutoCompleteTextViewTittle);
-		boxContent = (MultiAutoCompleteTextView) findViewById(R.id.multiAutoCompleteTextViewContent);
-
-		// 區塊： 時間選擇
-		buttonSetDate = (Button) findViewById(R.id.buttonSetDate);
-		buttonSetDate.setOnClickListener(btnActionEditorButton);
-		buttonSetTime = (Button) findViewById(R.id.buttonSetTime);
-		buttonSetTime.setOnClickListener(btnActionEditorButton);
-		cancelDateTime = (ImageButton) findViewById(R.id.imageButtonCancelDateTime);
-
-		// 區塊： 地點
-		buttonSetLocation = (Button) findViewById(R.id.buttonSetLocation);
-		buttonSetLocation.setOnClickListener(btnActionEditorButton);
-		cancelLocation = (ImageButton) findViewById(R.id.imageButtonCancelLocation);
-
-		// 區塊： 附件
-		buttonPickFile = (Button) findViewById(R.id.buttonPickFile);
-		buttonTakePhoto = (Button) findViewById(R.id.buttonTakePhoto);
-		cancelAttachment = (ImageButton) findViewById(R.id.imageButtonCancelAttachment);
-
+	@Override
+	protected void onResume() {
+		super.onResume();
+		// 初始化列表
+		init(getIntent());
 	}
 
-	// 地點選擇器
-	private void setLocationPicker() {
+	// ListView Adatper，該類別實作列表的每一項透過自定視圖實現
+	static class ViewAdapter extends BaseAdapter {
+		// 列表內容
+		String[] strs = { "截止日", "提醒時間", "備註" };
 
-		checkBoxIsFixed = (CheckBox) findViewById(R.id.checkBoxIsFixed);
-		SearchText = (EditText) findViewById(R.id.SearchText);
-
-		Search = (Button) findViewById(R.id.Search);
-		// Search.setOnClickListener(SearchPlace);
-
-		OK = (ImageButton) findViewById(R.id.OK);
-		// OK.setOnlickListener(SearchPlace);
-	}
-
-	private Button.OnClickListener btnActionEditorButton = new Button.OnClickListener() {
+		// 取得列表數量
+		// @Override
 		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.buttonSetDate:
-				// 設定提醒日期
-				showDialog(DATE_DIALOG_ID);
-				break;
-			case R.id.buttonSetTime:
-				// 設定提醒時間
-				showDialog(TIME_DIALOG_ID);
-				break;
-			case R.id.buttonSetLocation:
-				// 設定提醒時間
-				showDialog1(null, null, TIME_DIALOG_ID);
-				break;
-			}
-		}
-	};
-
-	// 初始化方法
-	private void init(Intent intent) {
-		Bundle b = intent.getBundleExtra("b");
-		if (b != null) {
-			taskId = b.getInt("taskId");
-			tittle = b.getString("tittle");
-			created = b.getString("created");
-			endDate = b.getString("endDate");
-			endTime = b.getString("endTime");
-			content = b.getString("content");
-			isRepeat = b.getString("isRepeat");
-			isFixed = b.getString("isFixed");
-			locationName = b.getString("locationName");
-			coordinate = b.getString("coordinate");
-			collaborator = b.getString("collaborator");
-
-			if (endDate != null && endDate.length() > 0) {
-				String[] strs = endDate.split("/");
-				mYear = Integer.parseInt(strs[0]);
-				mMonth = Integer.parseInt(strs[1]) - 1;
-				mDay = Integer.parseInt(strs[2]);
-			}
-
-			if (endTime != null && endTime.length() > 0) {
-				String[] strs = endTime.split(":");
-				mHour = Integer.parseInt(strs[0]);
-				mMinute = Integer.parseInt(strs[1]);
-			}
-
-			EditTextTittle.setText(tittle);
-
+		public int getCount() {
+			return strs.length;
 		}
 
-		Toast.makeText(getApplicationContext(),
-				taskId + "," + content + "," + endDate + "," + endTime,
-				Toast.LENGTH_LONG).show();
+		// 取得列表項目
+		// @Override
+		@Override
+		public Object getItem(int position) {
+			return position;
+		}
+
+		// 返回列表ID
+		// @Override
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		// 取得目前列表項目視圖
+		// @Override
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// 自定示圖layout
+			View textView = li.inflate(
+					R.layout.activity_task_editor_parts_textview, null);
+			// View editView =
+			// li.inflate(R.layout.activity_event_editor_parts_editview, null);
+			switch (position) {
+			// 是否開啟該筆備忘錄
+			/*
+			 * case 0: ctv1 = (CheckedTextView) li .inflate(
+			 * android.R.layout.simple_list_item_multiple_choice, null);
+			 * ctv1.setText(strs[position]); if (on_off == 0) {
+			 * ctv1.setChecked(false); } else { ctv1.setChecked(true); } return
+			 * ctv1;
+			 */
+			// 提醒日期
+			case 0:
+				// datePicker=(EditText)v.findViewById(R.id.editTextbox);
+				// datePicker.setHint("輕觸以選擇日期");
+				// datePicker.setHintTextColor(R.color.background_window);
+				// datePicker.setText(mYear + "/" + mMonth + "/" + mDay);
+
+				dateTittle = (TextView) textView.findViewById(R.id.name);
+				dateDesc = (TextView) textView.findViewById(R.id.desc);
+				dateTittle.setText(strs[position]);
+				//dateDesc.setText(mYear + "/" + mMonth + 1 + "/" + mDay);
+				return textView;
+				// 提醒時間
+			case 1:
+				// timePicker=(EditText)v.findViewById(R.id.editTextbox);
+				// timePicker.setHint("輕觸以選擇時間");
+				// timePicker.setHintTextColor(R.color.background_window);
+				// timePicker.setText(mHour + ":" + mMinute);
+				timeTittle = (TextView) textView.findViewById(R.id.name);
+				timeDesc = (TextView) textView.findViewById(R.id.desc);
+				timeTittle.setText(strs[position]);
+				//timeDesc.setText(mHour + ":" + mMinute);
+				return textView;
+				// 提醒內容
+			case 2:
+				// contentBox=(EditText)
+				// editView.findViewById(R.id.editTextbox);
+				// contentBox.setHint("輕觸以輸入內容");
+				// contentBox.setHintTextColor(R.color.background_window);
+				// contentBox.setText(content);
+
+				contentTittle = (TextView) textView.findViewById(R.id.name);
+				contentDesc = (TextView) textView.findViewById(R.id.desc);
+				contentTittle.setText(strs[position]);
+				contentDesc.setText(EditorVar.content);
+
+				contentDesc.setTextColor(Color.GRAY);
+				return textView;
+				// 地點選擇與輸入
+				// 是否開啟提醒
+				/*
+				 * case 5: ctv2 = (CheckedTextView) li .inflate(
+				 * android.R.layout.simple_list_item_multiple_choice, null);
+				 * ctv2.setText(strs[position]);
+				 * 
+				 * if (alarm == 0) { ctv2.setChecked(false); } else {
+				 * ctv2.setChecked(true); } return ctv2;
+				 */
+			default:
+				break;
+			}
+
+			return null;
+		}
 	}
+
+	private OnItemClickListener ViewAdapterClickListener = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> av, View v, int position, long id) {
+
+			switch (position) {
+			// 設定是否開啟提醒
+			/*
+			 * case 0:
+			 * 
+			 * ctv1 = (CheckedTextView) v; if (ctv1.isChecked()) { on_off = 0; }
+			 * else { on_off = 1; }
+			 * 
+			 * break;
+			 */
+			// 設定提醒日期
+			case 0:
+				showDialog(EditorVar.DATE_DIALOG_ID);
+				break;
+				// 設定提醒時間
+			case 1:
+				showDialog(EditorVar.TIME_DIALOG_ID);
+				break;
+				// 設定提醒內容
+			case 2:
+				showDialog1("請輸入內容：", "內容", position);
+				break;
+
+				// 設定是否開啟語音提醒
+			default:
+				break;
+			}
+		}
+
+	};
 
 	// 顯示對話方塊
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		// 顯示日期對話方塊
-		case DATE_DIALOG_ID:
-			return new DatePickerDialog(this, mDateSetListener, mYear,
-					mMonth - 1, mDay);
+		case EditorVar.DATE_DIALOG_ID:
+			return new DatePickerDialog(this,
+					mDateSetListener, EditorVar.mYear,
+					EditorVar.mMonth - 1, EditorVar.mDay);
 			// 顯示時間對話方塊
-		case TIME_DIALOG_ID:
-			return new TimePickerDialog(this, mTimeSetListener, mHour, mMinute,
+		case EditorVar.TIME_DIALOG_ID:
+			return new TimePickerDialog(this, 
+					mTimeSetListener, EditorVar.mHour, EditorVar.mMinute,
 					false);
 		}
 		return null;
@@ -350,16 +422,16 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		Intent intent = new Intent();
 		// 設定Intent action屬性
 		intent.setAction(BC_ACTION);
-		intent.putExtra("msg", content);
+		intent.putExtra("msg", EditorVar.content);
 		// 實例化PendingIntent
 		final PendingIntent pi = PendingIntent.getBroadcast(
 				getApplicationContext(), 0, intent, 0);
 		// 取得系統時間
 		final long time1 = System.currentTimeMillis();
 		Calendar c = Calendar.getInstance();
-		c.set(mYear, mMonth, mDay, mHour, mMinute);
+		c.set(EditorVar.mYear, EditorVar.mMonth, EditorVar.mDay, EditorVar.mHour, EditorVar.mMinute);
 		long time2 = c.getTimeInMillis();
-		if (flag && (time2 - time1) > 0 && on_off == 1) {
+		if (flag && (time2 - time1) > 0 && EditorVar.on_off == 1) {
 			am.set(AlarmManager.RTC_WAKEUP, time2, pi);
 		} else {
 			am.cancel(pi);
@@ -370,33 +442,32 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	 * 設定提示日期對話方塊
 	 */
 	private void showDialog1(String msg, String tittle, int target) {
-		View v = li.inflate(
-				R.layout.activity_task_editor_parts_dialog_location, null);
+		View v = li.inflate(R.layout.activity_task_editor_parts_textedit, null);
 		final TextView editTextTittle = (TextView) v.findViewById(R.id.name);
 		final EditText editTextbox = (EditText) v.findViewById(R.id.editTexbox);
 		editTextTittle.setText(tittle + target);
 
 		switch (target) {
 		case 2:
-			switcher = content;
+			EditorVar.switcher = EditorVar.content;
 			break;
 		default:
 			break;
 		}
 
-		editTextbox.setText(switcher);
+		editTextbox.setText(EditorVar.switcher);
 
 		new AlertDialog.Builder(this).setView(v).setMessage(msg)
-				.setCancelable(false)
-				.setPositiveButton("確定", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-						content = editTextbox.getText().toString();
+		.setCancelable(false)
+		.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int id) {
+				EditorVar.content = editTextbox.getText().toString();
 
-						contentDesc.setText(switcher);
-						// locationDesc.setText(switcher);
-					}
-				}).show();
+				contentDesc.setText(EditorVar.switcher);
+				// locationDesc.setText(switcher);
+			}
+		}).show();
 
 	}
 
@@ -404,25 +475,20 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			mHour = hourOfDay;
-			mMinute = minute;
-			if (String.valueOf(mMinute).length() == 1) {
-				buttonSetTime.setText(mHour + ":0" + mMinute);
-			}else{
-			buttonSetTime.setText(mHour + ":" + mMinute);
-			}
+			EditorVar.mHour = hourOfDay;
+			EditorVar.mMinute = minute;
+			timeDesc.setText(EditorVar.mHour + ":" + EditorVar.mMinute);
 		}
 	};
-
 	// 日期選擇對話方塊
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			mYear = year;
-			mMonth = monthOfYear;
-			mDay = dayOfMonth;
-			buttonSetDate.setText(mYear + "/" + (mMonth + 1) + "/" + mDay);
+			EditorVar.mYear = year;
+			EditorVar.mMonth = monthOfYear;
+			EditorVar.mDay = dayOfMonth;
+			dateDesc.setText(EditorVar.mYear + "/" + (EditorVar.mMonth + 1) + "/" + EditorVar.mDay);
 		}
 	};
 
@@ -430,8 +496,8 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		locationName = null;
-		content = null;
+		EditorVar.locationName = null;
+		EditorVar.content = null;
 	};
 
 	// This is the action bar menu
@@ -524,40 +590,63 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			// // }
 			// }
 
-			if (!isdidSearch && !SearchText.getText().toString().equals("")) {
+			if (!EditorVar.isdidSearch && !SearchText.getText().toString().equals("")) {
 				// SearchPlace();
 				GeocodingAPI LoacationAddress = new GeocodingAPI(
 						getApplicationContext(), SearchText.getText()
-								.toString());
+						.toString());
 				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
-					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+					EditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+					EditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 				}
 			}
-			if (isDraped && !SearchText.getText().toString().equals("")) {
-				Longitude = map.getCameraPosition().target.longitude;
-				Latitude = map.getCameraPosition().target.latitude;
+			if (EditorVar.isDraped && !SearchText.getText().toString().equals("")) {
+				EditorVar.Longitude = map.getCameraPosition().target.longitude;
+				EditorVar.Latitude = map.getCameraPosition().target.latitude;
 				GeocodingAPI LoacationAddress = new GeocodingAPI(
-						getApplicationContext(), Latitude + "," + Longitude);
+						getApplicationContext(), EditorVar.Latitude + "," + EditorVar.Longitude);
 				if (LoacationAddress.GeocodingApiAddressGet() != null) {
 					SearchText.setText(LoacationAddress
 							.GeocodingApiAddressGet());
 				}
 			}
 
+
+			//			// 存入標題
+			//			values.put(TaskCursor.KeyColumns.Tittle, EditTextTittle.getText()
+			//					.toString());
+			//			// 存入日期
+			//			values.put(TaskCursor.KeyColumns.StartDate, curDate.toString());
+			//			values.put(TaskCursor.KeyColumns.EndDate, dateDesc.getText()
+			//					.toString());
+			//			// save the selected value of time
+			//			values.put(TaskCursor.KeyColumns.StartTime, curDate.toString());
+			//			values.put(TaskCursor.KeyColumns.EndTime, timeDesc.getText()
+			//					.toString());
+			//			// save contents
+			//			values.put(TaskCursor.KeyColumns.CONTENT, contentDesc.getText()
+			//					.toString());
+			//			// save the name string of location
+			//			values.put(TaskCursor.KeyColumns.LocationName, SearchText.getText()
+			//					.toString());
+			//			values.put(TaskCursor.KeyColumns.Coordinate, Latitude + ","
+			//					+ Longitude);
+			//			values.put(TaskCursor.KeyColumns.Priority, 1000);
+
 			if (checkBoxIsFixed != null) {
-				is_Fixed = String.valueOf(checkBoxIsFixed.isChecked());
-				endDate = dateDesc.getText().toString();
-				// endTime = timeDesc.getText().toString();
-				// content = contentDesc.getText().toString();
-				tittle = EditTextTittle.getText().toString();
-				coordinate = Latitude + "," + Longitude;
-				locationName = SearchText.getText().toString();
+				EditorVar.is_Fixed = String.valueOf(checkBoxIsFixed.isChecked());
+				EditorVar.endDate = dateDesc.getText().toString();
+				//endTime = timeDesc.getText().toString();
+				//content = contentDesc.getText().toString();
+				EditorVar.tittle = EditTextTittle.getText().toString();
+				EditorVar.coordinate = EditorVar.Latitude + "," + EditorVar.Longitude;
+				EditorVar.locationName=SearchText.getText()
+						.toString();
 			}
 
 			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
-			mSaveOrUpdate.DoTaskEditorAdding(taskId, tittle, endDate, endTime,
-					content, locationName, coordinate, "1", is_Fixed, "1");
+			mSaveOrUpdate.DoTaskEditorAdding(EditorVar.taskId, EditorVar.tittle, EditorVar.endDate, EditorVar.endTime,
+					EditorVar.content, EditorVar.locationName, EditorVar.coordinate, "1", EditorVar.is_Fixed, "1");
 			finish();
 			return true;
 		}
@@ -599,13 +688,13 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		// Toast.makeText(getApplicationContext(), "關閉GPS"+location,
 		// Toast.LENGTH_LONG).show();
 
-		if (CommonUtils.GpsSetting.GpsStatus) {
-			CommonUtils.GpsSetting.GpsStatus = false;
+		if (MainVar.GpsSetting.GpsStatus) {
+			MainVar.GpsSetting.GpsStatus = false;
 			gpsManager.stopListening();
 			gpsManager.setGPSCallback(null);
 			gpsManager = null;
 		} else {
-			CommonUtils.GpsSetting.GpsStatus = false;
+			MainVar.GpsSetting.GpsStatus = false;
 		}
 		LatLng nowLoacation = new LatLng(Latitude, Longitude);
 
@@ -633,20 +722,20 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 				// //獲取地址
 				// textView2.setText(textView2.getText()+"\n"+LoacationAddress.GeocodingApiLatLngGet());
 				// //獲取經緯度
-				if (!isdidSearch
+				if (!EditorVar.isdidSearch
 						|| !SearchText.getText().toString()
-								.equals(LastTimeSearchName)) {
+						.equals(EditorVar.LastTimeSearchName)) {
 					SearchPlace();
-					isdidSearch = true;
-					LastTimeSearchName = SearchText.getText().toString();
+					EditorVar.isdidSearch = true;
+					EditorVar.LastTimeSearchName = SearchText.getText().toString();
 				}
 				GeocodingAPI LoacationAddress = new GeocodingAPI(
 						getApplicationContext(),
 						map.getCameraPosition().target.latitude + ","
 								+ map.getCameraPosition().target.longitude);
 				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
-					Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-					Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+					EditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+					EditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 				}
 				// locationDesc = LoacationAddress.GeocodingApiAddressGet();
 				// Toast.makeText(getApplicationContext(),
@@ -657,10 +746,10 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			case R.id.Search:
 				// textView2.setText(map.getMyLocation().toString());
 				// //可用網路抓到GPS位置
-				if (!SearchText.getText().toString().equals(LastTimeSearchName)) {
+				if (!SearchText.getText().toString().equals(EditorVar.LastTimeSearchName)) {
 					SearchPlace();
-					isdidSearch = true;
-					LastTimeSearchName = SearchText.getText().toString();
+					EditorVar.isdidSearch = true;
+					EditorVar.LastTimeSearchName = SearchText.getText().toString();
 				}
 				break;
 
@@ -680,22 +769,22 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			LatLng now = new LatLng(position.target.latitude,
 					position.target.longitude);
 			map.addMarker(new MarkerOptions().title("目的地").position(now));
-			if (isdidSearch)
-				isDraped = true;
+			if (EditorVar.isdidSearch)
+				EditorVar.isDraped = true;
 		}
 	};
 
 	private Runnable GpsTime = new Runnable() {
 		@Override
 		public void run() {
-			GpsUseTime++;
+			EditorVar.GpsUseTime++;
 			// Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取
 			// lastlocation.
-			if (GpsUseTime > CommonUtils.GpsSetting.TIMEOUT_SEC) {
-				if (CommonUtils.GpsSetting.GpsStatus) {
+			if (EditorVar.GpsUseTime > MainVar.GpsSetting.TIMEOUT_SEC) {
+				if (MainVar.GpsSetting.GpsStatus) {
 					gpsManager.stopListening();
 					gpsManager.startNetWorkListening(getApplicationContext());
-					CommonUtils.GpsSetting.GpsStatus = true;
+					MainVar.GpsSetting.GpsStatus = true;
 					// Toast.makeText(getApplicationContext(), "關閉GPS",
 					// Toast.LENGTH_LONG).show();
 				}
@@ -720,7 +809,7 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 				map.animateCamera((CameraUpdateFactory.newLatLngZoom(
 						SearchLocation, map.getMaxZoomLevel() - 4)));
 				map.addMarker(new MarkerOptions().title("搜尋的位置")
-						.snippet(locationName).position(SearchLocation));
+						.snippet(EditorVar.locationName).position(SearchLocation));
 			} else {
 				Toast.makeText(getApplicationContext(), "查無地點哦,換個詞試試看",
 						Toast.LENGTH_SHORT).show();

@@ -40,11 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/activity_task_editor_parts_box_location" />
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_task_editor_parts_box_attachment" />
     
 </LinearLayout>
 </ScrollView>

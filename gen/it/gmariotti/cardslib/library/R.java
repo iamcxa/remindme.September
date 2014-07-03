@@ -132,21 +132,21 @@ public final class R {
 		public static final int list_card_undobar_hide_delay = 0x7f070000;
 	}
 	public static final class layout {
-		public static final int base_header_layout = 0x7f03000f;
-		public static final int base_shadow_layout = 0x7f030010;
-		public static final int base_thumbnail_layout = 0x7f030011;
-		public static final int card_base_layout = 0x7f030012;
-		public static final int card_layout = 0x7f030017;
-		public static final int card_overlay_layout = 0x7f030019;
-		public static final int card_thumbnail_layout = 0x7f03001a;
-		public static final int card_thumbnail_overlay_layout = 0x7f03001b;
-		public static final int card_undo_layout = 0x7f03001c;
-		public static final int inner_base_expand = 0x7f030027;
-		public static final int inner_base_header = 0x7f030028;
-		public static final int inner_base_main = 0x7f030029;
-		public static final int list_card_layout = 0x7f03002a;
-		public static final int list_card_thumbnail_layout = 0x7f03002b;
-		public static final int list_card_undo_message = 0x7f03002c;
+		public static final int base_header_layout = 0x7f030010;
+		public static final int base_shadow_layout = 0x7f030011;
+		public static final int base_thumbnail_layout = 0x7f030012;
+		public static final int card_base_layout = 0x7f030013;
+		public static final int card_layout = 0x7f030018;
+		public static final int card_overlay_layout = 0x7f03001a;
+		public static final int card_thumbnail_layout = 0x7f03001b;
+		public static final int card_thumbnail_overlay_layout = 0x7f03001c;
+		public static final int card_undo_layout = 0x7f03001d;
+		public static final int inner_base_expand = 0x7f030028;
+		public static final int inner_base_header = 0x7f030029;
+		public static final int inner_base_main = 0x7f03002a;
+		public static final int list_card_layout = 0x7f03002b;
+		public static final int list_card_thumbnail_layout = 0x7f03002c;
+		public static final int list_card_undo_message = 0x7f03002d;
 	}
 	public static final class plurals {
 		public static final int card_selected_items = 0x7f090001;

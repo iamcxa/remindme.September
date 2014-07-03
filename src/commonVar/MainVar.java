@@ -1,7 +1,7 @@
 /**
  * 
  */
-package me.iamcxa.remindme;
+package commonVar;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +18,7 @@ import android.util.Log;
  * @author cxa
  * 
  */
-public class CommonUtils {
+public class MainVar {
 
 	// ±ÂÅv±`¼Æ
 	public static final String AUTHORITY = "me.iamcxa.remindme";
@@ -48,25 +48,25 @@ public class CommonUtils {
 
 	// debug msg on/off, read from Shared Preferences XML file
 	public static boolean IS_DEBUG_MSG_ON() {
-		return CommonUtils.mPreferences.getBoolean("isDebugMsgOn", true);
+		return MainVar.mPreferences.getBoolean("isDebugMsgOn", true);
 	}
 
 	// isServiceOn
 	public static boolean IS_SERVICE_ON() {
-		return CommonUtils.mPreferences.getBoolean("isServiceOn", true);
+		return MainVar.mPreferences.getBoolean("isServiceOn", true);
 	};
 
 	// isServiceOn
 	public static boolean IS_SORTING_ON() {
-		return CommonUtils.mPreferences.getBoolean("isSortingOn", true);
+		return MainVar.mPreferences.getBoolean("isSortingOn", true);
 	};
 
 	// isServiceOn
 	public static String getUpdatePeriod() {
-		return CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
+		return MainVar.mPreferences.getString("GetPriorityPeriod", "5000");
 	};
 
-	private CommonUtils() {
+	private MainVar() {
 	}
 
 	/***********************/

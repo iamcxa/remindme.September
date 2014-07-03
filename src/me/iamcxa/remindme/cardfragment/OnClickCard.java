@@ -1,8 +1,9 @@
 package me.iamcxa.remindme.cardfragment;
 
+import commonVar.MainVar;
+import commonVar.MainVar.TaskCursor;
+
 import it.gmariotti.cardslib.library.internal.Card;
-import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import me.iamcxa.remindme.editor.RemindmeTaskEditor;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class OnClickCard {
 		try {
 			
 
-			CommonUtils.debugMsg(0,
+			MainVar.debugMsg(0,
 					"ReadCardonClick cursor moveToPosition cardIDfromclcikevent="
 							+ cardPosition);
 			String cardID = mMyCursorCardAdapter.getCardFromCursor(cursor)
@@ -52,7 +53,7 @@ public class OnClickCard {
 
 		} catch (Exception e) {
 
-			CommonUtils.debugMsg(0, "ReadCardonClick error=" + e);
+			MainVar.debugMsg(0, "ReadCardonClick error=" + e);
 		}
 
 	}

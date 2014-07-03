@@ -22,18 +22,16 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/buttonSetLocation"
+                android:id="@+id/buttonSetDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right_button"
                 android:layout_weight="1.00"
-                android:background="@drawable/ab_stacked_solid_irdark"
                 android:minHeight="32dip"
-                android:text="設定目的地"
-                android:textColorHint="@color/background_window" />
+                android:text="設定目的地" />
 
             <ImageButton
-                android:id="@+id/imageButtonCancelLocation"
+                android:id="@+id/imageButtonResetDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -44,10 +42,16 @@
 
         </LinearLayout>
 
-        <include
+        <ImageView
+            android:id="@+id/imageView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/activity_task_editor_parts_box_baseline" />
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.00"
+            android:scaleType="fitXY"
+            android:src="@drawable/tab_unselected_pressed_irdark" />
 
     </LinearLayout>
     

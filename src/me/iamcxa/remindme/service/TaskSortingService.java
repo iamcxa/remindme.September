@@ -3,10 +3,11 @@
  */
 package me.iamcxa.remindme.service;
 
+import commonVar.MainVar;
+
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.LocationGetter;
 import me.iamcxa.remindme.provider.PriorityCalculator;
-import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeMainActivity;
 import me.iamcxa.remindme.provider.GPSCallback;
@@ -46,7 +47,7 @@ public class TaskSortingService extends Service {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		CommonUtils.debugMsg(0, "service onDestroy");
+		MainVar.debugMsg(0, "service onDestroy");
 		UpdataLocation.CloseUpdatePriority();
 	}
 
@@ -60,7 +61,7 @@ public class TaskSortingService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		CommonUtils.mPreferences = PreferenceManager
+		MainVar.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		UpdataLocation = new LocationGetter(getApplicationContext());
@@ -92,14 +93,14 @@ public class TaskSortingService extends Service {
 		noti.flags =Notification.FLAG_NO_CLEAR;
 		
 		nNotificationManager.notify(notifyID, noti);
-		CommonUtils.debugMsg(0, "service started");
+		MainVar.debugMsg(0, "service started");
 	}
 	
 	private void Stopself(){
 		
 		
-		if (!CommonUtils.IS_SERVICE_ON()) {
-			CommonUtils.debugMsg(0, "service Stopself");
+		if (!MainVar.IS_SERVICE_ON()) {
+			MainVar.debugMsg(0, "service Stopself");
 			this.stopSelf();
 		}
 	}
@@ -113,7 +114,7 @@ public class TaskSortingService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		CommonUtils.debugMsg(0, "service onStartCommand");
+		MainVar.debugMsg(0, "service onStartCommand");
 		
 		return super.onStartCommand(intent, flags, startId);
 	}

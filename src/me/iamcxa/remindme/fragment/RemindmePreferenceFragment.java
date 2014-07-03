@@ -1,6 +1,7 @@
 package me.iamcxa.remindme.fragment;
 
-import me.iamcxa.remindme.CommonUtils;
+import commonVar.MainVar;
+
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.R.xml;
 import me.iamcxa.remindme.service.TaskSortingService;

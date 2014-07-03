@@ -18,9 +18,10 @@
 
 package me.iamcxa.remindme.cardfragment;
 
+import commonVar.MainVar;
+import commonVar.MainVar.TaskCursor;
+
 import it.gmariotti.cardslib.library.view.CardListView;
-import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import me.iamcxa.remindme.R;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -51,7 +52,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 	private static CardListView mListView;
 	private static String[] projection = TaskCursor.PROJECTION;
 	private static String selection = null;
-	private static String sortOrder = CommonUtils.DEFAULT_SORT_ORDER;
+	private static String sortOrder = MainVar.DEFAULT_SORT_ORDER;
 	private static String[] selectionArgs;
 	private static Cursor cursor;
 	private static Double Latitude;
@@ -106,7 +107,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
 		Loader<Cursor> loader = null;
-		loader = new CursorLoader(getActivity(), CommonUtils.CONTENT_URI,
+		loader = new CursorLoader(getActivity(), MainVar.CONTENT_URI,
 				projection, selection, selectionArgs, sortOrder);
 		return loader;
 	}

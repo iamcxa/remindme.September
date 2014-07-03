@@ -11,10 +11,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import commonVar.MainVar;
+import commonVar.MainVar.TaskCursor;
 
-import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
 import me.iamcxa.remindme.provider.GPSCallback;
 import me.iamcxa.remindme.provider.GPSManager;
 import me.iamcxa.remindme.provider.GeocodingAPI;
@@ -207,7 +207,7 @@ public class RemindmeTaskEditorBackup extends FragmentActivity implements GPSCal
 		gpsManager = new GPSManager();
 		gpsManager.startGpsListening(getApplicationContext());
 		gpsManager.setGPSCallback(RemindmeTaskEditorBackup.this);
-		CommonUtils.GpsSetting.GpsStatus = true;
+		MainVar.GpsSetting.GpsStatus = true;
 		GpsUseTime = 0;
 		GpsTimehandler.post(GpsTime);
 
@@ -247,7 +247,7 @@ public class RemindmeTaskEditorBackup extends FragmentActivity implements GPSCal
 		final Intent intent = getIntent();
 		// 設定Uri
 		if (intent.getData() == null) {
-			intent.setData(CommonUtils.CONTENT_URI);
+			intent.setData(MainVar.CONTENT_URI);
 		}
 
 		/*
@@ -725,13 +725,13 @@ public class RemindmeTaskEditorBackup extends FragmentActivity implements GPSCal
 		// Toast.makeText(getApplicationContext(), "關閉GPS"+location,
 		// Toast.LENGTH_LONG).show();
 
-		if (CommonUtils.GpsSetting.GpsStatus) {
-			CommonUtils.GpsSetting.GpsStatus = false;
+		if (MainVar.GpsSetting.GpsStatus) {
+			MainVar.GpsSetting.GpsStatus = false;
 			gpsManager.stopListening();
 			gpsManager.setGPSCallback(null);
 			gpsManager = null;
 		} else {
-			CommonUtils.GpsSetting.GpsStatus = false;
+			MainVar.GpsSetting.GpsStatus = false;
 		}
 		LatLng nowLoacation = new LatLng(Latitude, Longitude);
 
@@ -817,11 +817,11 @@ public class RemindmeTaskEditorBackup extends FragmentActivity implements GPSCal
 			GpsUseTime++;
 			// Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取
 			// lastlocation.
-			if (GpsUseTime > CommonUtils.GpsSetting.TIMEOUT_SEC) {
-				if (CommonUtils.GpsSetting.GpsStatus) {
+			if (GpsUseTime > MainVar.GpsSetting.TIMEOUT_SEC) {
+				if (MainVar.GpsSetting.GpsStatus) {
 					gpsManager.stopListening();
 					gpsManager.startNetWorkListening(getApplicationContext());
-					CommonUtils.GpsSetting.GpsStatus = true;
+					MainVar.GpsSetting.GpsStatus = true;
 					// Toast.makeText(getApplicationContext(), "關閉GPS",
 					// Toast.LENGTH_LONG).show();
 				}

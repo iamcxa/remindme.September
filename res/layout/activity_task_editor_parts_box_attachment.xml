@@ -11,7 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
-            android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Left_Right"
+            android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
             android:text="附加檔案"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/task_editor_parts_layout_textview_color" />
@@ -22,7 +22,7 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/buttonPickFile"
+                android:id="@+id/buttonSetDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right_button"
@@ -31,7 +31,7 @@
                 android:text="選取檔案/圖片" />
 
             <Button
-                android:id="@+id/buttonTakePhoto"
+                android:id="@+id/buttonSetTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.2"
@@ -39,7 +39,7 @@
                 android:text="拍照.." />
 
             <ImageButton
-                android:id="@+id/imageButtonCancelAttachment"
+                android:id="@+id/imageButtonResetDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -51,17 +51,15 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageViewLoadImage"
+            android:id="@+id/imageView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
             android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
-            android:visibility="gone" />
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/activity_task_editor_parts_box_baseline" />
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.00"
+            android:scaleType="fitXY"
+            android:src="@drawable/tab_unselected_pressed_irdark" />
 
     </LinearLayout>
     

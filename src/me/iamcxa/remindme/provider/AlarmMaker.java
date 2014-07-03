@@ -1,6 +1,7 @@
 package me.iamcxa.remindme.provider;
 
-import me.iamcxa.remindme.CommonUtils;
+import commonVar.MainVar;
+
 import me.iamcxa.remindme.R;
 import android.app.Activity;
 import android.app.Notification;
@@ -41,9 +42,9 @@ public class AlarmMaker extends Activity {
 		tv.setText(msg);
 
 		// 設定語音提示
-		CommonUtils.mPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		CommonUtils.debugMsg(0, this.getFilesDir().getAbsolutePath()+"/fallbackring.ogg");
-		n.sound = Uri.parse(CommonUtils.mPreferences.getString("ringtonePref", this.getFilesDir().getAbsolutePath()+"/fallbackring.ogg"));
+		MainVar.mPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		MainVar.debugMsg(0, this.getFilesDir().getAbsolutePath()+"/fallbackring.ogg");
+		n.sound = Uri.parse(MainVar.mPreferences.getString("ringtonePref", this.getFilesDir().getAbsolutePath()+"/fallbackring.ogg"));
 		
 		// 發出通知
 		nm.notify(ID, n);
