@@ -62,7 +62,7 @@ import me.iamcxa.remindme.provider.WorkaroundMapFragment;
  * 
  */
 
-public class TaskEditorMain extends FragmentActivity implements GPSCallback {
+public class TaskEditorMain_Ref extends FragmentActivity implements GPSCallback {
 
 	private static SaveOrUpdate mSaveOrUpdate;
 

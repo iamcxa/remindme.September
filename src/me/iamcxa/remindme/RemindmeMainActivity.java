@@ -6,7 +6,7 @@ package me.iamcxa.remindme;
 import java.util.Locale;
 
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
-import me.iamcxa.remindme.editor.TaskEditorMain;
+import me.iamcxa.remindme.editor.TaskEditorMain_Ref;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
 import me.iamcxa.remindme.fragment.CardFragmentLoader1;
 import me.iamcxa.remindme.fragment.CardFragmentLoader2;
@@ -324,7 +324,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			// Toast.makeText(getApplication(), item.getTitle(),
 			// Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent();
-			intent.setClass(getApplication(), TaskEditorMain.class);
+			intent.setClass(getApplication(), TaskEditorMain_Ref.class);
 			startActivity(intent);
 			return false;
 		}
