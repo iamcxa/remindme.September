@@ -55,7 +55,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import me.iamcxa.remindme.provider.WorkaroundMapFragment;
 
 /**
  * @author cxa
