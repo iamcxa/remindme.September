@@ -1,5 +1,6 @@
 package me.iamcxa.remindme.editor;
 
+import me.iamcxa.remindme.R;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
@@ -22,7 +23,7 @@ public class MyTabListener implements ActionBar.TabListener {
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
-		//ft.add(R.id.frameLayout, mFragment, null);
+		ft.add(R.id.frameTabLayout, mFragment, null);
 	}
 
 	@Override
