@@ -5,8 +5,9 @@ package me.iamcxa.remindme.editor;
 
 import java.util.Date;
 
-import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
+import me.iamcxa.remindme.RemindmeVar;
+import me.iamcxa.remindme.RemindmeVar.TaskCursor;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -122,21 +123,21 @@ public class SaveOrUpdate {
 		try {
 			Date curDate = new Date(System.currentTimeMillis());
 			values.put(TaskCursor.KEY.CREATED, String.valueOf(curDate));
-			Uri uri = CommonUtils.CONTENT_URI;
+			Uri uri = RemindmeVar.CONTENT_URI;
 			context.getContentResolver().insert(uri, values);
 			Toast.makeText(context, "新事項已經儲存", Toast.LENGTH_SHORT).show();
 			mSetAlarm.SetIt(true);
 			return true;
 		} catch (Exception e) {
 			Toast.makeText(context, "儲存出錯！", Toast.LENGTH_SHORT).show();
-			CommonUtils.debugMsg(0, "SaveOrUpdate SaveIt error=" + e);
+			RemindmeVar.debugMsg(0, "SaveOrUpdate SaveIt error=" + e);
 			return false;
 		}
 	}
 
 	private boolean UpdateIt(ContentValues values, int taskId) {
 		try {
-			Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI,
+			Uri uri = ContentUris.withAppendedId(RemindmeVar.CONTENT_URI,
 					taskId);
 			context.getContentResolver().update(uri, values, null, null);
 			Toast.makeText(context, "事項更新成功！", Toast.LENGTH_SHORT).show();
@@ -144,7 +145,7 @@ public class SaveOrUpdate {
 			return true;
 		} catch (Exception e) {
 			Toast.makeText(context, "儲存出錯！", Toast.LENGTH_SHORT).show();
-			CommonUtils.debugMsg(0, "SaveOrUpdate SaveIt error=" + e);
+			RemindmeVar.debugMsg(0, "SaveOrUpdate SaveIt error=" + e);
 			return false;
 		}
 	}

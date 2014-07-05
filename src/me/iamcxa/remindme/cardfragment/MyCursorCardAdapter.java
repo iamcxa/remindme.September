@@ -10,8 +10,8 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
 import it.gmariotti.cardslib.library.view.component.CardHeaderView;
-import me.iamcxa.remindme.CommonUtils;
 import me.iamcxa.remindme.R;
+import me.iamcxa.remindme.RemindmeVar;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -82,7 +82,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		CardExpand expand = new CardExpand(getContext());
 		// Set inner title in Expand Area
 		String aa = "dbId=" + cursor.getString(0) + ",w="
-				+ cursor.getString(CommonUtils.TaskCursor.KEY_INDEX.PRIORITY)
+				+ cursor.getString(RemindmeVar.TaskCursor.KEY_INDEX.PRIORITY)
 				+ "cardID="+card.getId();
 
 		expand.setTitle(aa);
@@ -245,8 +245,8 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		// Use this code to delete items on DB
 		ContentResolver resolver = getContext().getContentResolver();
 		
-		long noDeleted = resolver.delete(CommonUtils.CONTENT_URI,
-				CommonUtils.TaskCursor.KEY.KEY_ID + " = ? ",
+		long noDeleted = resolver.delete(RemindmeVar.CONTENT_URI,
+				RemindmeVar.TaskCursor.KEY.KEY_ID + " = ? ",
 				new String[] { this.getCardFromCursor(getCursor()).getId() });
 
 		this.notifyDataSetChanged();

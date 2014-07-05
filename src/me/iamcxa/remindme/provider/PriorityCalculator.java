@@ -4,8 +4,10 @@
 package me.iamcxa.remindme.provider;
 
 import java.text.DecimalFormat;
-import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
+
+
+import me.iamcxa.remindme.RemindmeVar;
+import me.iamcxa.remindme.RemindmeVar.TaskCursor;
 import me.iamcxa.remindme.database.TaskDbEditor;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -54,28 +56,28 @@ public class PriorityCalculator {
 
 	public void ProcessData(Cursor data) {
 
-		CommonUtils.debugMsg(0, "GetDistance onLoadFinished");
+		RemindmeVar.debugMsg(0, "GetDistance onLoadFinished");
 		int i = 0;
 		double Distance;
 		long dayLeft;
 		data.moveToFirst();
 		for (i = 0; i < data.getCount(); i++) {
-			CommonUtils.debugMsg(0, "GetDistance data.move@" + i);
+			RemindmeVar.debugMsg(0, "GetDistance data.move@" + i);
 			// idList.add("" +
 			// data.getInt(TaskCursor.IndexColumns.KEY_ID));
 			// WeightsList.add("" + data.getInt(4));
 
-			CommonUtils.debugMsg(0, "GetDistance LatLon1=" + data.getString(2)
+			RemindmeVar.debugMsg(0, "GetDistance LatLon1=" + data.getString(2)
 					+ " / LatLon2=" + Lat + "," + Lon);
 			Distance = DistanceCalculator.Distance(data.getString(2), Lat, Lon);
 			endDate = data.getString(5);
 			endTime = data.getString(6);
-			dayLeft = CommonUtils.getDaysLeft(endDate + " " + endTime, 1);
+			dayLeft = RemindmeVar.getDaysLeft(endDate + " " + endTime, 1);
 
-			CommonUtils.debugMsg(0, "GetDistance dayLeft org=" + dayLeft);
-			CommonUtils.debugMsg(0, "GetDistance endDate=" + endDate);
-			CommonUtils.debugMsg(0, "GetDistance endTime=" + endTime);
-			CommonUtils.debugMsg(0, "GetDistance Distance=" + Distance);
+			RemindmeVar.debugMsg(0, "GetDistance dayLeft org=" + dayLeft);
+			RemindmeVar.debugMsg(0, "GetDistance endDate=" + endDate);
+			RemindmeVar.debugMsg(0, "GetDistance endTime=" + endTime);
+			RemindmeVar.debugMsg(0, "GetDistance Distance=" + Distance);
 			saveOrUpdate(
 					Integer.valueOf(data.getInt(0)),
 					getNewWeight(i, Integer.valueOf(data.getInt(4)), Distance,
@@ -101,7 +103,7 @@ public class PriorityCalculator {
 		int newPriorityWeight = oldWeights;
 		dayLeft = (dayLeft) * 24;
 		//Distance *= 10;
-		CommonUtils.debugMsg(0, "GetDistance dayLeft=" + dayLeft);
+		RemindmeVar.debugMsg(0, "GetDistance dayLeft=" + dayLeft);
 		// 時間
 //		if ((dayLeft>168)) {
 //			newPriorityWeight *= 0.25;
@@ -138,7 +140,7 @@ public class PriorityCalculator {
 		//newPriorityWeight = newPriorityWeight + oldWeights;
 //		
 	//	oldWeights+=newPriorityWeight ;
-		CommonUtils
+		RemindmeVar
 				.debugMsg(0, "GetDistance getNewWeight=" + newPriorityWeight);
 		return newPriorityWeight+1;   //+1防止歸0
 	}
@@ -159,13 +161,13 @@ public class PriorityCalculator {
 					newPriorityWeight);
 
 			// 修改
-			Uri uri = ContentUris.withAppendedId(CommonUtils.CONTENT_URI, ID);
+			Uri uri = ContentUris.withAppendedId(RemindmeVar.CONTENT_URI, ID);
 			context.getContentResolver().update(uri, values, null, null);
 			//load.update(values, null, null);
 			// Toast.makeText(this, "事項更新成功！" + curDate.toString(),
 			// Toast.LENGTH_SHORT).show();
 
-			CommonUtils.debugMsg(0, "GetDistance newPriorityWeight更新成功！");
+			RemindmeVar.debugMsg(0, "GetDistance newPriorityWeight更新成功！");
 			load.closeDB();
 			return true;
 		} catch (Exception e) {

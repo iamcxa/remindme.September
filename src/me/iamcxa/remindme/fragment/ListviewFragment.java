@@ -1,9 +1,10 @@
 package me.iamcxa.remindme.fragment;
 
+
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
-import me.iamcxa.remindme.CommonUtils;
-import me.iamcxa.remindme.CommonUtils.TaskCursor;
+import me.iamcxa.remindme.RemindmeVar;
 import me.iamcxa.remindme.R;
+import me.iamcxa.remindme.RemindmeVar.TaskCursor;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class ListviewFragment extends Fragment implements
 	/** A callback method invoked by the loader when initLoader() is called */
 	@Override
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-		Uri uri = CommonUtils.CONTENT_URI;
+		Uri uri = RemindmeVar.CONTENT_URI;
 		return new CursorLoader(getActivity(), uri, null, null, null, null);
 	}
 

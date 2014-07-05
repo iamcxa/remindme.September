@@ -18,8 +18,7 @@ import android.util.Log;
  * @author cxa
  * 
  */
-public class CommonUtils {
-
+public class RemindmeVar {
 
 	// 授權常數
 	public static final String AUTHORITY = "me.iamcxa.remindme";
@@ -49,25 +48,25 @@ public class CommonUtils {
 
 	// debug msg on/off, read from Shared Preferences XML file
 	public static boolean IS_DEBUG_MSG_ON() {
-		return CommonUtils.mPreferences.getBoolean("isDebugMsgOn", true);
+		return RemindmeVar.mPreferences.getBoolean("isDebugMsgOn", true);
 	}
 
-	// IS_SERVICE_ON - 背景服務開關
+	// isServiceOn
 	public static boolean IS_SERVICE_ON() {
-		return CommonUtils.mPreferences.getBoolean("isServiceOn", true);
+		return RemindmeVar.mPreferences.getBoolean("isServiceOn", true);
 	};
 
-	// IS_SORTING_ON - 智慧優先開關
+	// isServiceOn
 	public static boolean IS_SORTING_ON() {
-		return CommonUtils.mPreferences.getBoolean("isSortingOn", true);
+		return RemindmeVar.mPreferences.getBoolean("isSortingOn", true);
 	};
 
-	// getUpdatePeriod - 更新間隔
+	// isServiceOn
 	public static String getUpdatePeriod() {
-		return CommonUtils.mPreferences.getString("GetPriorityPeriod", "5000");
+		return RemindmeVar.mPreferences.getString("GetPriorityPeriod", "5000");
 	};
-	
-	private CommonUtils() {
+
+	private RemindmeVar() {
 	}
 
 	/***********************/
