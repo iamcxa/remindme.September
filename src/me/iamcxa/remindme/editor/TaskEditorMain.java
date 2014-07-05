@@ -4,13 +4,20 @@ import me.iamcxa.remindme.R;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.MultiAutoCompleteTextView;
 
 public class TaskEditorMain extends Fragment {
+	
+	private static MultiAutoCompleteTextView taskTittle; //¼ÐÃD
+	
 
+
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		setupViewComponent();
 	}
 
 	@Override
@@ -43,4 +50,10 @@ public class TaskEditorMain extends Fragment {
 		super.onPause();
 	}
 
+	private void setupViewComponent(){
+		taskTittle=(MultiAutoCompleteTextView)getView().findViewById(R.id.multiAutoCompleteTextViewTittle);
+		
+
+		
+	}
 }
