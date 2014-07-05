@@ -4,7 +4,7 @@
  * aapt tool from the resource data it found.  It
  * should not be modified by hand.
  */
-package it.gmariotti.cardslib.library;
+package it.gmariotti.cardslib.library.extra;
 
 public final class R {
 	public static final class attr {
