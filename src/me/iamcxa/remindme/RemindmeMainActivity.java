@@ -5,8 +5,6 @@ package me.iamcxa.remindme;
 
 import java.util.Locale;
 
-import commonVar.MainVar;
-
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
 import me.iamcxa.remindme.editor.TaskEditorMain;
 import me.iamcxa.remindme.fragment.CardFragmentLoader0;
@@ -67,24 +65,24 @@ public class RemindmeMainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setLoding("ON");
 
-		MainVar.mPreferences = PreferenceManager
+		RemindmeVar.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		// 設定：layout視圖
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
-		MainVar.debugMsg(0, "=========================");
+		RemindmeVar.debugMsg(0, "=========================");
 		threadID = android.os.Process.getThreadPriority(android.os.Process
 				.myTid());
-		MainVar.debugMsg(1, threadID + " onCreate");
+		RemindmeVar.debugMsg(1, threadID + " onCreate");
 
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				MainVar.debugMsg(1, threadID + " pre-setViewComponent");
+				RemindmeVar.debugMsg(1, threadID + " pre-setViewComponent");
 				// 設定：頁面元件
 				setViewComponent();
 			}
@@ -121,7 +119,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 	/** StartService LOCALE **/
 	/**********************/
 	public void StartService() {
-		if (MainVar.IS_SERVICE_ON()) {
+		if (RemindmeVar.IS_SERVICE_ON()) {
 			Intent intent = new Intent(this, TaskSortingService.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startService(intent);
@@ -183,7 +181,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				MainVar.debugMsg(1, threadID + " setViewComponent");
+				RemindmeVar.debugMsg(1, threadID + " setViewComponent");
 				// 定義：tabs
 				// tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 				// pager = (ViewPager) findViewById(R.id.pager);
@@ -217,7 +215,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				MainVar.debugMsg(1, threadID + " setFragment "
+				RemindmeVar.debugMsg(1, threadID + " setFragment "
 						+ FragmentPosition);
 
 				fragmentManager = getFragmentManager();
@@ -225,7 +223,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 						.beginTransaction();
 
 				// 設定卡片
-				ListCursorCardFragment.setSelection( MainVar.TaskCursor.KEY.PRIORITY
+				ListCursorCardFragment.setSelection( RemindmeVar.TaskCursor.KEY.PRIORITY
 						+ " DESC");
 			//	ListCursorCardFragmentTime.sortOrder = CommonUtils.TaskCursor.KeyColumns.EndDate;
 				//ListCursorCardFragmentLocal.sortOrder = CommonUtils.TaskCursor.KeyColumns.Distance;
@@ -293,7 +291,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				MainVar.debugMsg(1, +threadID + " setDatatoEditor");
+				RemindmeVar.debugMsg(1, +threadID + " setDatatoEditor");
 
 			}
 		}).start();

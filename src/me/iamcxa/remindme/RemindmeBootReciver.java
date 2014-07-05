@@ -1,6 +1,5 @@
 package me.iamcxa.remindme;
 
-import commonVar.MainVar;
 
 import me.iamcxa.remindme.service.TaskSortingService;
 import android.content.BroadcastReceiver;
@@ -18,14 +17,14 @@ public class RemindmeBootReciver extends BroadcastReceiver {
 
 		intent.setClass(context, TaskSortingService.class);
 		
-		MainVar.debugMsg(0,"準備啟動TaskSortingService");
+		RemindmeVar.debugMsg(0,"準備啟動TaskSortingService");
 		try {
 			context.startActivity(intent);
 
-			MainVar.debugMsg(0,"TaskSortingService 啟動完成");
+			RemindmeVar.debugMsg(0,"TaskSortingService 啟動完成");
 		} catch (Exception e) {
 			// TODO: handle exception
-			MainVar.debugMsg(0,"啟動TaskSortingService失敗！error="+e.toString());
+			RemindmeVar.debugMsg(0,"啟動TaskSortingService失敗！error="+e.toString());
 		}
 	}
 }
