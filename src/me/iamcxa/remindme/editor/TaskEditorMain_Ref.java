@@ -274,7 +274,7 @@ public class TaskEditorMain_Ref extends FragmentActivity implements GPSCallback 
 		}
 
 		// ªð¦^¦CªíID
-		// @Override
+		// @Override 
 		@Override
 		public long getItemId(int position) {
 			return position;
