@@ -64,7 +64,7 @@ import me.iamcxa.remindme.provider.WorkaroundMapFragment;
  * 
  */
 
-public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback {
+public class TaskEditorMain extends FragmentActivity implements GPSCallback {
 
 	private static SaveOrUpdate mSaveOrUpdate;
 
@@ -152,8 +152,6 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 	}
 
 	public View vv;
-
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -163,47 +161,46 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 		SearchText = (EditText) findViewById(R.id.SearchText);
 		Search = (Button) findViewById(R.id.Search);
 		OK = (ImageButton) findViewById(R.id.OK);
-		Search.setOnClickListener(SearchPlace);
-		OK.setOnClickListener(SearchPlace);
-		gpsManager = new GPSManager();
-		gpsManager.startGpsListening(getApplicationContext());
-		gpsManager.setGPSCallback(RemindmeTaskEditor.this);
+		//Search.setOnClickListener(SearchPlace);
+		//OK.setOnClickListener(SearchPlace);
+		//gpsManager = new GPSManager();
+		//gpsManager.startGpsListening(getApplicationContext());
+		//gpsManager.setGPSCallback(RemindmeTaskEditor.this);
 		MainVar.GpsSetting.GpsStatus = true;
 		EditorVar.GpsUseTime = 0;
 		GpsTimehandler.post(GpsTime);
 
 		// map = ((MapFragment) getFragmentManager()
 		// .findFragmentById(R.id.map)).getMap();
-		map = ((WorkaroundMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map)).getMap();
+		//map = ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 		main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
 
-		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
-				R.id.map))
-				.setListener(new WorkaroundMapFragment.OnTouchListener() {
-					@Override
-					public void onTouch() {
-						main_scrollview
-						.requestDisallowInterceptTouchEvent(true);
-					}
-				});
-		map.setMyLocationEnabled(true);
-		map.clear();
-		LatLng nowLoacation;
-		if (gpsManager.LastLocation() != null) {
-			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
-					gpsManager.LastLocation().getLongitude());
-			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
-					map.getMaxZoomLevel() - 4)));
-		} else {
-			nowLoacation = new LatLng(23.6978, 120.961);
-			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
-					map.getMinZoomLevel() + 7)));
-		}
-		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
-				.position(nowLoacation));
-
-		map.setOnCameraChangeListener(listener);
+//		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
+//				R.id.map))
+//				.setListener(new WorkaroundMapFragment.OnTouchListener() {
+//					@Override
+//					public void onTouch() {
+//						main_scrollview
+//						.requestDisallowInterceptTouchEvent(true);
+//					}
+//				});
+		//map.setMyLocationEnabled(true);
+		//map.clear();
+//		LatLng nowLoacation;
+//		if (gpsManager.LastLocation() != null) {
+//			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
+//					gpsManager.LastLocation().getLongitude());
+//			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+//					map.getMaxZoomLevel() - 4)));
+//		} else {
+//			nowLoacation = new LatLng(23.6978, 120.961);
+//			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+//					map.getMinZoomLevel() + 7)));
+//		}
+//		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
+//				.position(nowLoacation));
+//
+//		map.setOnCameraChangeListener(listener);
 		// 取得Intent
 		final Intent intent = getIntent();
 		// 設定Uri
@@ -247,10 +244,10 @@ public class RemindmeTaskEditor extends FragmentActivity implements GPSCallback 
 			// TODO: handle exception
 		}
 		// 可多選
-		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+		//listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
 		// 回應列表單擊事件
-		listView.setOnItemClickListener(ViewAdapterClickListener);
+		//listView.setOnItemClickListener(ViewAdapterClickListener);
 	}
 
 	@Override
