@@ -1,5 +1,10 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
+<<<<<<< HEAD
 1399709189925 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\Users\dan\Documents\GitHub\RemindmeV3\libs\android-support-v4.jar
 1399708432647 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\Users\dan\Documents\GitHub\cardslib\library\src\main\libs\android-support-v4.jar
+=======
+1397726733439 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\Users\cxa\git\RemindmeV3\libs\android-support-v4.jar
+1398762911159 621451 5896b0a4e377ac4242eb2bc785220c1c4fc052f4 C:\Users\cxa\git\remindme\libs\AndroidStaggeredGrid\libs\android-support-v4.jar
+>>>>>>> 90f650a3bd13712ec20e73f59bc083ca452f4916
