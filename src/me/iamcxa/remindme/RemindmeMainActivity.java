@@ -3,30 +3,18 @@
  */
 package me.iamcxa.remindme;
 
-import java.util.Locale;
-
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
-import me.iamcxa.remindme.editor.TaskEditorMain_Ref;
-import me.iamcxa.remindme.fragment.CardFragmentLoader0;
-import me.iamcxa.remindme.fragment.CardFragmentLoader1;
-import me.iamcxa.remindme.fragment.CardFragmentLoader2;
+import me.iamcxa.remindme.editor.TaskEditorTab;
 import me.iamcxa.remindme.provider.LocationGetter;
-import me.iamcxa.remindme.provider.PriorityCalculator;
 import me.iamcxa.remindme.service.TaskSortingService;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;   
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
@@ -324,7 +312,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			// Toast.makeText(getApplication(), item.getTitle(),
 			// Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent();
-			intent.setClass(getApplication(), TaskEditorMain_Ref.class);
+			intent.setClass(getApplication(), TaskEditorTab.class);
 			startActivity(intent);
 			return false;
 		}

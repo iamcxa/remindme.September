@@ -8,18 +8,6 @@ import android.view.View;
 public class TaskEditorMap extends Fragment {
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-	}
-
-	@Override
-	public View getView() {
-		// TODO Auto-generated method stub
-		return super.getView();
-	}
-
-	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);

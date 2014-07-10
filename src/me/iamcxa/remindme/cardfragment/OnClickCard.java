@@ -4,7 +4,7 @@ package me.iamcxa.remindme.cardfragment;
 import it.gmariotti.cardslib.library.internal.Card;
 import me.iamcxa.remindme.RemindmeVar;
 import me.iamcxa.remindme.RemindmeVar.TaskCursor;
-import me.iamcxa.remindme.editor.TaskEditorMain_Ref;
+import me.iamcxa.remindme.editor.TaskEditorTab;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -90,7 +90,7 @@ public class OnClickCard {
 		Intent intent = new Intent();
 		intent.putExtra("b", b);
 		// 啟動備忘錄詳細資訊Activity
-		intent.setClass(context, TaskEditorMain_Ref.class);
+		intent.setClass(context, TaskEditorTab.class);
 		context.startActivity(intent);
 	}
 }

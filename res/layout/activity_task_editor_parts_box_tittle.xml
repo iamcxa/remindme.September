@@ -16,7 +16,7 @@
             android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
             android:background="?android:attr/editTextBackground"
             android:ems="10"
-            android:hint="工作標題"
+            android:hint="任務"
             android:textColor="@color/task_editor_parts_layout_textview_color" >
 
             <requestFocus />

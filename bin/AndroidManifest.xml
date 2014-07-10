@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".editor.RemindmeTaskEditor" android:noHistory="true" android:screenOrientation="portrait">
+        <activity android:name=".editor.TaskEditorTab" android:noHistory="true" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.new" />
             </intent-filter>
@@ -84,7 +84,6 @@
         </receiver>
         <activity android:name=".provider.AlarmProvider"></activity>
         <service android:name=".service.TaskSortingService"></service>
-        <activity android:name=".service.GetDistance"></activity>
     </application>
 
 </manifest>
