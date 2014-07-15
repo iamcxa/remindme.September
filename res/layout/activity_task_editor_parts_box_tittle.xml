@@ -3,19 +3,20 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_window"
+        android:background="@color/card_background"
         android:orientation="vertical" >
 
         <MultiAutoCompleteTextView
             android:id="@+id/multiAutoCompleteTextViewTittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/task_editor_parts_layout_margin_Top_Bottom"
             android:layout_marginLeft="@dimen/task_editor_parts_layout_margin_Left_Right"
             android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
-            android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
             android:background="?android:attr/editTextBackground"
             android:ems="10"
+        android:layout_marginBottom="@dimen/task_editor_parts_layout_margin_Top_Bottom"
+        android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
+            android:height="@dimen/task_editor_parts_EditText_Height"
             android:hint="任務"
             android:textColor="@color/task_editor_parts_layout_textview_color" >
 

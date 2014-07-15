@@ -49,8 +49,8 @@ public class SaveOrUpdate {
 		values.put(TaskCursor.KEY.IS_FIXED, is_Fixed);
 
 		// save 日期/時間
-		values.put(TaskCursor.KEY.END_DATE, endDate);
-		values.put(TaskCursor.KEY.END_TIME, endTime);
+		values.put(TaskCursor.KEY.DUE_DATE, endDate);
+		values.put(TaskCursor.KEY.ALERT_TIME, endTime);
 
 		// save contents
 		values.put(TaskCursor.KEY.CONTENT, content);
@@ -92,8 +92,8 @@ public class SaveOrUpdate {
 		values.put(TaskCursor.KEY.IS_FIXED, is_Fixed);
 
 		// save 日期/時間
-		values.put(TaskCursor.KEY.END_DATE, endDate);
-		values.put(TaskCursor.KEY.END_TIME, endTime);
+		values.put(TaskCursor.KEY.DUE_DATE, endDate);
+		values.put(TaskCursor.KEY.ALERT_TIME, endTime);
 
 		// save contents
 		values.put(TaskCursor.KEY.CONTENT, content);

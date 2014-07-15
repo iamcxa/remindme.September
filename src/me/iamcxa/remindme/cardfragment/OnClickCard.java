@@ -61,8 +61,8 @@ public class OnClickCard {
 	private void ReadDatefromCursor() {
 		int taskId = cursor.getInt(0);;
 		String tittle = cursor.getString(1);
-		String endDate = cursor.getString(3);
-		String endTime = cursor.getString(TaskCursor.KEY_INDEX.END_TIME);
+		String DUE_DATE = cursor.getString(TaskCursor.KEY_INDEX.DUE_DATE);
+		String ALERT_TIME = cursor.getString(TaskCursor.KEY_INDEX.ALERT_TIME);
 		String isRepeat = cursor.getString(TaskCursor.KEY_INDEX.IS_REPEAT);
 		String isFixed = cursor.getString(TaskCursor.KEY_INDEX.IS_FIXED);
 		String locationName = cursor
@@ -77,8 +77,8 @@ public class OnClickCard {
 		b.putInt("taskId", taskId);
 		b.putString("tittle", tittle);
 		b.putString("created", created);
-		b.putString("endDate", endDate);
-		b.putString("endTime", endTime);
+		b.putString("endDate", DUE_DATE);
+		b.putString("endTime", ALERT_TIME);
 		b.putString("content", content);
 		b.putString("isRepeat", isRepeat);
 		b.putString("IsFixed", isFixed);

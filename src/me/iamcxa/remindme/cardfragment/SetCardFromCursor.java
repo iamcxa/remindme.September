@@ -27,7 +27,7 @@ public class SetCardFromCursor {
 
 		RemindmeVar.debugMsg(0, "prepare data from cursor...");
 		boolean Extrainfo = cursor
-				.isNull(RemindmeVar.TaskCursor.KEY_INDEX.OTHER);
+				.isNull(RemindmeVar.TaskCursor.KEY_INDEX.TAG);
 		int CID = cursor.getInt(RemindmeVar.TaskCursor.KEY_INDEX.KEY_ID);
 		String dintence = cursor
 				.getString(RemindmeVar.TaskCursor.KEY_INDEX.DISTANCE);
@@ -35,11 +35,11 @@ public class SetCardFromCursor {
 				.getString(RemindmeVar.TaskCursor.KEY_INDEX.CREATED);
 		String endTime = "";// cursor.getString(5);
 		String endDate = cursor
-				.getString(RemindmeVar.TaskCursor.KEY_INDEX.END_DATE);
+				.getString(RemindmeVar.TaskCursor.KEY_INDEX.DUE_DATE);
 		String LocationName = cursor
 				.getString(RemindmeVar.TaskCursor.KEY_INDEX.LOCATION_NAME);
 		String extraInfo = cursor
-				.getString(RemindmeVar.TaskCursor.KEY_INDEX.OTHER);
+				.getString(RemindmeVar.TaskCursor.KEY_INDEX.TAG);
 		String PriorityWeight = cursor
 				.getString(RemindmeVar.TaskCursor.KEY_INDEX.PRIORITY);
 		long dayLeft = RemindmeVar.getDaysLeft(endDate, 2);

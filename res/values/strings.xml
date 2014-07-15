@@ -3,40 +3,38 @@
 
     <!-- Basic theme information -->
     <string name="app_name">智慧提醒</string>
-    <string name="icon_title">Ultimate Theme UI</string>
     <string name="developer_name">DesignRifts</string>
     <string name="pkg">tw.iamcxa.remindme</string>
     <string name="apply_wallpaper">Apply</string>
     <string name="go_applied">Theme Applied</string>
-    
-   
+
     <!-- The feature graphic will appear above the theme description -->
     <string name="theme_feature">feature</string>
-    
+
     <!-- Each theme may have up to 5 preview images -->
     <string name="theme_preview1">preview1</string>
     <string name="theme_preview2">preview2</string>
-    
+
     <!-- Theme properties -->
-	<string name="authorName">DesignRifts</string>
-	<string name="developerName">DesignRifts</string>
-	<string name="authorLink">http://designrifts.com</string>
-        
+    <string name="authorName">DesignRifts</string>
+    <string name="developerName">DesignRifts</string>
+    <string name="authorLink">http://designrifts.com</string>
+
     <!-- Share Button -->
     <!-- This is additional text that is attached to your package when sharing the link -->
-    <string name="share_this">This Template Is Da Bomb </string> 
-   
+    <string name="share_this">This Template Is Da Bomb </string>
+
     <!-- This (optional) link will appear at the end of the theme description -->
     <string name="developer_link">http://www.designrifts.com/</string>
     <string name="theme_description">This is like having all the sexy parts on my own body and I can play with them all at the same time</string>
-    	
-	<!-- Icon Catergories Tabs -->
-	<string name="icon1">Latest Icons</string>
+
+    <!-- Icon Catergories Tabs -->
+    <string name="icon1">Latest Icons</string>
     <string name="icon2">System Icons</string>
     <string name="icon3">Play Icons</string>
     <string name="icon4">Games Icons</string>
-    <string name="icon5">Misc Icons</string>  
-    
+    <string name="icon5">Misc Icons</string>
+
     <!-- Icon Request data -->
     <string name="email_subject">Icon Requests</string>
     <string name="email_text">Will you have my babies oh mighty Jai</string>
@@ -45,31 +43,48 @@
     <string name="begin_activity_scan">Begin Icon Request Activity</string>
     <string name="scan_note">By pressing this button this application will scan your phone for installed activities (apps) and compile a text file as well as the applications icons and create a zip file to send us, thus allowing us to fulfil your request</string>
     <string name="carddemo_title_list_cursor">carddemo_title_list_cursor</string>
+
     <string-array name="PowerUsageOptionString">
-        <item >精準</item>
-        <item >平衡</item>
-        <item >省電</item>
+        <item>精準</item>
+        <item>平衡</item>
+        <item>省電</item>
     </string-array>
     <string-array name="PowerUsageOptionValue">
-        <item >1</item>
-        <item >0</item>
-        <item >-1</item>
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
     </string-array>
+
     <string name="PowerUsageOptionDefaultValue">0</string>
     <string name="PowerUsageOptionTittle">位置偵測模式</string>
+
     <string-array name="CardOnLongClickDialogString">
-        <item >修改</item>
-        <item >刪除</item>s
-        <item >提高優先權</item>
-        <item >降低優先權</item>
-        <item >分享</item>
+        <item>修改</item>
+        <item>刪除</item>
+s        <item>提高優先權</item>
+        <item>降低優先權</item>
+        <item>分享</item>
     </string-array>
-        <string-array name="CardOnLongClickDialogValue">
-        <item >0</item>
-        <item >1</item>
-        <item >2</item>
-        <item >3</item>
-        <item >4</item>
+    <string-array name="CardOnLongClickDialogValue">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
     </string-array>
+    <string-array name="drawer_array_CHT">
+        <item>任務盒</item>
+        <item>今天</item>
+        <item>往後一週</item>
+        <item>任務組合</item>
+        <item>●距離</item>
+        <item>標籤</item>
+    </string-array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     
+	    <string name="action_websearch">Web search</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
 </resources>

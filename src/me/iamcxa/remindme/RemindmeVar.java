@@ -155,8 +155,8 @@ public class RemindmeVar {
 		// ¬d¸ßÄæ¦ì°}¦C
 		public static final String[] PROJECTION = new String[] { KEY.KEY_ID, // 0
 				KEY.TITTLE, // 1
-				KEY.END_DATE,// 3
-				KEY.END_TIME,// 5
+				KEY.DUE_DATE,// 3
+				KEY.ALERT_TIME,// 5
 				KEY.IS_REPERT, // 6
 				KEY.LOCATION_NAME, // 8
 				KEY.COORDINATE,// 9
@@ -165,9 +165,9 @@ public class RemindmeVar {
 				KEY.CREATED,// 12
 				KEY.PRIORITY,// 17
 				KEY.COLLABORATOR,// 18
-				KEY.CAL_ID,// 19
+				KEY.TAG,// 19
 				KEY.GOOGOLE_CAL_SYNC_ID,// 20
-				KEY.OTHER, // 21
+				KEY.CATEGORY, // 21
 				KEY.LEVEL, KEY.IS_FIXED };
 
 		// ¬d¸ßÄæ¦ì°}¦C
@@ -177,8 +177,8 @@ public class RemindmeVar {
 				KEY.COORDINATE,// 2
 				KEY.DISTANCE,// 3
 				KEY.PRIORITY,// 4
-				KEY.END_DATE,// 5
-				KEY.END_TIME,// 6
+				KEY.DUE_DATE,// 5
+				KEY.ALERT_TIME,// 6
 				KEY.CREATED,// 6
 		};
 
@@ -186,8 +186,8 @@ public class RemindmeVar {
 			public static final int KEY_ID = 0;
 			public static final int TITTLE = 1;
 			public static final int CREATED = 2;
-			public static final int END_DATE = 3;
-			public static final int END_TIME = 4;
+			public static final int DUE_DATE = 3;
+			public static final int ALERT_TIME = 4;
 			public static final int CONTENT = 5;
 			public static final int LOCATION_NAME = 6;
 			public static final int COORDINATE = 7;
@@ -195,9 +195,9 @@ public class RemindmeVar {
 			public static final int LEVEL = 9;
 			public static final int PRIORITY = 10;
 			public static final int COLLABORATOR = 11;
-			public static final int CAL_ID = 12;
+			public static final int TAG = 12;
 			public static final int GOOGOLE_CAL_SYNC_ID = 13;
-			public static final int OTHER = 14;
+			public static final int CATEGORY = 14;
 			public static final int IS_FIXED = 15;
 			public static final int IS_REPEAT = 16;
 		}
@@ -207,8 +207,8 @@ public class RemindmeVar {
 			public static final String KEY_ID = "_id";
 			public static final String TITTLE = "TITTLE";
 			public static final String CREATED = "CREATED";
-			public static final String END_TIME = "END_TIME";
-			public static final String END_DATE = "END_DATE";
+			public static final String ALERT_TIME = "ALERT_TIME";
+			public static final String DUE_DATE = "DUE_DATE";
 			public static final String CONTENT = "CONTENT";
 			public static final String LOCATION_NAME = "LOCATION_NAME";
 			public static final String COORDINATE = "COORDINATE";
@@ -216,9 +216,9 @@ public class RemindmeVar {
 			public static final String LEVEL = "LEVEL";
 			public static final String PRIORITY = "PRIORITY";
 			public static final String COLLABORATOR = "COLLABORATOR";
-			public static final String CAL_ID = "CAL_ID";
+			public static final String TAG = "TAG";
 			public static final String GOOGOLE_CAL_SYNC_ID = "GOOGOLE_CAL_SYNC_ID";
-			public static final String OTHER = "OTHER";
+			public static final String CATEGORY = "CATEGORY";
 			public static final String IS_FIXED = "IS_FIXED";;
 			public static final String IS_REPERT = "IS_REPERT";
 		}

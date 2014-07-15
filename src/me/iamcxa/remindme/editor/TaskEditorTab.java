@@ -21,7 +21,7 @@ public class TaskEditorTab extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_task_editor);
+		setContentView(R.layout.activity_task_editor_tab);
 
 		setupViewComponent();
 	}
@@ -41,10 +41,6 @@ public class TaskEditorTab extends Activity {
 		// actionAdd
 		MenuItem actionAdd = menu.findItem(R.id.action_add);
 		actionAdd.setOnMenuItemClickListener(btnClickListener);
-
-		// actionCancel
-		//MenuItem actionCancel = menu.findItem(R.id.action_cancel);
-		//actionCancel.setOnMenuItemClickListener(btnClickListener);
 
 		return true;
 	}
@@ -101,27 +97,21 @@ public class TaskEditorTab extends Activity {
 
 		Fragment fragMarriSug = new TaskEditorMain();
 		actBar.addTab(actBar.newTab()
-				.setText("婚姻建議")
+				//.setText("婚姻建議")
 				.setIcon(getResources().getDrawable(android.R.drawable.ic_lock_idle_alarm))
 				.setTabListener(new MyTabListener(fragMarriSug)));
 
-		//        Fragment fragGame = new GameFragment();
-		//        actBar.addTab(actBar.newTab()
-		//        		.setText("電腦猜拳遊戲")
-		//        		.setIcon(getResources().getDrawable(android.R.drawable.ic_dialog_alert))
-		//        		.setTabListener(new MyTabListener(fragGame)));
-		//
-		//        Fragment fragVideo = new VideoFragment();
-		//        actBar.addTab(actBar.newTab()
-		//        		.setText("播放影片")
-		//        		.setIcon(getResources().getDrawable(android.R.drawable.ic_media_play))
-		//        		.setTabListener(new MyTabListener(fragVideo)));
-		//
-		//        Fragment fragList = new ExpList();
-		//        actBar.addTab(actBar.newTab()
-		//        		.setText("ExpandableListView")
-		//        		.setIcon(getResources().getDrawable(android.R.drawable.ic_dialog_info))
-		//        		.setTabListener(new MyTabListener(fragList)));
+		Fragment fragGame = new TaskEditorMain();
+		actBar.addTab(actBar.newTab()
+				//	.setText("電腦猜拳遊戲")
+				.setIcon(getResources().getDrawable(android.R.drawable.ic_dialog_alert))
+				.setTabListener(new MyTabListener(fragGame)));
+
+		Fragment fragVideo = new TaskEditorMain();
+		actBar.addTab(actBar.newTab()
+				//.setText("播放影片")
+				.setIcon(getResources().getDrawable(android.R.drawable.ic_media_play))
+				.setTabListener(new MyTabListener(fragVideo)));
 	}
 
 
@@ -136,12 +126,12 @@ public class TaskEditorTab extends Activity {
 		public boolean onMenuItemClick(MenuItem item) {
 			// TODO Auto-generated method stub
 			String itemName=String.valueOf(item.getTitle());
-			 Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
 			if (itemName.contentEquals( "action_add")){
-				 btnActionAdd();
+				btnActionAdd();
 
-			}else if (itemName=="action_cancel") {
-				 btnActionCancel();
+			}else if (itemName.contentEquals( "action_add")) {
+				btnActionCancel();
 			}
 
 
@@ -149,7 +139,7 @@ public class TaskEditorTab extends Activity {
 		}
 
 	};
-	
+
 	private void btnActionAdd(){
 		// if (dateDesc.getText().equals("") &&
 		// timeDesc.getText().equals("")
@@ -253,9 +243,9 @@ public class TaskEditorTab extends Activity {
 		//			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
 		//			mSaveOrUpdate.DoTaskEditorAdding(mEditorVar.taskId, mEditorVar.tittle, mEditorVar.endDate, mEditorVar.endTime,
 		//					mEditorVar.content, mEditorVar.locationName, mEditorVar.coordinate, "1", mEditorVar.is_Fixed, "1");
-		//			finish();
+					finish();
 	}
-	
+
 	private void btnActionCancel(){
 		// Intent EventEditor = new Intent();
 		// EventEditor.setClass(getApplication(),RemindmeTaskEditorActivity.class);

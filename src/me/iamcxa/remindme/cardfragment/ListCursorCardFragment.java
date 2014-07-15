@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 /**
  * List with Cursor Example
@@ -40,15 +41,9 @@ import android.view.ViewGroup;
 public class ListCursorCardFragment extends BaseFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 
+	public static final String FILTER_STRING="FILTER_STRING";
+	
 	private static MyCursorCardAdapter mAdapter;
-	public static MyCursorCardAdapter getmAdapter() {
-		return mAdapter;
-	}
-
-	public static void setmAdapter(MyCursorCardAdapter mAdapter) {
-		ListCursorCardFragment.mAdapter = mAdapter;
-	}
-
 	private static CardListView mListView;
 	private static String[] projection = TaskCursor.PROJECTION;
 	private static String selection = null;
@@ -69,10 +64,30 @@ public class ListCursorCardFragment extends BaseFragment implements
 		if (mListView != null) {
 			mListView.setAdapter(mAdapter);
 		}
+
+		int filter = getArguments().getInt(FILTER_STRING);
+		Toast.makeText(getActivity(), "i="+String.valueOf(filter), Toast.LENGTH_SHORT).show();		
 		
-		getLoaderManager();
+		switch (filter) {
+		case 0:
+			// filter=0 : 任務盒
+			ListCursorCardFragment.setSelection("DUE_DATE = \"\"");
+			//ListCursorCardFragmentTime.selection = "TaskLocationName = \"\"";
+			//ListCursorCardFragmentLocal.selection = "TaskLocationName <> \"\"";
+			break;
+		case 1:
+			// filter=0 : 任務盒
+			ListCursorCardFragment.setSelection("DUE_DATE = \"\"");
+			
+			break;
+
+		default:
+			break;
+		}
+		
 		
 		// Force start background query to load sessions
+		getLoaderManager();
 		getLoaderManager().restartLoader(0, null, this);
 		
 		// LoaderManager.enableDebugLogging(true);
@@ -80,7 +95,8 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 	@Override
 	public int getTitleResourceId() {
-		return R.string.app_name;
+	
+		return  R.string.app_name;
 	}
 
 	@Override
@@ -109,6 +125,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 		Loader<Cursor> loader = null;
 		loader = new CursorLoader(getActivity(), RemindmeVar.CONTENT_URI,
 				projection, selection, selectionArgs, sortOrder);
+		
 		return loader;
 	}
 
@@ -123,8 +140,18 @@ public class ListCursorCardFragment extends BaseFragment implements
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		mAdapter.swapCursor(null);
+		
+	}
+	
+	
+
+	public static MyCursorCardAdapter getmAdapter() {
+		return mAdapter;
 	}
 
+	public static void setmAdapter(MyCursorCardAdapter mAdapter) {
+		ListCursorCardFragment.mAdapter = mAdapter;
+	}
 
 
 	public static Double getLongitude() {
@@ -165,6 +192,14 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 	public static void setSelection(String selections) {
 		ListCursorCardFragment.selection = selections;
+	}
+
+	public static Cursor getCursor() {
+		return cursor;
+	}
+
+	public static void setCursor(Cursor cursor) {
+		ListCursorCardFragment.cursor = cursor;
 	}
 
 }

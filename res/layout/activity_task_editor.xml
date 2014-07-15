@@ -19,7 +19,8 @@
     <FrameLayout
         android:id="@+id/frameTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="3dp" >
+        android:layout_height="0dp"
+        android:layout_weight="0" >
 
     </FrameLayout>
 
@@ -31,17 +32,22 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/activity_task_editor_parts_box_content" />
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_task_editor_parts_box_option" />
+        layout="@layout/activity_task_editor_parts_box_category" />
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/activity_task_editor_parts_box_duedate" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/activity_task_editor_parts_box_btnmore" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/activity_task_editor_parts_box_option" />
 
     <include
         android:layout_width="match_parent"

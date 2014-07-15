@@ -59,8 +59,8 @@ public class TaskDbProvider extends ContentProvider {
 					+ TaskCursor.KEY.KEY_ID + " INTEGER PRIMARY KEY autoincrement,"//0
 					+ TaskCursor.KEY.TITTLE + " TEXT," // 1
 					+ TaskCursor.KEY.CREATED+ " TEXT," // 2
-					+ TaskCursor.KEY.END_DATE + " TEXT,"//3
-					+ TaskCursor.KEY.END_TIME + " TEXT,"//4
+					+ TaskCursor.KEY.ALERT_TIME + " TEXT,"//3
+					+ TaskCursor.KEY.DUE_DATE + " TEXT,"//4
 					+ TaskCursor.KEY.CONTENT+ " TEXT," // 5
 					+ TaskCursor.KEY.LOCATION_NAME + " TEXT,"//6
 					+ TaskCursor.KEY.COORDINATE + " TEXT,"//
@@ -68,9 +68,9 @@ public class TaskDbProvider extends ContentProvider {
 					+ TaskCursor.KEY.LEVEL	+ " INTEGER," // 21
 					+ TaskCursor.KEY.PRIORITY+ " INTEGER," // 19
 					+ TaskCursor.KEY.COLLABORATOR+ " TEXT," // 20
-					+ TaskCursor.KEY.CAL_ID + " INTEGER," // 12
-					+ TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID + " INTEGER,"
-					+ TaskCursor.KEY.OTHER + " TEXT," // 21
+					+ TaskCursor.KEY.TAG + " TEXT," // 12
+					+ TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID + " TEXT,"
+					+ TaskCursor.KEY.CATEGORY + " TEXT," // 21
 					+ TaskCursor.KEY.IS_FIXED+ " TEXT," // 21
 					+ TaskCursor.KEY.IS_REPERT + " TEXT"
 					+ ");");
@@ -244,13 +244,13 @@ public class TaskDbProvider extends ContentProvider {
 		sTaskListProjectionMap.put(TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID,
 				TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID);
 		sTaskListProjectionMap
-				.put(TaskCursor.KEY.CAL_ID, TaskCursor.KEY.CAL_ID);
+				.put(TaskCursor.KEY.CATEGORY, TaskCursor.KEY.CATEGORY);
 		sTaskListProjectionMap
 				.put(TaskCursor.KEY.TITTLE, TaskCursor.KEY.TITTLE);
-		sTaskListProjectionMap.put(TaskCursor.KEY.END_DATE,
-				TaskCursor.KEY.END_DATE);
-		sTaskListProjectionMap.put(TaskCursor.KEY.END_TIME,
-				TaskCursor.KEY.END_TIME);
+		sTaskListProjectionMap.put(TaskCursor.KEY.DUE_DATE,
+				TaskCursor.KEY.DUE_DATE);
+		sTaskListProjectionMap.put(TaskCursor.KEY.ALERT_TIME,
+				TaskCursor.KEY.ALERT_TIME);
 		sTaskListProjectionMap.put(TaskCursor.KEY.LOCATION_NAME,
 				TaskCursor.KEY.LOCATION_NAME);
 		sTaskListProjectionMap.put(TaskCursor.KEY.DISTANCE,
@@ -263,7 +263,7 @@ public class TaskDbProvider extends ContentProvider {
 				TaskCursor.KEY.CONTENT);
 		sTaskListProjectionMap.put(TaskCursor.KEY.CREATED,
 				TaskCursor.KEY.CREATED);
-		sTaskListProjectionMap.put(TaskCursor.KEY.OTHER, TaskCursor.KEY.OTHER);
+		sTaskListProjectionMap.put(TaskCursor.KEY.TAG, TaskCursor.KEY.TAG);
 		sTaskListProjectionMap.put(TaskCursor.KEY.COLLABORATOR,
 				TaskCursor.KEY.COLLABORATOR);
 		sTaskListProjectionMap.put(TaskCursor.KEY.COORDINATE,
