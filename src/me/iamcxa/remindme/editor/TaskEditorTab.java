@@ -95,14 +95,14 @@ public class TaskEditorTab extends Activity {
 
 		Fragment fragMarriSug = new TaskEditorMain();
 		actBar.addTab(actBar.newTab()
-				//.setText("婚姻建議")
-				.setIcon(getResources().getDrawable(android.R.drawable.ic_lock_idle_alarm))
+				//.setText("任務")
+				.setIcon(getResources().getDrawable(R.drawable.tear_of_calendar))
 				.setTabListener(new MyTabListener(fragMarriSug)));
 
-		Fragment fragGame = new TaskEditorMain();
+		Fragment fragGame = new TaskEditorLocation();
 		actBar.addTab(actBar.newTab()
-				//	.setText("電腦猜拳遊戲")
-				.setIcon(getResources().getDrawable(android.R.drawable.ic_dialog_alert))
+				//.setText("位置")
+				.setIcon(getResources().getDrawable(R.drawable.map_marker))
 				.setTabListener(new MyTabListener(fragGame)));
 
 		Fragment fragVideo = new TaskEditorMain();
