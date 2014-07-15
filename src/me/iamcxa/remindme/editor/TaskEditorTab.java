@@ -61,27 +61,25 @@ public class TaskEditorTab extends Activity {
 	public static void init(Intent intent) {
 		Bundle b = intent.getBundleExtra("b");
 		if (b != null) {
-			mEditorVar.taskId = b.getInt("taskId");
-			mEditorVar.tittle = b.getString("tittle");
-			mEditorVar.created = b.getString("created");
-			mEditorVar.endDate = b.getString("endDate");
-			mEditorVar.endTime = b.getString("endTime");
-			mEditorVar.content = b.getString("content");
-			mEditorVar.isRepeat = b.getString("isRepeat");
-			mEditorVar.isFixed = b.getString("isFixed");
-			mEditorVar.locationName = b.getString("locationName");
-			mEditorVar.coordinate = b.getString("coordinate");
-			mEditorVar.collaborator = b.getString("collaborator");
+			mEditorVar.Editor.taskId = b.getInt("taskId");
+			mEditorVar.Editor.tittle = b.getString("tittle");
+			mEditorVar.Editor.created = b.getString("created");
+			mEditorVar.Editor.dueDate = b.getString("dueDate");
+			mEditorVar.Editor.alertTime = b.getString("alertTime");
+			mEditorVar.Editor.content = b.getString("content");
+			mEditorVar.Editor.alertCycle = b.getString("alertCycle");
+			mEditorVar.Editor.locationName = b.getString("locationName");
+			mEditorVar.Editor.coordinate = b.getString("coordinate");
 
-			if (mEditorVar.endDate != null && mEditorVar.endDate.length() > 0) {
-				String[] strs = mEditorVar.endDate.split("/");
+			if (mEditorVar.Editor.dueDate != null && mEditorVar.Editor.dueDate.length() > 0) {
+				String[] strs = mEditorVar.Editor.dueDate.split("/");
 				mEditorVar.Date.setmYear(Integer.parseInt(strs[0]));
 				mEditorVar.Date.setmMonth (Integer.parseInt(strs[1]) - 1);
 				mEditorVar.Date.setmDay ( Integer.parseInt(strs[2]));
 			}
 
-			if (mEditorVar.endTime != null && mEditorVar.endTime.length() > 0) {
-				String[] strs = mEditorVar.endTime.split(":");
+			if (mEditorVar.Editor.alertTime != null && mEditorVar.Editor.alertTime.length() > 0) {
+				String[] strs = mEditorVar.Editor.alertTime.split(":");
 				mEditorVar.Date.setmHour (Integer.parseInt(strs[0]));
 				mEditorVar.Date.setmMinute(Integer.parseInt(strs[1]));
 			}
@@ -213,11 +211,11 @@ public class TaskEditorTab extends Activity {
 		//					.toString());
 		//			// 存入日期
 		//			values.put(TaskCursor.KeyColumns.StartDate, curDate.toString());
-		//			values.put(TaskCursor.KeyColumns.EndDate, dateDesc.getText()
+		//			values.put(TaskCursor.KeyColumns.Editor.dueDate, dateDesc.getText()
 		//					.toString());
 		//			// save the selected value of time
 		//			values.put(TaskCursor.KeyColumns.StartTime, curDate.toString());
-		//			values.put(TaskCursor.KeyColumns.EndTime, timeDesc.getText()
+		//			values.put(TaskCursor.KeyColumns.Editor.alertTime, timeDesc.getText()
 		//					.toString());
 		//			// save contents
 		//			values.put(TaskCursor.KeyColumns.CONTENT, contentDesc.getText()
@@ -231,8 +229,8 @@ public class TaskEditorTab extends Activity {
 
 		//			if (checkBoxIsFixed != null) {
 		//				mEditorVar.is_Fixed = String.valueOf(checkBoxIsFixed.isChecked());
-		//				mEditorVar.endDate = dateDesc.getText().toString();
-		//				//endTime = timeDesc.getText().toString();
+		//				mEditorVar.Editor.dueDate = dateDesc.getText().toString();
+		//				//Editor.alertTime = timeDesc.getText().toString();
 		//				//content = contentDesc.getText().toString();
 		//				mEditorVar.tittle = EditTextTittle.getText().toString();
 		//				mEditorVar.coordinate = mEditorVar.Latitude + "," + mEditorVar.Longitude;
@@ -241,7 +239,7 @@ public class TaskEditorTab extends Activity {
 		//			}
 		//	
 		//			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
-		//			mSaveOrUpdate.DoTaskEditorAdding(mEditorVar.taskId, mEditorVar.tittle, mEditorVar.endDate, mEditorVar.endTime,
+		//			mSaveOrUpdate.DoTaskEditorAdding(mEditorVar.taskId, mEditorVar.tittle, mEditorVar.Editor.dueDate, mEditorVar.Editor.alertTime,
 		//					mEditorVar.content, mEditorVar.locationName, mEditorVar.coordinate, "1", mEditorVar.is_Fixed, "1");
 					finish();
 	}

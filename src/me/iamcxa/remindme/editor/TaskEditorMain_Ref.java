@@ -72,7 +72,7 @@
 //	private static GoogleMap map;
 //
 //	// 備忘錄訊息列表
-//	private ListView listView;
+//	private static ListView listView;
 //
 //
 //	private static EditText EditTextTittle;
@@ -105,45 +105,46 @@
 //	private CheckedTextView ctv1, ctv2;
 //	// 存取佈局實例
 //	private static LayoutInflater li;
+//	
+//
+//	private EditorVar mEditorVar ;
 //
 //	// 初始化方法
 //	private void init(Intent intent) {
 //		Bundle b = intent.getBundleExtra("b");
 //		if (b != null) {
-//			EditorVar.taskId = b.getInt("taskId");
-//			EditorVar.tittle = b.getString("tittle");
-//			EditorVar.created = b.getString("created");
-//			EditorVar.endDate = b.getString("endDate");
-//			EditorVar.endTime = b.getString("endTime");
-//			EditorVar.content = b.getString("content");
-//			EditorVar.isRepeat = b.getString("isRepeat");
-//			EditorVar.isFixed = b.getString("isFixed");
-//			EditorVar.locationName = b.getString("locationName");
-//			EditorVar.coordinate = b.getString("coordinate");
-//			EditorVar.collaborator = b.getString("collaborator");
+//			mEditorVar.Editor.taskId = b.getInt("taskId");
+//			mEditorVar.Editor.tittle = b.getString("tittle");
+//			mEditorVar.Editor.created = b.getString("created");
+//			mEditorVar.Editor.dueDate = b.getString("dueDate");
+//			mEditorVar.Editor.alertTime = b.getString("alertTime");
+//			mEditorVar.Editor.content = b.getString("content");
+//			mEditorVar.Editor.alertCycle = b.getString("alertCycle");
+//			mEditorVar.Editor.locationName = b.getString("locationName");
+//			mEditorVar.Editor.coordinate = b.getString("coordinate");
 //
-//			if (EditorVar.endDate != null && EditorVar.endDate.length() > 0) {
-//				String[] strs = EditorVar.endDate.split("/");
-//				EditorVar.mYear = Integer.parseInt(strs[0]);
-//				EditorVar.mMonth = Integer.parseInt(strs[1]) - 1;
-//				EditorVar.mDay = Integer.parseInt(strs[2]);
+//			if (mEditorVar.Editor.dueDate != null && mEditorVar.Editor.dueDate.length() > 0) {
+//				String[] strs = mEditorVar.Editor.dueDate.split("/");
+//				mEditorVar.Date.setmYear( Integer.parseInt(strs[0]));
+//				mEditorVar.Date.setmMonth (Integer.parseInt(strs[1]) - 1);
+//				mEditorVar.Date.setmDay (Integer.parseInt(strs[2]));
 //			}
 //
-//			if (EditorVar.endTime != null && EditorVar.endTime.length() > 0) {
-//				String[] strs = EditorVar.endTime.split(":");
-//				EditorVar.mHour = Integer.parseInt(strs[0]);
-//				EditorVar.mMinute = Integer.parseInt(strs[1]);
+//			if (mEditorVar.Editor.alertTime != null && mEditorVar.Editor.alertTime.length() > 0) {
+//				String[] strs = mEditorVar.Editor.alertTime.split(":");
+//				mEditorVar.Date.setmHour(Integer.parseInt(strs[0]));
+//				mEditorVar.Date.setmMinute ( Integer.parseInt(strs[1]));
 //			}
 //
-//			EditTextTittle.setText(EditorVar.tittle);
+//			EditTextTittle.setText(mEditorVar.Editor.tittle);
 //
 //		}
 //
 //		Toast.makeText(getApplicationContext(),
-//				EditorVar.taskId + "," +
-//						EditorVar.content + "," +
-//						EditorVar.endDate + "," +
-//						EditorVar.endTime,
+//				mEditorVar.Editor.taskId + "," +
+//						mEditorVar.Editor.content + "," +
+//						mEditorVar.Editor.dueDate + "," +
+//						mEditorVar.Editor.alertTime,
 //						Toast.LENGTH_LONG).show();
 //
 //	}
@@ -154,7 +155,7 @@
 //
 //		super.onCreate(savedInstanceState);
 //		setContentView(R.layout.activity_task_editor);
-//		checkBoxIsFixed = (CheckBox) findViewById(R.id.checkBoxIsFixed);
+//		//checkBoxIsFixed = (CheckBox) findViewById(R.id.checkBoxIsFixed);
 //		SearchText = (EditText) findViewById(R.id.SearchText);
 //		Search = (Button) findViewById(R.id.Search);
 //		OK = (ImageButton) findViewById(R.id.OK);
@@ -164,7 +165,7 @@
 //		//gpsManager.startGpsListening(getApplicationContext());
 //		//gpsManager.setGPSCallback(RemindmeTaskEditor.this);
 //		RemindmeVar.GpsSetting.GpsStatus = true;
-//		EditorVar.GpsUseTime = 0;
+//		mEditorVar.Location.GpsUseTime = 0;
 //		GpsTimehandler.post(GpsTime);
 //
 //		// map = ((MapFragment) getFragmentManager()
@@ -215,7 +216,7 @@
 //		 */
 //
 //		// 標題輸入欄位
-//		EditTextTittle = (EditText) findViewById(R.id.editTextTittle);
+//		EditTextTittle = (EditText) findViewById(R.id.multiAutoCompleteTextViewTittle);
 //		// EditTextTittle.setHint("您能輸入\"123 9. 星巴克 裝文青 \"快速設定");
 //		// EditTextTittle.setTextSize(textsize(5));
 //		// EditTextTittle.setHintTextColor(R.color.background_window);
@@ -224,14 +225,14 @@
 //		final Calendar c = Calendar.getInstance();
 //
 //		// 取得目前日期、時間
-//		EditorVar.mYear = c.get(Calendar.YEAR);
-//		EditorVar.mMonth = (c.get(Calendar.MONTH));
-//		EditorVar.mDay = c.get(Calendar.DAY_OF_MONTH);
-//		EditorVar.mHour = c.get(Calendar.HOUR_OF_DAY);
-//		EditorVar.mMinute = c.get(Calendar.MINUTE);
+//		mEditorVar.Date.setmYear (c.get(Calendar.YEAR));
+//		mEditorVar.Date.setmMonth ( (c.get(Calendar.MONTH)));
+//		mEditorVar.Date.setmDay ( c.get(Calendar.DAY_OF_MONTH));
+//		mEditorVar.Date.setmHour ( c.get(Calendar.HOUR_OF_DAY));
+//		mEditorVar.Date.setmMinute( c.get(Calendar.MINUTE));
 //
 //		// 取得ListView
-//		listView = (ListView) (findViewById(R.id.listView1));
+//		//listView = (ListView) (findViewById(R.id.listView1));
 //		// 實例化LayoutInflater
 //		li = getLayoutInflater();
 //		// 設定ListView Adapter
@@ -332,7 +333,8 @@
 //				contentTittle = (TextView) textView.findViewById(R.id.name);
 //				contentDesc = (TextView) textView.findViewById(R.id.desc);
 //				contentTittle.setText(strs[position]);
-//				contentDesc.setText(EditorVar.content);
+//				String mEditorVarEditorContent=null;
+//				contentDesc.setText(mEditorVarEditorContent);
 //
 //				contentDesc.setTextColor(Color.GRAY);
 //				return textView;
@@ -370,11 +372,11 @@
 //			 */
 //			// 設定提醒日期
 //			case 0:
-//				showDialog(EditorVar.DATE_DIALOG_ID);
+//				showDialog(mEditorVar.DATE_DIALOG_ID);
 //				break;
 //				// 設定提醒時間
 //			case 1:
-//				showDialog(EditorVar.TIME_DIALOG_ID);
+//				showDialog(mEditorVar.TIME_DIALOG_ID);
 //				break;
 //				// 設定提醒內容
 //			case 2:
@@ -394,14 +396,15 @@
 //	protected Dialog onCreateDialog(int id) {
 //		switch (id) {
 //		// 顯示日期對話方塊
-//		case EditorVar.DATE_DIALOG_ID:
+//		case mEditorVar.DATE_DIALOG_ID:
 //			return new DatePickerDialog(this,
-//					mDateSetListener, EditorVar.mYear,
-//					EditorVar.mMonth - 1, EditorVar.mDay);
+//					mDateSetListener, mEditorVar.Date.getmYear(),
+//					mEditorVar.Date.getmMonth() - 1, mEditorVar.Date.getmDay());
 //			// 顯示時間對話方塊
-//		case EditorVar.TIME_DIALOG_ID:
+//		case mEditorVar.TIME_DIALOG_ID:
 //			return new TimePickerDialog(this, 
-//					mTimeSetListener, EditorVar.mHour, EditorVar.mMinute,
+//					mTimeSetListener, mEditorVar.Date.getmHour(),
+//					mEditorVar.Date.getmMinute(),
 //					false);
 //		}
 //		return null;
@@ -416,16 +419,16 @@
 //		Intent intent = new Intent();
 //		// 設定Intent action屬性
 //		intent.setAction(BC_ACTION);
-//		intent.putExtra("msg", EditorVar.content);
+//		intent.putExtra("msg", mEditorVar.content);
 //		// 實例化PendingIntent
 //		final PendingIntent pi = PendingIntent.getBroadcast(
 //				getApplicationContext(), 0, intent, 0);
 //		// 取得系統時間
 //		final long time1 = System.currentTimeMillis();
 //		Calendar c = Calendar.getInstance();
-//		c.set(EditorVar.mYear, EditorVar.mMonth, EditorVar.mDay, EditorVar.mHour, EditorVar.mMinute);
+//		c.set(mEditorVar.mYear, mEditorVar.mMonth, mEditorVar.mDay, mEditorVar.mHour, mEditorVar.mMinute);
 //		long time2 = c.getTimeInMillis();
-//		if (flag && (time2 - time1) > 0 && EditorVar.on_off == 1) {
+//		if (flag && (time2 - time1) > 0 && mEditorVar.on_off == 1) {
 //			am.set(AlarmManager.RTC_WAKEUP, time2, pi);
 //		} else {
 //			am.cancel(pi);
@@ -443,22 +446,22 @@
 //
 //		switch (target) {
 //		case 2:
-//			EditorVar.switcher = EditorVar.content;
+//			mEditorVar.switcher = mEditorVar.content;
 //			break;
 //		default:
 //			break;
 //		}
 //
-//		editTextbox.setText(EditorVar.switcher);
+//		editTextbox.setText(mEditorVar.switcher);
 //
 //		new AlertDialog.Builder(this).setView(v).setMessage(msg)
 //		.setCancelable(false)
 //		.setPositiveButton("確定", new DialogInterface.OnClickListener() {
 //			@Override
 //			public void onClick(DialogInterface dialog, int id) {
-//				EditorVar.content = editTextbox.getText().toString();
+//				mEditorVar.content = editTextbox.getText().toString();
 //
-//				contentDesc.setText(EditorVar.switcher);
+//				contentDesc.setText(mEditorVar.switcher);
 //				// locationDesc.setText(switcher);
 //			}
 //		}).show();
@@ -469,9 +472,9 @@
 //	private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
 //		@Override
 //		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//			EditorVar.mHour = hourOfDay;
-//			EditorVar.mMinute = minute;
-//			timeDesc.setText(EditorVar.mHour + ":" + EditorVar.mMinute);
+//			mEditorVar.mHour = hourOfDay;
+//			mEditorVar.mMinute = minute;
+//			timeDesc.setText(mEditorVar.mHour + ":" + mEditorVar.mMinute);
 //		}
 //	};
 //	// 日期選擇對話方塊
@@ -479,10 +482,10 @@
 //		@Override
 //		public void onDateSet(DatePicker view, int year, int monthOfYear,
 //				int dayOfMonth) {
-//			EditorVar.mYear = year;
-//			EditorVar.mMonth = monthOfYear;
-//			EditorVar.mDay = dayOfMonth;
-//			dateDesc.setText(EditorVar.mYear + "/" + (EditorVar.mMonth + 1) + "/" + EditorVar.mDay);
+//			mEditorVar.mYear = year;
+//			mEditorVar.mMonth = monthOfYear;
+//			mEditorVar.mDay = dayOfMonth;
+//			dateDesc.setText(mEditorVar.mYear + "/" + (mEditorVar.mMonth + 1) + "/" + mEditorVar.mDay);
 //		}
 //	};
 //
@@ -490,8 +493,8 @@
 //	@Override
 //	protected void onPause() {
 //		super.onPause();
-//		EditorVar.locationName = null;
-//		EditorVar.content = null;
+//		mEditorVar.locationName = null;
+//		mEditorVar.content = null;
 //	};
 //
 //	// This is the action bar menu
@@ -584,21 +587,21 @@
 //			// // }
 //			// }
 //
-//			if (!EditorVar.isdidSearch && !SearchText.getText().toString().equals("")) {
+//			if (!mEditorVar.isdidSearch && !SearchText.getText().toString().equals("")) {
 //				// SearchPlace();
 //				GeocodingAPI LoacationAddress = new GeocodingAPI(
 //						getApplicationContext(), SearchText.getText()
 //						.toString());
 //				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
-//					EditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-//					EditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+//					mEditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+//					mEditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 //				}
 //			}
-//			if (EditorVar.isDraped && !SearchText.getText().toString().equals("")) {
-//				EditorVar.Longitude = map.getCameraPosition().target.longitude;
-//				EditorVar.Latitude = map.getCameraPosition().target.latitude;
+//			if (mEditorVar.isDraped && !SearchText.getText().toString().equals("")) {
+//				mEditorVar.Longitude = map.getCameraPosition().target.longitude;
+//				mEditorVar.Latitude = map.getCameraPosition().target.latitude;
 //				GeocodingAPI LoacationAddress = new GeocodingAPI(
-//						getApplicationContext(), EditorVar.Latitude + "," + EditorVar.Longitude);
+//						getApplicationContext(), mEditorVar.Latitude + "," + mEditorVar.Longitude);
 //				if (LoacationAddress.GeocodingApiAddressGet() != null) {
 //					SearchText.setText(LoacationAddress
 //							.GeocodingApiAddressGet());
@@ -611,11 +614,11 @@
 //			//					.toString());
 //			//			// 存入日期
 //			//			values.put(TaskCursor.KeyColumns.StartDate, curDate.toString());
-//			//			values.put(TaskCursor.KeyColumns.EndDate, dateDesc.getText()
+//			//			values.put(TaskCursor.KeyColumns.Editor.dueDate, dateDesc.getText()
 //			//					.toString());
 //			//			// save the selected value of time
 //			//			values.put(TaskCursor.KeyColumns.StartTime, curDate.toString());
-//			//			values.put(TaskCursor.KeyColumns.EndTime, timeDesc.getText()
+//			//			values.put(TaskCursor.KeyColumns.Editor.alertTime, timeDesc.getText()
 //			//					.toString());
 //			//			// save contents
 //			//			values.put(TaskCursor.KeyColumns.CONTENT, contentDesc.getText()
@@ -628,19 +631,19 @@
 //			//			values.put(TaskCursor.KeyColumns.Priority, 1000);
 //
 //			if (checkBoxIsFixed != null) {
-//				EditorVar.is_Fixed = String.valueOf(checkBoxIsFixed.isChecked());
-//				EditorVar.endDate = dateDesc.getText().toString();
-//				//endTime = timeDesc.getText().toString();
+//				mEditorVar.is_Fixed = String.valueOf(checkBoxIsFixed.isChecked());
+//				mEditorVar.Editor.dueDate = dateDesc.getText().toString();
+//				//Editor.alertTime = timeDesc.getText().toString();
 //				//content = contentDesc.getText().toString();
-//				EditorVar.tittle = EditTextTittle.getText().toString();
-//				EditorVar.coordinate = EditorVar.Latitude + "," + EditorVar.Longitude;
-//				EditorVar.locationName=SearchText.getText()
+//				mEditorVar.tittle = EditTextTittle.getText().toString();
+//				mEditorVar.coordinate = mEditorVar.Latitude + "," + mEditorVar.Longitude;
+//				mEditorVar.locationName=SearchText.getText()
 //						.toString();
 //			}
 //
 //			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
-//			mSaveOrUpdate.DoTaskEditorAdding(EditorVar.taskId, EditorVar.tittle, EditorVar.endDate, EditorVar.endTime,
-//					EditorVar.content, EditorVar.locationName, EditorVar.coordinate, "1", EditorVar.is_Fixed, "1");
+//			mSaveOrUpdate.DoTaskEditorAdding(mEditorVar.taskId, mEditorVar.tittle, mEditorVar.Editor.dueDate, mEditorVar.Editor.alertTime,
+//					mEditorVar.content, mEditorVar.locationName, mEditorVar.coordinate, "1", mEditorVar.is_Fixed, "1");
 //			finish();
 //			return true;
 //		}
@@ -716,20 +719,20 @@
 //				// //獲取地址
 //				// textView2.setText(textView2.getText()+"\n"+LoacationAddress.GeocodingApiLatLngGet());
 //				// //獲取經緯度
-//				if (!EditorVar.isdidSearch
+//				if (!mEditorVar.isdidSearch
 //						|| !SearchText.getText().toString()
-//						.equals(EditorVar.LastTimeSearchName)) {
+//						.equals(mEditorVar.LastTimeSearchName)) {
 //					SearchPlace();
-//					EditorVar.isdidSearch = true;
-//					EditorVar.LastTimeSearchName = SearchText.getText().toString();
+//					mEditorVar.isdidSearch = true;
+//					mEditorVar.LastTimeSearchName = SearchText.getText().toString();
 //				}
 //				GeocodingAPI LoacationAddress = new GeocodingAPI(
 //						getApplicationContext(),
 //						map.getCameraPosition().target.latitude + ","
 //								+ map.getCameraPosition().target.longitude);
 //				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
-//					EditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-//					EditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
+//					mEditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
+//					mEditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
 //				}
 //				// locationDesc = LoacationAddress.GeocodingApiAddressGet();
 //				// Toast.makeText(getApplicationContext(),
@@ -740,10 +743,10 @@
 //			case R.id.Search:
 //				// textView2.setText(map.getMyLocation().toString());
 //				// //可用網路抓到GPS位置
-//				if (!SearchText.getText().toString().equals(EditorVar.LastTimeSearchName)) {
+//				if (!SearchText.getText().toString().equals(mEditorVar.LastTimeSearchName)) {
 //					SearchPlace();
-//					EditorVar.isdidSearch = true;
-//					EditorVar.LastTimeSearchName = SearchText.getText().toString();
+//					mEditorVar.isdidSearch = true;
+//					mEditorVar.LastTimeSearchName = SearchText.getText().toString();
 //				}
 //				break;
 //
@@ -763,18 +766,18 @@
 //			LatLng now = new LatLng(position.target.latitude,
 //					position.target.longitude);
 //			map.addMarker(new MarkerOptions().title("目的地").position(now));
-//			if (EditorVar.isdidSearch)
-//				EditorVar.isDraped = true;
+//			if (mEditorVar.isdidSearch)
+//				mEditorVar.isDraped = true;
 //		}
 //	};
 //
 //	private Runnable GpsTime = new Runnable() {
 //		@Override
 //		public void run() {
-//			EditorVar.GpsUseTime++;
+//			mEditorVar.GpsUseTime++;
 //			// Timeout Sec, 超過TIMEOUT設定時間後,直接設定FLAG使得getCurrentLocation抓取
 //			// lastlocation.
-//			if (EditorVar.GpsUseTime > RemindmeVar.GpsSetting.TIMEOUT_SEC) {
+//			if (mEditorVar.GpsUseTime > RemindmeVar.GpsSetting.TIMEOUT_SEC) {
 //				if (RemindmeVar.GpsSetting.GpsStatus) {
 //					gpsManager.stopListening();
 //					gpsManager.startNetWorkListening(getApplicationContext());
@@ -803,7 +806,7 @@
 //				map.animateCamera((CameraUpdateFactory.newLatLngZoom(
 //						SearchLocation, map.getMaxZoomLevel() - 4)));
 //				map.addMarker(new MarkerOptions().title("搜尋的位置")
-//						.snippet(EditorVar.locationName).position(SearchLocation));
+//						.snippet(mEditorVar.locationName).position(SearchLocation));
 //			} else {
 //				Toast.makeText(getApplicationContext(), "查無地點哦,換個詞試試看",
 //						Toast.LENGTH_SHORT).show();
