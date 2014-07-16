@@ -418,7 +418,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-		Toast.makeText(getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getBaseContext(), String.valueOf(position), Toast.LENGTH_SHORT).show();
 		
 		// update selected item and title, then close the drawer
 		mDrawerList.setItemChecked(position, true);

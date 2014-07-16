@@ -8,10 +8,13 @@ public class EditorVar {
 	public final int TIME_DIALOG_ID = 1;
 
 	public static EditorVar EditorVarInstance = new EditorVar();
-	public DateVar Date = new DateVar();
-	public LocationVar Location = new LocationVar();
-	public EditorFields Editor = new EditorFields();
-
+	//切割分類
+	public DateVar TaskDate = new DateVar();
+	public LocationVar TaskLocation = new LocationVar();
+	public EditorFields Task = new EditorFields();
+	public TaskTypeVar TaskType= new TaskTypeVar();
+	public AlertVar TaskAlert= new AlertVar();
+	
 	private EditorVar(){}
 
 	public static EditorVar GetInstance(){
@@ -20,46 +23,109 @@ public class EditorVar {
 
 }
 
+//任務基本成員
 class EditorFields {
-	// 是否開啟提醒
-	public int on_off = 0;
-	// 是否聲音警告
-	public int alarm = 0;
-	// String
-	// 備忘錄ID
-	public int taskId;
-	
+	// 任務ID
+	private int taskId=0;
 	//任務標題/備註
-	public String tittle = null;
-	public String content = null;
-	
+	private String tittle ="null";
+	private String content ="null";
 	//任務到期日/建立日
-	public String dueDate = null;
-	public String created = null;
-	
-	//任務地點名稱/座標
-	public String locationName = null;
-	public String coordinate = null;
+	private String dueDate ="null";
+	private String created ="null";
 
-	//任務到期提醒/提醒週週期
-	public String alertTime = null;
-	public String alertCycle = null;
+	//---------------Getter/Setter-----------------//
+	public int getTaskId() {
+		return taskId;
+	}
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+	public String getTittle() {
+		return tittle;
+	}
+	public void setTittle(String tittle) {
+		this.tittle = tittle;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getDueDate() {
+		return dueDate;
+	}
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+	public String getCreated() {
+		return created;
+	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
 	
 }
 
+//任務類型/標籤/優先成員
+class TaskTypeVar{
 
-class LocationVar {
-	// gps使用時間
-	public int GpsUseTime = 0;
-	// 經緯度
-	public Double Latitude;
-	public Double Longitude;
-
-	// 是否有搜尋過地點
-	public Boolean isdidSearch = false;
-	public Boolean isDropped = false;
+	//任務優先等級
+	private int priority=0;
+	//任務分類
+	private String category="null";
+	//任務標籤
+	private String tag="null";
 	
 	//---------------Getter/Setter-----------------//
+	public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+}
+
+//任務地點成員
+class LocationVar {
+	//任務地點名稱/座標
+	private String locationName ="null";
+	private String coordinate ="null";
+	// gps使用時間
+	private int GpsUseTime = 0;
+	// 經緯度
+	private Double Latitude=0.0;
+	private Double Longitude=0.0;
+	// 是否有搜尋過地點
+	private Boolean isSearched = false;
+	private Boolean isDropped = false;
+	
+	//---------------Getter/Setter-----------------//
+	public String getLocationName() {
+		return locationName;
+	}
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+	public String getCoordinate() {
+		return coordinate;
+	}
+	public void setCoordinate(String coordinate) {
+		this.coordinate = coordinate;
+	}
 	public int getGpsUseTime() {
 		return GpsUseTime;
 	}
@@ -79,26 +145,60 @@ class LocationVar {
 		Longitude = longitude;
 	}
 	public Boolean getIsdidSearch() {
-		return isdidSearch;
+		return isSearched;
 	}
 	public void setIsdidSearch(Boolean isdidSearch) {
-		this.isdidSearch = isdidSearch;
+		this.isSearched = isdidSearch;
 	}
-
+	public Boolean getIsDropped() {
+		return isDropped;
+	}
+	public void setIsDropped(Boolean isDropped) {
+		this.isDropped = isDropped;
+	}
 
 }
 
+//任務提醒成員
+class AlertVar {
 
+	//任務是否提醒/提醒時間/提醒週期
+	private boolean isAlertOn = false;
+	private String alertTime ="null";
+	private String alertInterval ="null";
+	
+	//---------------Getter/Setter-----------------//
+	public boolean isAlertOn() {
+		return isAlertOn;
+	}
+	public void setAlertOn(boolean isAlertOn) {
+		this.isAlertOn = isAlertOn;
+	}
+	public String getAlertTime() {
+		return alertTime;
+	}
+	public void setAlertTime(String alertTime) {
+		this.alertTime = alertTime;
+	}
+	public String getAlertInterval() {
+		return alertInterval;
+	}
+	public void setAlertInterval(String alertInterval) {
+		this.alertInterval = alertInterval;
+	}
+}
+
+//日期成員
 class DateVar {
 
 	// 日期
-	private int mYear;
-	private int mMonth;
-	private int mDay;
+	private int mYear=0;
+	private int mMonth=0;
+	private int mDay=0;
 	// 時間
-	private int mHour;
-	private int mMinute;
-	private int target;
+	private int mHour=0;
+	private int mMinute=0;
+	//private int target;
 	
 	//---------------Getter/Setter-----------------//
 	public int getmYear() {
@@ -130,12 +230,6 @@ class DateVar {
 	}
 	public void setmMinute(int mMinute) {
 		this.mMinute = mMinute;
-	}
-	public int getTarget() {
-		return target;
-	}
-	public void setTarget(int target) {
-		this.target = target;
 	}
 
 }

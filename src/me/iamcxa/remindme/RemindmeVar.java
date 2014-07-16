@@ -4,8 +4,12 @@
 package me.iamcxa.remindme;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
+import android.R.integer;
 import android.R.string;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -94,16 +98,15 @@ public class RemindmeVar {
 	/***********************/
 	/** getDaysLeft **/
 	/***********************/
-	@SuppressLint("SimpleDateFormat")
 	public static long getDaysLeft(String TaskDate, int Option) {
 
 		// 定義時間格式
 		// java.text.SimpleDateFormat sdf = new
 		SimpleDateFormat sdf = null;
 		if (Option == 1) {
-			sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+			sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm",Locale.TAIWAN);
 		} else if (Option == 2) {
-			sdf = new SimpleDateFormat("yyyy/MM/dd");
+			sdf = new SimpleDateFormat("yyyy/MM/dd",Locale.TAIWAN);
 		}
 
 		// 取得現在時間
@@ -113,13 +116,13 @@ public class RemindmeVar {
 		try {
 			// 取得事件時間與現在時間
 			Date dt1 = sdf.parse(nowDate);
-			Date dt2 = sdf.parse(TaskDate);
+			//Date dt2 = sdf.parse(TaskDate);
 
 			// 取得兩個時間的Unix時間
 			Long ut1 = dt1.getTime();
-			Long ut2 = dt2.getTime();
+			//Long ut2 = dt2.getTime();
 
-			Long timeP = ut2 - ut1;// 毫秒差
+			Long timeP = Long.valueOf(TaskDate) - ut1;// 毫秒差
 			// 相減獲得兩個時間差距的毫秒
 			// Long sec = timeP / 1000;// 秒差
 			// Long min = timeP / 1000 * 60;// 分差
@@ -133,6 +136,52 @@ public class RemindmeVar {
 			return -1;
 		}
 
+	}
+	
+	public static long getNextFewDays(int Days) {
+
+		// 定義時間格式
+		// java.text.SimpleDateFormat sdf = new
+		SimpleDateFormat sdf = null;
+			//sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm",Locale.TAIWAN);
+			sdf = new SimpleDateFormat("yyyy/MM/dd",Locale.TAIWAN);
+
+		// 取得現在時間
+		Date now = new Date();
+		String nowDate = sdf.format(now);
+		try {
+			// 取得事件時間與現在時間
+			Date dt1 = sdf.parse(nowDate);
+			// 取得兩個時間的Unix時間
+			Long timeP = dt1.getTime()+ (1000 * 60 * 60 * 24 * 7);// 毫秒
+			// 相減獲得兩個時間差距的毫秒
+			// Long sec = timeP / 1000;// 秒差
+			// Long min = timeP / 1000 * 60;// 分差
+			// Long hr = timeP / 1000 * 60 * 60;// 時差
+			Long day = timeP / (1000 * 60 * 60 * 24);// 日差
+			debugMsg(0, "Get days left Sucessed! " + day);
+			return day;
+		} catch (Exception e) {
+			// TODO: handle exception
+			debugMsg(999, e.toString());
+			return -1;
+		}
+
+	}
+
+
+
+	public static String getCalendarToday(int ExtraDays) {
+		Calendar today = Calendar.getInstance();
+		today.add(Calendar.DAY_OF_MONTH, ExtraDays);
+		int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
+		String month = String.valueOf(today.get(Calendar.MONTH)+1);
+		int year=today.get(Calendar.YEAR);
+		if (String.valueOf(month).length()==1){
+			month="0"+month;
+		}
+		
+		return year+"/"+month+"/"+dayOfMonth;
 	}
 
 	public static class GpsSetting {
@@ -153,74 +202,95 @@ public class RemindmeVar {
 		}
 
 		// 查詢欄位陣列
-		public static final String[] PROJECTION = new String[] { KEY.KEY_ID, // 0
-				KEY.TITTLE, // 1
-				KEY.DUE_DATE,// 3
-				KEY.ALERT_TIME,// 5
-				KEY.IS_REPERT, // 6
-				KEY.LOCATION_NAME, // 8
-				KEY.COORDINATE,// 9
-				KEY.DISTANCE,// 10
-				KEY.CONTENT,// 11
-				KEY.CREATED,// 12
-				KEY.PRIORITY,// 17
-				KEY.COLLABORATOR,// 18
-				KEY.TAG,// 19
-				KEY.GOOGOLE_CAL_SYNC_ID,// 20
-				KEY.CATEGORY, // 21
-				KEY.LEVEL, KEY.IS_FIXED };
+		public static final String[] PROJECTION = new String[] { 
+			KEY._ID ,
+			//主要內容
+			KEY.TITTLE ,
+			KEY.CONTENT ,
+			KEY.CREATED ,
+			KEY.DUE_DATE ,
+			//提醒
+			KEY.ALERT_Interval ,
+			KEY.ALERT_TIME ,
+			//位置
+			KEY.LOCATION_NAME ,
+			KEY.COORDINATE ,
+			KEY.DISTANCE ,
+			//分類,標籤與優先
+			KEY.CATEGORY ,
+			KEY.PRIORITY ,
+			KEY.TAG ,
+			KEY.LEVEL ,
+			//其他
+			KEY.COLLABORATOR ,
+			KEY.GOOGOLE_CAL_SYNC_ID ,
+			KEY.TASK_COLOR ,};
 
 		// 查詢欄位陣列
 		public static final String[] PROJECTION_GPS = new String[] {
-				KEY.KEY_ID, // 0
-				KEY.LOCATION_NAME, // 1
-				KEY.COORDINATE,// 2
-				KEY.DISTANCE,// 3
-				KEY.PRIORITY,// 4
-				KEY.DUE_DATE,// 5
-				KEY.ALERT_TIME,// 6
-				KEY.CREATED,// 6
+			KEY._ID, // 0
+			KEY.LOCATION_NAME, // 1
+			KEY.COORDINATE,// 2
+			KEY.DISTANCE,// 3
+			KEY.PRIORITY,// 4
+			KEY.DUE_DATE,// 5
+			KEY.ALERT_TIME,// 6
+			KEY.CREATED,// 6
 		};
 
 		public static class KEY_INDEX {
 			public static final int KEY_ID = 0;
+			//主要內容
 			public static final int TITTLE = 1;
-			public static final int CREATED = 2;
-			public static final int DUE_DATE = 3;
-			public static final int ALERT_TIME = 4;
-			public static final int CONTENT = 5;
-			public static final int LOCATION_NAME = 6;
-			public static final int COORDINATE = 7;
-			public static final int DISTANCE = 8;
-			public static final int LEVEL = 9;
-			public static final int PRIORITY = 10;
-			public static final int COLLABORATOR = 11;
+			public static final int CONTENT = 2;
+			public static final int CREATED = 3;
+			public static final int DUE_DATE = 4;
+			//提醒
+			public static final int ALERT_Interval = 5;
+			public static final int ALERT_TIME = 6;
+			//位置
+			public static final int LOCATION_NAME = 7;
+			public static final int COORDINATE = 8;
+			public static final int DISTANCE = 9;
+			//分類,標籤與優先
+			public static final int CATEGORY = 10;
+			public static final int PRIORITY = 11;
 			public static final int TAG = 12;
-			public static final int GOOGOLE_CAL_SYNC_ID = 13;
-			public static final int CATEGORY = 14;
-			public static final int IS_FIXED = 15;
-			public static final int IS_REPEAT = 16;
+			public static final int LEVEL = 13;
+			//其他
+			public static final int COLLABORATOR = 14;
+			public static final int GOOGOLE_CAL_SYNC_ID = 15;
+			public static final int TASK_COLOR = 16;
 		}
 
 		// 其他欄位常數
 		public static class KEY {
-			public static final String KEY_ID = "_id";
+
+			public static final String _Bundle = "Bundle"; 
+
+			public static final String _ID = "_id";
+			//主要內容
 			public static final String TITTLE = "TITTLE";
-			public static final String CREATED = "CREATED";
-			public static final String ALERT_TIME = "ALERT_TIME";
-			public static final String DUE_DATE = "DUE_DATE";
 			public static final String CONTENT = "CONTENT";
+			public static final String CREATED = "CREATED";
+			public static final String DUE_DATE = "DUE_DATE";
+			//提醒
+			public static final String ALERT_Interval = "ALERT_Interval";
+			public static final String ALERT_TIME = "ALERT_TIME";
+			//位置
 			public static final String LOCATION_NAME = "LOCATION_NAME";
 			public static final String COORDINATE = "COORDINATE";
 			public static final String DISTANCE = "DISTANCE";
-			public static final String LEVEL = "LEVEL";
-			public static final String PRIORITY = "PRIORITY";
-			public static final String COLLABORATOR = "COLLABORATOR";
-			public static final String TAG = "TAG";
-			public static final String GOOGOLE_CAL_SYNC_ID = "GOOGOLE_CAL_SYNC_ID";
+			//分類,標籤與優先
 			public static final String CATEGORY = "CATEGORY";
-			public static final String IS_FIXED = "IS_FIXED";;
-			public static final String IS_REPERT = "IS_REPERT";
+			public static final String PRIORITY = "PRIORITY";
+			public static final String TAG = "TAG";
+			public static final String LEVEL = "LEVEL";
+			//其他
+			public static final String COLLABORATOR = "COLLABORATOR";
+			public static final String GOOGOLE_CAL_SYNC_ID = "GOOGOLE_CAL_SYNC_ID";
+			public static final String TASK_COLOR = "TASK_COLOR";
+
 		}
 	}
 }

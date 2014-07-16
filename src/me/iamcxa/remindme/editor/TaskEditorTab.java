@@ -1,7 +1,9 @@
 package me.iamcxa.remindme.editor;
 
 import me.iamcxa.remindme.R;
-import android.R.string;
+import me.iamcxa.remindme.RemindmeVar;
+import me.iamcxa.remindme.RemindmeVar.TaskCursor;
+import android.R.bool;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -13,8 +15,8 @@ import android.widget.Toast;
 
 public class TaskEditorTab extends Activity {
 
-
-	private static EditorVar mEditorVar ;
+	private static EditorVar mEditorVar=EditorVar.GetInstance();
+	private static SaveOrUpdate mSaveOrUpdate;
 
 
 	/** Called when the activity is first created. */
@@ -22,9 +24,9 @@ public class TaskEditorTab extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_editor_tab);
-
 		setupViewComponent();
 	}
+
 	// This is the action bar menu
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,29 +61,33 @@ public class TaskEditorTab extends Activity {
 
 	//  由資料庫初始化變數
 	public static void init(Intent intent) {
-		Bundle b = intent.getBundleExtra("b");
+		Bundle b = intent.getBundleExtra(TaskCursor.KEY._Bundle);
 		if (b != null) {
-			mEditorVar.Editor.taskId = b.getInt("taskId");
-			mEditorVar.Editor.tittle = b.getString("tittle");
-			mEditorVar.Editor.created = b.getString("created");
-			mEditorVar.Editor.dueDate = b.getString("dueDate");
-			mEditorVar.Editor.alertTime = b.getString("alertTime");
-			mEditorVar.Editor.content = b.getString("content");
-			mEditorVar.Editor.alertCycle = b.getString("alertCycle");
-			mEditorVar.Editor.locationName = b.getString("locationName");
-			mEditorVar.Editor.coordinate = b.getString("coordinate");
+			//參照 底部之TaskFieldContents/RemindmeVar.class等處, 確保變數欄位與順序都相同
+			mEditorVar.Task.setTaskId(b.getInt(TaskCursor.KEY._ID));
+			mEditorVar.Task.setTittle(b.getString(TaskCursor.KEY.TITTLE));
+			mEditorVar.Task.setContent(b.getString(TaskCursor.KEY.CONTENT));
+			mEditorVar.Task.setCreated(b.getString(TaskCursor.KEY.CREATED));
+			mEditorVar.Task.setDueDate(b.getString(TaskCursor.KEY.DUE_DATE));
+			mEditorVar.TaskAlert.setAlertInterval(b.getString(TaskCursor.KEY.ALERT_Interval));
+			mEditorVar.TaskAlert.setAlertTime(b.getString(TaskCursor.KEY.ALERT_TIME));
+			mEditorVar.TaskLocation.setLocationName(b.getString(TaskCursor.KEY.LOCATION_NAME));
+			mEditorVar.TaskLocation.setCoordinate(b.getString(TaskCursor.KEY.COORDINATE));
+			mEditorVar.TaskType.setCategory(b.getString(TaskCursor.KEY.CATEGORY));
+			mEditorVar.TaskType.setPriority(b.getInt(TaskCursor.KEY.PRIORITY));
+			mEditorVar.TaskType.setTag(b.getString(TaskCursor.KEY.TAG));
 
-			if (mEditorVar.Editor.dueDate != null && mEditorVar.Editor.dueDate.length() > 0) {
-				String[] strs = mEditorVar.Editor.dueDate.split("/");
-				mEditorVar.Date.setmYear(Integer.parseInt(strs[0]));
-				mEditorVar.Date.setmMonth (Integer.parseInt(strs[1]) - 1);
-				mEditorVar.Date.setmDay ( Integer.parseInt(strs[2]));
+			if (b.getString("dueDate") != null && b.getString("dueDate").length() > 0) {
+				String[] dateStr = mEditorVar.Task.getDueDate().split("/");
+				mEditorVar.TaskDate.setmYear(Integer.parseInt(dateStr[0]));
+				mEditorVar.TaskDate.setmMonth(Integer.parseInt(dateStr[1]) - 1);
+				mEditorVar.TaskDate.setmDay(Integer.parseInt(dateStr[2]));
 			}
 
-			if (mEditorVar.Editor.alertTime != null && mEditorVar.Editor.alertTime.length() > 0) {
-				String[] strs = mEditorVar.Editor.alertTime.split(":");
-				mEditorVar.Date.setmHour (Integer.parseInt(strs[0]));
-				mEditorVar.Date.setmMinute(Integer.parseInt(strs[1]));
+			if (b.getString("alertTime") != null && b.getString("alertTime").length() > 0) {
+				String[] timeStr = mEditorVar.TaskAlert.getAlertTime().split(":");
+				mEditorVar.TaskDate.setmHour (Integer.parseInt(timeStr[0]));
+				mEditorVar.TaskDate.setmMinute(Integer.parseInt(timeStr[1]));
 			}
 		}
 	}
@@ -93,7 +99,7 @@ public class TaskEditorTab extends Activity {
 		final ActionBar actBar = getActionBar();
 		actBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		Fragment fragMarriSug = new TaskEditorMain();
+		Fragment fragMarriSug =new TaskEditorMain();
 		actBar.addTab(actBar.newTab()
 				//.setText("任務")
 				.setIcon(getResources().getDrawable(R.drawable.tear_of_calendar))
@@ -115,9 +121,7 @@ public class TaskEditorTab extends Activity {
 
 
 
-	/*
-	 * 
-	 */
+	// 按鈕監聽
 	private MenuItem.OnMenuItemClickListener btnClickListener = new MenuItem.OnMenuItemClickListener() {
 
 		@Override
@@ -126,10 +130,11 @@ public class TaskEditorTab extends Activity {
 			String itemName=String.valueOf(item.getTitle());
 			Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
 			if (itemName.contentEquals( "action_add")){
+
 				btnActionAdd();
 
 			}else if (itemName.contentEquals( "action_add")) {
-				btnActionCancel();
+				//btnActionCancel();//暫時取消此功能
 			}
 
 
@@ -138,120 +143,59 @@ public class TaskEditorTab extends Activity {
 
 	};
 
+	//由view物件取得輸入資訊
+	private void getDataFromView(){
+		mEditorVar.Task.setTittle(TaskEditorMain.getTaskTittle());	
+		mEditorVar.Task.setContent(TaskEditorMain.getTaskTittle());	
+		mEditorVar.Task.setDueDate(TaskEditorMain.getTaskDueDate());	
+
+
+	}
+
 	private void btnActionAdd(){
-		// if (dateDesc.getText().equals("") &&
-		// timeDesc.getText().equals("")
-		// && contentDesc.getText().equals("")
-		// && SearchText.getText().toString().equals("")) {
-		// String[] StringArray = EditTextTittle.getText().toString()
-		// .split(" ");
-		// try {
-		// int i = Integer.parseInt(StringArray[0]);
-		// // System.out.println(i);
-		// } catch (Exception e) {
-		// EditTextTittle.setText("3 " + StringArray[0]);
-		// }
-		// // String[] QuickTitle =
-		// // QuickInput.QuickInput(EditTextTittle.getText().toString());
-		// // for (int a=0 ;a<QuickTitle.length;a++) {
-		// // if(QuickTitle[a]!=null){
-		// // switch (a) {
-		// // case 1:
-		// // String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
-		// // try {
-		// // mHour = Integer.parseInt(Time[0]);
-		// // mMinute = Integer.parseInt(Time[1]);
-		// // timeDesc.setText(mHour + ":" + mMinute);
-		// //
-		// // } catch (Exception e) {
-		// // Toast.makeText(getApplicationContext(), e.toString(),
-		// // Toast.LENGTH_SHORT).show();
-		// // }
-		// // break;
-		// // case 2:
-		// // SearchText.setText(QuickTitle[2]);
-		// // break;
-		// // case 3:
-		// // EditTextTittle.setText(QuickTitle[3]);
-		// // break;
-		// // case 4:
-		// // contentDesc.setText(QuickTitle[4]);
-		// // break;
-		// // default:
-		// // break;
-		// // }
-		// // }
-		// // }
-		// }
+		//檢查title是否為空
+		boolean isEmpty=(TaskEditorMain.getTaskTittle().contentEquals("null"));
+		if(!isEmpty){
+			getDataFromView();
 
-		//			if (!mEditorVar.isdidSearch && !SearchText.getText().toString().equals("")) {
-		//				// SearchPlace();
-		//				GeocodingAPI LoacationAddress = new GeocodingAPI(
-		//						getApplicationContext(), SearchText.getText()
-		//						.toString());
-		//				if (LoacationAddress.GeocodingApiLatLngGet() != null) {
-		//					mEditorVar.Longitude = LoacationAddress.GeocodingApiLatLngGet().longitude;
-		//					mEditorVar.Latitude = LoacationAddress.GeocodingApiLatLngGet().latitude;
-		//				}
-		//			}
-		//			if (mEditorVar.isDraped && !SearchText.getText().toString().equals("")) {
-		//				mEditorVar.Longitude = map.getCameraPosition().target.longitude;
-		//				mEditorVar.Latitude = map.getCameraPosition().target.latitude;
-		//				GeocodingAPI LoacationAddress = new GeocodingAPI(
-		//						getApplicationContext(), mEditorVar.Latitude + "," + mEditorVar.Longitude);
-		//				if (LoacationAddress.GeocodingApiAddressGet() != null) {
-		//					SearchText.setText(LoacationAddress
-		//							.GeocodingApiAddressGet());
-		//				}
-		//			}
-		//	
+			String TaskField_Main=
+					mEditorVar.Task.getTaskId()+","+		
+							mEditorVar.Task.getTittle()+","+		
+							mEditorVar.Task.getContent()+","+		
+							mEditorVar.Task.getCreated()+","+		
+							mEditorVar.Task.getDueDate();
+			RemindmeVar.debugMsg(0,"TaskField_Main="+ TaskField_Main);
 
-		//			// 存入標題
-		//			values.put(TaskCursor.KeyColumns.Tittle, EditTextTittle.getText()
-		//					.toString());
-		//			// 存入日期
-		//			values.put(TaskCursor.KeyColumns.StartDate, curDate.toString());
-		//			values.put(TaskCursor.KeyColumns.Editor.dueDate, dateDesc.getText()
-		//					.toString());
-		//			// save the selected value of time
-		//			values.put(TaskCursor.KeyColumns.StartTime, curDate.toString());
-		//			values.put(TaskCursor.KeyColumns.Editor.alertTime, timeDesc.getText()
-		//					.toString());
-		//			// save contents
-		//			values.put(TaskCursor.KeyColumns.CONTENT, contentDesc.getText()
-		//					.toString());
-		//			// save the name string of location
-		//			values.put(TaskCursor.KeyColumns.LocationName, SearchText.getText()
-		//					.toString());
-		//			values.put(TaskCursor.KeyColumns.Coordinate, Latitude + ","
-		//					+ Longitude);
-		//			values.put(TaskCursor.KeyColumns.Priority, 1000);
+			String TaskField_Location=
+					mEditorVar.TaskLocation.getCoordinate()+","+	
+							mEditorVar.TaskLocation.getLocationName();
+			RemindmeVar.debugMsg(0,"TaskField_Location="+ TaskField_Location);
 
-		//			if (checkBoxIsFixed != null) {
-		//				mEditorVar.is_Fixed = String.valueOf(checkBoxIsFixed.isChecked());
-		//				mEditorVar.Editor.dueDate = dateDesc.getText().toString();
-		//				//Editor.alertTime = timeDesc.getText().toString();
-		//				//content = contentDesc.getText().toString();
-		//				mEditorVar.tittle = EditTextTittle.getText().toString();
-		//				mEditorVar.coordinate = mEditorVar.Latitude + "," + mEditorVar.Longitude;
-		//				mEditorVar.locationName=SearchText.getText()
-		//						.toString();
-		//			}
-		//	
-		//			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
-		//			mSaveOrUpdate.DoTaskEditorAdding(mEditorVar.taskId, mEditorVar.tittle, mEditorVar.Editor.dueDate, mEditorVar.Editor.alertTime,
-		//					mEditorVar.content, mEditorVar.locationName, mEditorVar.coordinate, "1", mEditorVar.is_Fixed, "1");
-					finish();
+			String TaskField_Alert=
+					mEditorVar.TaskAlert .getAlertInterval()+","+	
+							mEditorVar.TaskAlert.getAlertTime();
+			RemindmeVar.debugMsg(0,"TaskField_Alert="+ TaskField_Alert);
+
+			String TaskField_Type=
+					mEditorVar.TaskType.getPriority()+","+		
+							mEditorVar.TaskType.getCategory()+","+	
+							mEditorVar.TaskType.getTag();			
+			RemindmeVar.debugMsg(0,"TaskField_Type="+ TaskField_Type);	
+
+			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
+			mSaveOrUpdate.DoTaskEditorAdding(
+					TaskField_Main,
+					TaskField_Location,
+					TaskField_Alert,
+					TaskField_Type
+					);
+			finish();
+		}else {
+			String EmptyMsg="您需要輸入任務名稱。";
+			Toast.makeText(getApplicationContext(),EmptyMsg , Toast.LENGTH_SHORT).show();
+		}
+
 	}
 
-	private void btnActionCancel(){
-		// Intent EventEditor = new Intent();
-		// EventEditor.setClass(getApplication(),RemindmeTaskEditorActivity.class);
-		// EventEditor.setClass(getApplication(), IconRequest.class);
-		// startActivity(EventEditor);
-
-		// saveOrUpdate();
-		finish();
-	}
 
 }
