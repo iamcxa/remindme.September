@@ -19,10 +19,15 @@
 package me.iamcxa.remindme.cardfragment;
 
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import it.gmariotti.cardslib.library.view.CardListView;
 import me.iamcxa.remindme.RemindmeVar;
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.RemindmeVar.TaskCursor;
+import android.R.string;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -39,10 +44,10 @@ import android.widget.Toast;
  * @author Gabriele Mariotti (gabri.mariotti@gmail.com)
  */
 public class ListCursorCardFragment extends BaseFragment implements
-		LoaderManager.LoaderCallbacks<Cursor> {
+LoaderManager.LoaderCallbacks<Cursor> {
 
 	public static final String FILTER_STRING="FILTER_STRING";
-	
+
 	private static MyCursorCardAdapter mAdapter;
 	private static CardListView mListView;
 	private static String[] projection = TaskCursor.PROJECTION;
@@ -52,6 +57,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 	private static Cursor cursor;
 	private static Double Latitude;
 	private static Double Longitude;
+	private static String mToday=RemindmeVar.getCalendarToday(0);
 
 	/********************/
 	/** Initialization **/
@@ -67,35 +73,46 @@ public class ListCursorCardFragment extends BaseFragment implements
 
 		int filter = getArguments().getInt(FILTER_STRING);
 		Toast.makeText(getActivity(), "i="+String.valueOf(filter), Toast.LENGTH_SHORT).show();		
-		
+
 		switch (filter) {
 		case 0:
 			// filter=0 : 任務盒
-			ListCursorCardFragment.setSelection("DUE_DATE = \"\"");
-			//ListCursorCardFragmentTime.selection = "TaskLocationName = \"\"";
-			//ListCursorCardFragmentLocal.selection = "TaskLocationName <> \"\"";
+			setSelection("DUE_DATE = 'null'");
 			break;
 		case 1:
-			// filter=0 : 任務盒
-			ListCursorCardFragment.setSelection("DUE_DATE = \"\"");
-			
+			// filter=1 : 今天
+			String today=RemindmeVar.getCalendarToday(0);
+			Toast.makeText(getActivity(), "today="+today, Toast.LENGTH_SHORT).show();
+			setSelection("DUE_DATE = '"+today+"'");
+			break;
+		case 2:
+			// filter=2 : 未來七天
+			String curDate=RemindmeVar.getCalendarToday(0);
+			String sevenDaysLater = 
+					RemindmeVar.getCalendarToday(7);
+
+			Toast.makeText(getActivity(), 
+					"now:"+curDate+
+					"\n,+7="+sevenDaysLater, Toast.LENGTH_LONG).show();
+			setSelection("DUE_DATE > "+curDate+" AND DUE_DATE < "+sevenDaysLater);
+
 			break;
 
 		default:
 			break;
 		}
-		
-		
+
+
 		// Force start background query to load sessions
 		getLoaderManager();
 		getLoaderManager().restartLoader(0, null, this);
-		
+
 		// LoaderManager.enableDebugLogging(true);
 	}
 
 	@Override
 	public int getTitleResourceId() {
-	
+
 		return  R.string.app_name;
 	}
 
@@ -125,7 +142,7 @@ public class ListCursorCardFragment extends BaseFragment implements
 		Loader<Cursor> loader = null;
 		loader = new CursorLoader(getActivity(), RemindmeVar.CONTENT_URI,
 				projection, selection, selectionArgs, sortOrder);
-		
+
 		return loader;
 	}
 
@@ -140,10 +157,10 @@ public class ListCursorCardFragment extends BaseFragment implements
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		mAdapter.swapCursor(null);
-		
+
 	}
-	
-	
+
+
 
 	public static MyCursorCardAdapter getmAdapter() {
 		return mAdapter;

@@ -1,6 +1,7 @@
 package me.iamcxa.remindme.editor;
 
 import me.iamcxa.remindme.R;
+import me.iamcxa.remindme.RemindmeVar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +13,10 @@ import android.widget.Spinner;
 
 public class TaskEditorMain extends Fragment {
 
-	private MultiAutoCompleteTextView taskTittle; //任務標題
-	private EditText taskDuedate;//任務到期日
-	private Spinner taskCategory;//任務類別
+	private static MultiAutoCompleteTextView taskTittle; //任務標題
+	private static EditText taskDueDate;//任務到期日
+	private static Spinner taskCategory;//任務類別
+	private static Spinner taskPriority;//任務優先
 
 	private EditorVar mEditorVar ;
 
@@ -42,8 +44,8 @@ public class TaskEditorMain extends Fragment {
 		taskTittle.setHint("任務");
 
 		//任務日期輸入框
-		taskDuedate =(EditText)getView().findViewById(R.id.editTextDueDate);
-		taskDuedate.setHint("到期日");
+		taskDueDate =(EditText)getView().findViewById(R.id.editTextDueDate);
+		taskDueDate.setHint("到期日");
 
 		//任務類別選擇框
 		taskCategory=(Spinner)getActivity().findViewById(R.id.spinnerCategory);
@@ -57,4 +59,24 @@ public class TaskEditorMain extends Fragment {
 
 
 	}
+
+
+	public static String getTaskDueDate() {
+		String taskDueDateString = "null";
+		if (!(taskDueDate.getText().toString().isEmpty())){
+			taskDueDateString=taskDueDate.getText().toString().trim();
+		}
+		
+		RemindmeVar.debugMsg(0,"getTaskDueDate:"+ taskDueDateString.isEmpty());
+		return taskDueDateString;
+	}
+	public static String getTaskTittle() {
+		String TaskTittleString = "null";
+		if (!(taskTittle.getText().toString().isEmpty())){
+			TaskTittleString= taskTittle.getText().toString().trim();
+		}
+		RemindmeVar.debugMsg(0,"getTaskTittle:"+ TaskTittleString+",TaskTittle.len="+TaskTittleString.length());
+		return TaskTittleString;
+	}
+
 }

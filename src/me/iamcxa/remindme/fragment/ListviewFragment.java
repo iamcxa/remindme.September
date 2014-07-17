@@ -41,7 +41,7 @@ public class ListviewFragment extends Fragment implements
 
 		adapter = new SimpleCursorAdapter(getActivity(),
 				android.R.layout.simple_list_item_2, null,
-				new String[] { TaskCursor.KEY.KEY_ID,
+				new String[] { TaskCursor.KEY._ID,
 						TaskCursor.KEY.TITTLE }, new int[] {
 						android.R.id.text1, android.R.id.text2 }, 0);
 

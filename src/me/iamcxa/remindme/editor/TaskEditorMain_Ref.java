@@ -105,7 +105,7 @@
 //	private CheckedTextView ctv1, ctv2;
 //	// 存取佈局實例
 //	private static LayoutInflater li;
-//	
+//
 //
 //	private EditorVar mEditorVar ;
 //
@@ -173,32 +173,32 @@
 //		//map = ((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 //		main_scrollview = (ScrollView) findViewById(R.id.main_scrollview);
 //
-////		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
-////				R.id.map))
-////				.setListener(new WorkaroundMapFragment.OnTouchListener() {
-////					@Override
-////					public void onTouch() {
-////						main_scrollview
-////						.requestDisallowInterceptTouchEvent(true);
-////					}
-////				});
+//		//		((WorkaroundMapFragment) getSupportFragmentManager().findFragmentById(
+//		//				R.id.map))
+//		//				.setListener(new WorkaroundMapFragment.OnTouchListener() {
+//		//					@Override
+//		//					public void onTouch() {
+//		//						main_scrollview
+//		//						.requestDisallowInterceptTouchEvent(true);
+//		//					}
+//		//				});
 //		//map.setMyLocationEnabled(true);
 //		//map.clear();
-////		LatLng nowLoacation;
-////		if (gpsManager.LastLocation() != null) {
-////			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
-////					gpsManager.LastLocation().getLongitude());
-////			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
-////					map.getMaxZoomLevel() - 4)));
-////		} else {
-////			nowLoacation = new LatLng(23.6978, 120.961);
-////			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
-////					map.getMinZoomLevel() + 7)));
-////		}
-////		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
-////				.position(nowLoacation));
-////
-////		map.setOnCameraChangeListener(listener);
+//		//		LatLng nowLoacation;
+//		//		if (gpsManager.LastLocation() != null) {
+//		//			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
+//		//					gpsManager.LastLocation().getLongitude());
+//		//			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+//		//					map.getMaxZoomLevel() - 4)));
+//		//		} else {
+//		//			nowLoacation = new LatLng(23.6978, 120.961);
+//		//			map.moveCamera((CameraUpdateFactory.newLatLngZoom(nowLoacation,
+//		//					map.getMinZoomLevel() + 7)));
+//		//		}
+//		//		map.addMarker(new MarkerOptions().title("當前位置").draggable(true)
+//		//				.position(nowLoacation));
+//		//
+//		//		map.setOnCameraChangeListener(listener);
 //		// 取得Intent
 //		final Intent intent = getIntent();
 //		// 設定Uri
@@ -539,53 +539,53 @@
 //	private MenuItem.OnMenuItemClickListener btnActionAddClick = new MenuItem.OnMenuItemClickListener() {
 //		@Override
 //		public boolean onMenuItemClick(MenuItem item) {
-//			// Toast.makeText(getApplicationContext(),
-//			// dateDesc.getText()+"2"+timeDesc.getText(),
-//			// Toast.LENGTH_SHORT).show();
-//			// if (dateDesc.getText().equals("") &&
-//			// timeDesc.getText().equals("")
-//			// && contentDesc.getText().equals("")
-//			// && SearchText.getText().toString().equals("")) {
-//			// String[] StringArray = EditTextTittle.getText().toString()
-//			// .split(" ");
-//			// try {
-//			// int i = Integer.parseInt(StringArray[0]);
-//			// // System.out.println(i);
-//			// } catch (Exception e) {
-//			// EditTextTittle.setText("3 " + StringArray[0]);
-//			// }
-//			// // String[] QuickTitle =
-//			// // QuickInput.QuickInput(EditTextTittle.getText().toString());
-//			// // for (int a=0 ;a<QuickTitle.length;a++) {
-//			// // if(QuickTitle[a]!=null){
-//			// // switch (a) {
-//			// // case 1:
-//			// // String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
-//			// // try {
-//			// // mHour = Integer.parseInt(Time[0]);
-//			// // mMinute = Integer.parseInt(Time[1]);
-//			// // timeDesc.setText(mHour + ":" + mMinute);
-//			// //
-//			// // } catch (Exception e) {
-//			// // Toast.makeText(getApplicationContext(), e.toString(),
-//			// // Toast.LENGTH_SHORT).show();
-//			// // }
-//			// // break;
-//			// // case 2:
-//			// // SearchText.setText(QuickTitle[2]);
-//			// // break;
-//			// // case 3:
-//			// // EditTextTittle.setText(QuickTitle[3]);
-//			// // break;
-//			// // case 4:
-//			// // contentDesc.setText(QuickTitle[4]);
-//			// // break;
-//			// // default:
-//			// // break;
-//			// // }
-//			// // }
-//			// // }
-//			// }
+//			Toast.makeText(getApplicationContext(),
+//					dateDesc.getText()+"2"+timeDesc.getText(),
+//					Toast.LENGTH_SHORT).show();
+//			if (dateDesc.getText().equals("") &&
+//					timeDesc.getText().equals("")
+//					&& contentDesc.getText().equals("")
+//					&& SearchText.getText().toString().equals("")) {
+//				String[] StringArray = EditTextTittle.getText().toString()
+//						.split(" ");
+//				try {
+//					int i = Integer.parseInt(StringArray[0]);
+//					// System.out.println(i);
+//				} catch (Exception e) {
+//					EditTextTittle.setText("3 " + StringArray[0]);
+//				}
+//				String[] QuickTitle =
+//						QuickInput.QuickInput(EditTextTittle.getText().toString());
+//				for (int a=0 ;a<QuickTitle.length;a++) {
+//					if(QuickTitle[a]!=null){
+//						switch (a) {
+//						case 1:
+//							String[] Time =QuickInput.TimeQuickInput(QuickTitle[1]);
+//							try {
+//								mHour = Integer.parseInt(Time[0]);
+//								mMinute = Integer.parseInt(Time[1]);
+//								timeDesc.setText(mHour + ":" + mMinute);
+//
+//							} catch (Exception e) {
+//								Toast.makeText(getApplicationContext(), e.toString(),
+//										Toast.LENGTH_SHORT).show();
+//							}
+//							break;
+//						case 2:
+//							SearchText.setText(QuickTitle[2]);
+//							break;
+//						case 3:
+//							EditTextTittle.setText(QuickTitle[3]);
+//							break;
+//						case 4:
+//							contentDesc.setText(QuickTitle[4]);
+//							break;
+//						default:
+//							break;
+//						}
+//					}
+//				}
+//			}
 //
 //			if (!mEditorVar.isdidSearch && !SearchText.getText().toString().equals("")) {
 //				// SearchPlace();

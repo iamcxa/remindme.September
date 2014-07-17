@@ -56,23 +56,29 @@ public class TaskDbProvider extends ContentProvider {
 			db.execSQL("CREATE TABLE "
 					+ TASK_LIST_TABLE_NAME
 					+ " ("
-					+ TaskCursor.KEY.KEY_ID + " INTEGER PRIMARY KEY autoincrement,"//0
-					+ TaskCursor.KEY.TITTLE + " TEXT," // 1
-					+ TaskCursor.KEY.CREATED+ " TEXT," // 2
-					+ TaskCursor.KEY.ALERT_TIME + " TEXT,"//3
-					+ TaskCursor.KEY.DUE_DATE + " TEXT,"//4
-					+ TaskCursor.KEY.CONTENT+ " TEXT," // 5
-					+ TaskCursor.KEY.LOCATION_NAME + " TEXT,"//6
-					+ TaskCursor.KEY.COORDINATE + " TEXT,"//
-					+ TaskCursor.KEY.DISTANCE+ " TEXT,"//
-					+ TaskCursor.KEY.LEVEL	+ " INTEGER," // 21
-					+ TaskCursor.KEY.PRIORITY+ " INTEGER," // 19
-					+ TaskCursor.KEY.COLLABORATOR+ " TEXT," // 20
-					+ TaskCursor.KEY.TAG + " TEXT," // 12
+					// Task ID
+					+ TaskCursor.KEY._ID + " INTEGER PRIMARY KEY autoincrement,"
+					//主要內容
+					+ TaskCursor.KEY.TITTLE + " TEXT,"
+					+ TaskCursor.KEY.CONTENT + " TEXT,"
+					+ TaskCursor.KEY.CREATED+ " TEXT,"
+					+ TaskCursor.KEY.DUE_DATE + " TEXT,"
+					//提醒
+					+ TaskCursor.KEY.ALERT_Interval + " TEXT,"
+					+ TaskCursor.KEY.ALERT_TIME + " TEXT,"
+					//位置
+					+ TaskCursor.KEY.LOCATION_NAME + " TEXT,"
+					+ TaskCursor.KEY.COORDINATE + " TEXT,"
+					+ TaskCursor.KEY.DISTANCE + " TEXT,"
+					//分類,標籤與優先
+					+ TaskCursor.KEY.CATEGORY + " TEXT,"
+					+ TaskCursor.KEY.PRIORITY + " TEXT,"
+					+ TaskCursor.KEY.TAG + " TEXT,"
+					+ TaskCursor.KEY.LEVEL + " TEXT,"
+					//其他
+					+ TaskCursor.KEY.COLLABORATOR + " TEXT,"
 					+ TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID + " TEXT,"
-					+ TaskCursor.KEY.CATEGORY + " TEXT," // 21
-					+ TaskCursor.KEY.IS_FIXED+ " TEXT," // 21
-					+ TaskCursor.KEY.IS_REPERT + " TEXT"
+					+ TaskCursor.KEY.TASK_COLOR + " TEXT"
 					+ ");");
 		}
 
@@ -103,7 +109,7 @@ public class TaskDbProvider extends ContentProvider {
 			qb.setTables(TASK_LIST_TABLE_NAME);
 			qb.setProjectionMap(sTaskListProjectionMap);
 			break;
-		// 根據ID查詢
+			// 根據ID查詢
 		case TASK_ID:
 			qb.setTables(TASK_LIST_TABLE_NAME);
 			qb.setProjectionMap(sTaskListProjectionMap);
@@ -182,15 +188,15 @@ public class TaskDbProvider extends ContentProvider {
 		case TASKS:
 			count = db.delete(TASK_LIST_TABLE_NAME, where, whereArgs);
 			break;
-		// 根據指定條件和ID刪除
+			// 根據指定條件和ID刪除
 		case TASK_ID:
 			String noteId = uri.getPathSegments().get(1);
 			count = db.delete(TASK_LIST_TABLE_NAME,
 					BaseColumns._ID
-							+ "="
-							+ noteId
-							+ (!TextUtils.isEmpty(where) ? " AND (" + where
-									+ ')' : ""), whereArgs);
+					+ "="
+					+ noteId
+					+ (!TextUtils.isEmpty(where) ? " AND (" + where
+							+ ')' : ""), whereArgs);
 			break;
 
 		default:
@@ -212,15 +218,15 @@ public class TaskDbProvider extends ContentProvider {
 		case TASKS:
 			count = db.update(TASK_LIST_TABLE_NAME, values, where, whereArgs);
 			break;
-		// 根據指定條件和ID更新
+			// 根據指定條件和ID更新
 		case TASK_ID:
 			String noteId = uri.getPathSegments().get(1);
 			count = db.update(TASK_LIST_TABLE_NAME, values,
 					BaseColumns._ID
-							+ "="
-							+ noteId
-							+ (!TextUtils.isEmpty(where) ? " AND (" + where
-									+ ')' : ""), whereArgs);
+					+ "="
+					+ noteId
+					+ (!TextUtils.isEmpty(where) ? " AND (" + where
+							+ ')' : ""), whereArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("錯誤的 URI " + uri);
@@ -240,37 +246,30 @@ public class TaskDbProvider extends ContentProvider {
 		// 實例化查詢欄位集合
 		sTaskListProjectionMap = new HashMap<String, String>();
 		// 添加查詢欄位
+		// Task ID
 		sTaskListProjectionMap.put(BaseColumns._ID, BaseColumns._ID);
-		sTaskListProjectionMap.put(TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID,
-				TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID);
-		sTaskListProjectionMap
-				.put(TaskCursor.KEY.CATEGORY, TaskCursor.KEY.CATEGORY);
-		sTaskListProjectionMap
-				.put(TaskCursor.KEY.TITTLE, TaskCursor.KEY.TITTLE);
-		sTaskListProjectionMap.put(TaskCursor.KEY.DUE_DATE,
-				TaskCursor.KEY.DUE_DATE);
-		sTaskListProjectionMap.put(TaskCursor.KEY.ALERT_TIME,
-				TaskCursor.KEY.ALERT_TIME);
-		sTaskListProjectionMap.put(TaskCursor.KEY.LOCATION_NAME,
-				TaskCursor.KEY.LOCATION_NAME);
-		sTaskListProjectionMap.put(TaskCursor.KEY.DISTANCE,
-				TaskCursor.KEY.DISTANCE);
-		sTaskListProjectionMap.put(TaskCursor.KEY.PRIORITY,
-				TaskCursor.KEY.PRIORITY);
-		sTaskListProjectionMap.put(TaskCursor.KEY.IS_REPERT,
-				TaskCursor.KEY.IS_REPERT);
-		sTaskListProjectionMap.put(TaskCursor.KEY.CONTENT,
-				TaskCursor.KEY.CONTENT);
-		sTaskListProjectionMap.put(TaskCursor.KEY.CREATED,
-				TaskCursor.KEY.CREATED);
-		sTaskListProjectionMap.put(TaskCursor.KEY.TAG, TaskCursor.KEY.TAG);
-		sTaskListProjectionMap.put(TaskCursor.KEY.COLLABORATOR,
-				TaskCursor.KEY.COLLABORATOR);
-		sTaskListProjectionMap.put(TaskCursor.KEY.COORDINATE,
-				TaskCursor.KEY.COORDINATE);
-		sTaskListProjectionMap.put(TaskCursor.KEY.LEVEL, TaskCursor.KEY.LEVEL);
-		sTaskListProjectionMap.put(TaskCursor.KEY.IS_FIXED,
-				TaskCursor.KEY.IS_FIXED);
+
+		//主要內容
+		sTaskListProjectionMap.put( TaskCursor.KEY.TITTLE,TaskCursor.KEY.TITTLE );
+		sTaskListProjectionMap.put( TaskCursor.KEY.CONTENT,TaskCursor.KEY.CONTENT );
+		sTaskListProjectionMap.put( TaskCursor.KEY.CREATED,TaskCursor.KEY.CREATED);
+		sTaskListProjectionMap.put( TaskCursor.KEY.DUE_DATE,TaskCursor.KEY.DUE_DATE );
+		//提醒
+		sTaskListProjectionMap.put( TaskCursor.KEY.ALERT_Interval,TaskCursor.KEY.ALERT_Interval );
+		sTaskListProjectionMap.put( TaskCursor.KEY.ALERT_TIME,TaskCursor.KEY.ALERT_TIME );
+		//位置
+		sTaskListProjectionMap.put( TaskCursor.KEY.LOCATION_NAME,TaskCursor.KEY.LOCATION_NAME );
+		sTaskListProjectionMap.put( TaskCursor.KEY.COORDINATE,TaskCursor.KEY.COORDINATE );
+		sTaskListProjectionMap.put( TaskCursor.KEY.DISTANCE,TaskCursor.KEY.DISTANCE );
+		//分類,標籤與優先
+		sTaskListProjectionMap.put( TaskCursor.KEY.CATEGORY,TaskCursor.KEY.CATEGORY );
+		sTaskListProjectionMap.put( TaskCursor.KEY.PRIORITY,TaskCursor.KEY.PRIORITY );
+		sTaskListProjectionMap.put( TaskCursor.KEY.TAG,TaskCursor.KEY.TAG );
+		sTaskListProjectionMap.put( TaskCursor.KEY.LEVEL,TaskCursor.KEY.LEVEL );
+		//其他
+		sTaskListProjectionMap.put( TaskCursor.KEY.COLLABORATOR,TaskCursor.KEY.COLLABORATOR );
+		sTaskListProjectionMap.put( TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID,TaskCursor.KEY.GOOGOLE_CAL_SYNC_ID );
+		sTaskListProjectionMap.put( TaskCursor.KEY.TASK_COLOR,TaskCursor.KEY.TASK_COLOR );
 
 	}
 }

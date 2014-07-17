@@ -44,7 +44,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 	@Override
 	protected Card getCardFromCursor(final Cursor cursor) {
 		MyCursorCard card = new MyCursorCard(super.getContext());
-		
+
 		mReadCardOnClick = new OnClickCard(getContext(), cursor, card);
 		mReadCardOnClick.setMyCursorCardAdapter(this);
 
@@ -98,7 +98,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 			@Override
 			public void onClick(Card card, View view) {
 
-				
+
 				mReadCardOnClick.readIt(card.getId());
 
 			}
@@ -244,13 +244,14 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 		// Use this code to delete items on DB
 		ContentResolver resolver = getContext().getContentResolver();
-		
-		long noDeleted = resolver.delete(RemindmeVar.CONTENT_URI,
-				RemindmeVar.TaskCursor.KEY.KEY_ID + " = ? ",
+
+		//long noDeleted =
+		resolver.delete(RemindmeVar.CONTENT_URI,
+				RemindmeVar.TaskCursor.KEY._ID + " = ? ",
 				new String[] { this.getCardFromCursor(getCursor()).getId() });
 
 		this.notifyDataSetChanged();
-	
+
 
 	}
 
@@ -259,46 +260,46 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 	private AlertDialog ShowLongClickMenu() {
 
 		return new AlertDialog.Builder(getContext())
-				.setTitle("請選擇...")
-				.setItems(R.array.CardOnLongClickDialogString,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
+		.setTitle("請選擇...")
+		.setItems(R.array.CardOnLongClickDialogString,
+				new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,
+					int which) {
 
-								switch (which) {
-								case 0:// 修改
+				switch (which) {
+				case 0:// 修改
 
-									break;
-								case 1:// 刪除
-									removeCard();
+					break;
+				case 1:// 刪除
+					removeCard();
 
-									break;
-								case 2:// 提高優先
+					break;
+				case 2:// 提高優先
 
-									break;
-								case 3:// 降低優先
+					break;
+				case 3:// 降低優先
 
-									break;
-								case 5:// 分享
+					break;
+				case 5:// 分享
 
-									break;
-								}
+					break;
+				}
 
-								//
-								/* User clicked so do some stuff */
-								String[] items = getContext()
-										.getResources()
-										.getStringArray(
-												R.array.CardOnLongClickDialogString);
-								new AlertDialog.Builder(getContext())
-										.setMessage(
-												"You selected: " + which
-														+ " , " + items[which])
-										.show();
-								//
+				//
+				/* User clicked so do some stuff */
+				String[] items = getContext()
+						.getResources()
+						.getStringArray(
+								R.array.CardOnLongClickDialogString);
+				//				new AlertDialog.Builder(getContext())
+				//				.setMessage(
+				//						"You selected: " + which
+				//						+ " , " + items[which])
+				//						.show();
+				//
 
-							}
-						}).show();
+			}
+		}).show();
 
 	}
 
