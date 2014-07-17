@@ -5,8 +5,9 @@ package me.iamcxa.remindme.database;
 
 import java.util.HashMap;
 
-import me.iamcxa.remindme.RemindmeVar;
-import me.iamcxa.remindme.RemindmeVar.TaskCursor;
+import common.CommonVar;
+import common.CommonVar.TaskCursor;
+
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -123,7 +124,7 @@ public class TaskDbProvider extends ContentProvider {
 		// 使用預設排序
 		String orderBy;
 		if (TextUtils.isEmpty(sortOrder)) {
-			orderBy = RemindmeVar.DEFAULT_SORT_ORDER;
+			orderBy = CommonVar.DEFAULT_SORT_ORDER;
 		} else {
 			orderBy = sortOrder;
 		}
@@ -142,9 +143,9 @@ public class TaskDbProvider extends ContentProvider {
 	public String getType(Uri uri) {
 		switch (sUriMatcher.match(uri)) {
 		case TASKS:
-			return RemindmeVar.CONTENT_TYPE;
+			return CommonVar.CONTENT_TYPE;
 		case TASK_ID:
-			return RemindmeVar.CONTENT_ITEM_TYPE;
+			return CommonVar.CONTENT_ITEM_TYPE;
 
 		default:
 			throw new IllegalArgumentException("錯誤的 URI！ " + uri);
@@ -169,7 +170,7 @@ public class TaskDbProvider extends ContentProvider {
 		long rowId = db.insert(TASK_LIST_TABLE_NAME, TaskCursor.KEY.CONTENT,
 				values);
 		if (rowId > 0) {
-			Uri taskUri = ContentUris.withAppendedId(RemindmeVar.CONTENT_URI,
+			Uri taskUri = ContentUris.withAppendedId(CommonVar.CONTENT_URI,
 					rowId);
 			getContext().getContentResolver().notifyChange(taskUri, null);
 			return taskUri;
@@ -239,8 +240,8 @@ public class TaskDbProvider extends ContentProvider {
 	static {
 		// Uriぁ匹配工具類別
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(RemindmeVar.AUTHORITY, RemindmeVar.TASKLIST, TASKS);
-		sUriMatcher.addURI(RemindmeVar.AUTHORITY, RemindmeVar.TASKLIST + "/#",
+		sUriMatcher.addURI(CommonVar.AUTHORITY, CommonVar.TASKLIST, TASKS);
+		sUriMatcher.addURI(CommonVar.AUTHORITY, CommonVar.TASKLIST + "/#",
 				TASK_ID);
 
 		// 實例化查詢欄位集合

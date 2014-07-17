@@ -3,6 +3,8 @@
  */
 package me.iamcxa.remindme.cardfragment;
 
+import common.CommonVar;
+
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
 import it.gmariotti.cardslib.library.internal.CardExpand;
@@ -11,7 +13,6 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
 import it.gmariotti.cardslib.library.view.component.CardHeaderView;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeVar;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -82,7 +83,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		CardExpand expand = new CardExpand(getContext());
 		// Set inner title in Expand Area
 		String aa = "dbId=" + cursor.getString(0) + ",w="
-				+ cursor.getString(RemindmeVar.TaskCursor.KEY_INDEX.PRIORITY)
+				+ cursor.getString(CommonVar.TaskCursor.KEY_INDEX.PRIORITY)
 				+ "cardID="+card.getId();
 
 		expand.setTitle(aa);
@@ -246,8 +247,8 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		ContentResolver resolver = getContext().getContentResolver();
 
 		//long noDeleted =
-		resolver.delete(RemindmeVar.CONTENT_URI,
-				RemindmeVar.TaskCursor.KEY._ID + " = ? ",
+		resolver.delete(CommonVar.CONTENT_URI,
+				CommonVar.TaskCursor.KEY._ID + " = ? ",
 				new String[] { this.getCardFromCursor(getCursor()).getId() });
 
 		this.notifyDataSetChanged();

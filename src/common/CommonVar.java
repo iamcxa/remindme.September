@@ -1,7 +1,7 @@
 /**
  * 
  */
-package me.iamcxa.remindme;
+package common;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,7 +22,7 @@ import android.util.Log;
  * @author cxa
  * 
  */
-public class RemindmeVar {
+public class CommonVar {
 
 	// 授權常數
 	public static final String AUTHORITY = "me.iamcxa.remindme";
@@ -52,25 +52,25 @@ public class RemindmeVar {
 
 	// debug msg on/off, read from Shared Preferences XML file
 	public static boolean IS_DEBUG_MSG_ON() {
-		return RemindmeVar.mPreferences.getBoolean("isDebugMsgOn", true);
+		return CommonVar.mPreferences.getBoolean("isDebugMsgOn", true);
 	}
 
 	// isServiceOn
 	public static boolean IS_SERVICE_ON() {
-		return RemindmeVar.mPreferences.getBoolean("isServiceOn", true);
+		return CommonVar.mPreferences.getBoolean("isServiceOn", true);
 	};
 
 	// isServiceOn
 	public static boolean IS_SORTING_ON() {
-		return RemindmeVar.mPreferences.getBoolean("isSortingOn", true);
+		return CommonVar.mPreferences.getBoolean("isSortingOn", true);
 	};
 
 	// isServiceOn
 	public static String getUpdatePeriod() {
-		return RemindmeVar.mPreferences.getString("GetPriorityPeriod", "5000");
+		return CommonVar.mPreferences.getString("GetPriorityPeriod", "5000");
 	};
 
-	private RemindmeVar() {
+	private CommonVar() {
 	}
 
 	/***********************/
@@ -137,36 +137,16 @@ public class RemindmeVar {
 		}
 
 	}
-	
+
 	public static long getNextFewDays(int Days) {
+		long NextFewDays=System.currentTimeMillis()+( 60 * 60 * 24 * 1000 * Days);//N天的毫秒數;
+		return NextFewDays;
 
-		// 定義時間格式
-		// java.text.SimpleDateFormat sdf = new
-		SimpleDateFormat sdf = null;
-			//sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm",Locale.TAIWAN);
-			sdf = new SimpleDateFormat("yyyy/MM/dd",Locale.TAIWAN);
+	}
 
-		// 取得現在時間
-		Date now = new Date();
-		String nowDate = sdf.format(now);
-		try {
-			// 取得事件時間與現在時間
-			Date dt1 = sdf.parse(nowDate);
-			// 取得兩個時間的Unix時間
-			Long timeP = dt1.getTime()+ (1000 * 60 * 60 * 24 * 7);// 毫秒
-			// 相減獲得兩個時間差距的毫秒
-			// Long sec = timeP / 1000;// 秒差
-			// Long min = timeP / 1000 * 60;// 分差
-			// Long hr = timeP / 1000 * 60 * 60;// 時差
-			Long day = timeP / (1000 * 60 * 60 * 24);// 日差
-			debugMsg(0, "Get days left Sucessed! " + day);
-			return day;
-		} catch (Exception e) {
-			// TODO: handle exception
-			debugMsg(999, e.toString());
-			return -1;
-		}
-
+	public static long getToday() {
+		long curDate=System.currentTimeMillis();
+		return curDate;
 	}
 
 
@@ -180,7 +160,7 @@ public class RemindmeVar {
 		if (String.valueOf(month).length()==1){
 			month="0"+month;
 		}
-		
+
 		return year+"/"+month+"/"+dayOfMonth;
 	}
 
