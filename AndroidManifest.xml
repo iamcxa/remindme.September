@@ -52,8 +52,10 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCc6qLg_oLGlva4ms9IwnpCOnpp2laUNNw" />
-        	<!-- AIzaSyCc6qLg_oLGlva4ms9IwnpCOnpp2laUNNw 耀德 mac mini key -->
+            android:value="AIzaSyB_so61XR17TQz3hs1Err7qWyd39pm8Jsc" />
+        	<!-- AIzaSyCc6qLg_oLGlva4ms9IwnpCOnpp2laUNNw 耀德  mac mini key -->
+        	<!-- AIzaSyB_so61XR17TQz3hs1Err7qWyd39pm8Jsc 耀德 Tx300 -->
+        	<!-- AIzaSyCc6qLg_oLGlva4ms9IwnpCOnpp2laUNNw 奎研 -->
         	
      	 <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
      	 
