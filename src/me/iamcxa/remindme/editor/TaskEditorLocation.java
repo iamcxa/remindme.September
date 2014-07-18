@@ -6,6 +6,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import me.iamcxa.remindme.R;
@@ -40,10 +41,13 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 	private static GoogleMap map;
 	private static EditText EditTextTittle;
 	private static EditText SearchText;
+	private static TextView PlaceName;
 	private static TextView locationTittle;
 	private static Button Search;
+	
 	private static ImageButton OK;
 	private Handler GpsTimehandler = new Handler();
+	private static Boolean isDrop=false;
 
 	private MultiAutoCompleteTextView taskTittle; //任務標題
 	private EditText taskDuedate;//任務到期日
@@ -51,17 +55,27 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 
 	private EditorVar mEditorVar ;
 
+	//****************搜尋到的經緯度、名稱********************
+	
+	private String locationName;
+	private double Lat;
+	private double Lon;
+	
+	//************************************************
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		super.onCreateView(inflater, container, savedInstanceState);
+	
 		View v= inflater.inflate(R.layout.activity_task_editor_parts_dialog_location, container, false);
 		//OK = (ImageButton) getActivity().findViewById(R.id.OK);
-		
+		setUpMapIfNeeded();
 		SearchText = (EditText) v.findViewById(R.id.SearchText);
 		Search = (Button) v.findViewById(R.id.Search);
 		Search.setOnClickListener(SearchPlace);
-		
+		PlaceName = (TextView)v.findViewById(R.id.PlaceName);
 //		OK.setOnClickListener(SearchPlace);
 //		gpsManager = new GPSManager();
 //		gpsManager.startNetWorkListening(getActivity());
@@ -93,21 +107,23 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		setUpMapIfNeeded();
+		//setUpMapIfNeeded();
 	}
 
 	private void setUpMapIfNeeded()
 	{
 	    if(map == null)
 	    {
-	    	map = ((MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.map)).getMap();
+	    	map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 	        if(map == null)
 	        {
 	            Log.d("", "googleMap is null !!!!!!!!!!!!!!!");
 	        }else
 	        {
 	        	map.setMyLocationEnabled(true);
+	        	map.getUiSettings().setZoomControlsEnabled(false);
 	        	map.setOnCameraChangeListener(listener);
+	        	map.setOnMarkerClickListener(MarkerClickListener);
 	    		LatLng nowLoacation;
 //	    		if (gpsManager.LastLocation() != null) {
 //	    			nowLoacation = new LatLng(gpsManager.LastLocation().getLatitude(),
@@ -150,6 +166,22 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 		}
 	};
 	
+	private GoogleMap.OnMarkerClickListener MarkerClickListener =new GoogleMap.OnMarkerClickListener() {
+		
+		@Override
+		public boolean onMarkerClick(Marker marker) {
+			// TODO Auto-generated method stub
+			GeocodingAPI LoacationAddress = new GeocodingAPI(getActivity(),marker.getPosition().latitude+","+marker.getPosition().longitude);
+			
+			locationName=LoacationAddress.GeocodingApiAddressGet();
+			PlaceName.setText(locationName);
+			Lat=marker.getPosition().latitude;
+			Lon=marker.getPosition().longitude;
+			return false;
+		}
+	};
+	
+	
 	private Button.OnClickListener SearchPlace = new Button.OnClickListener() {
 
 		@Override
@@ -171,12 +203,16 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 			// locationName=LoacationAddress2.GeocodingApiAddressGet();
 			// textView2.setText(textView2.getText()+"\n"+Address);
 			SearchLocation = LoacationAddress2.GeocodingApiLatLngGet();
+			Lat=SearchLocation.latitude;
+			Lon=SearchLocation.longitude;
 			// textView2.setText(textView2.getText()+"\n"+SearchLocation);
+			locationName=LoacationAddress2.GeocodingApiAddressGet();
+			PlaceName.setText(locationName);
 			if (SearchLocation != null) {
 				map.animateCamera((CameraUpdateFactory.newLatLngZoom(
 						SearchLocation, map.getMaxZoomLevel() - 4)));
 				map.addMarker(new MarkerOptions().title("搜尋的位置")
-						.snippet(LoacationAddress2.GeocodingApiAddressGet()).position(SearchLocation));
+						.snippet(locationName).position(SearchLocation));
 			} else {
 				Toast.makeText(getActivity(), "查無地點哦,換個詞試試看",
 						Toast.LENGTH_SHORT).show();

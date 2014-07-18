@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class TaskEditorTab extends FragmentActivity  {
 
+
 	private static EditorVar mEditorVar=EditorVar.GetInstance();
 	private static SaveOrUpdate mSaveOrUpdate;
 
