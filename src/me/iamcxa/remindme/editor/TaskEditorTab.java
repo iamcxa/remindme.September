@@ -1,9 +1,9 @@
 package me.iamcxa.remindme.editor;
 
+import common.CommonVar;
+import common.CommonVar.TaskCursor;
+
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeVar;
-import me.iamcxa.remindme.RemindmeVar.TaskCursor;
-import android.R.bool;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -167,23 +167,23 @@ public class TaskEditorTab extends FragmentActivity  {
 							mEditorVar.Task.getContent()+","+		
 							mEditorVar.Task.getCreated()+","+		
 							mEditorVar.Task.getDueDate();
-			RemindmeVar.debugMsg(0,"TaskField_Main="+ TaskField_Main);
+			CommonVar.debugMsg(0,"TaskField_Main="+ TaskField_Main);
 
 			String TaskField_Location=
 					mEditorVar.TaskLocation.getCoordinate()+","+	
 							mEditorVar.TaskLocation.getLocationName();
-			RemindmeVar.debugMsg(0,"TaskField_Location="+ TaskField_Location);
+			CommonVar.debugMsg(0,"TaskField_Location="+ TaskField_Location);
 
 			String TaskField_Alert=
 					mEditorVar.TaskAlert .getAlertInterval()+","+	
 							mEditorVar.TaskAlert.getAlertTime();
-			RemindmeVar.debugMsg(0,"TaskField_Alert="+ TaskField_Alert);
+			CommonVar.debugMsg(0,"TaskField_Alert="+ TaskField_Alert);
 
 			String TaskField_Type=
 					mEditorVar.TaskType.getPriority()+","+		
 							mEditorVar.TaskType.getCategory()+","+	
 							mEditorVar.TaskType.getTag();			
-			RemindmeVar.debugMsg(0,"TaskField_Type="+ TaskField_Type);	
+			CommonVar.debugMsg(0,"TaskField_Type="+ TaskField_Type);	
 
 			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
 			mSaveOrUpdate.DoTaskEditorAdding(

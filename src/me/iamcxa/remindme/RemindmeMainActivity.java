@@ -4,6 +4,8 @@
 package me.iamcxa.remindme;
 
 
+import common.CommonVar;
+
 import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
 import me.iamcxa.remindme.editor.TaskEditorTab;
 import me.iamcxa.remindme.provider.LocationGetter;
@@ -66,24 +68,24 @@ public class RemindmeMainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setLoding("ON");
 
-		RemindmeVar.mPreferences = PreferenceManager
+		CommonVar.mPreferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 
 		// 設定：layout視圖
 		setContentView(R.layout.activity_main);
 		setNavagationDrawer(savedInstanceState);
 		
-		RemindmeVar.debugMsg(0, "=========================");
+		CommonVar.debugMsg(0, "=========================");
 		threadID = android.os.Process.getThreadPriority(android.os.Process
 				.myTid());
-		RemindmeVar.debugMsg(1, threadID + " onCreate");
+		CommonVar.debugMsg(1, threadID + " onCreate");
 
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				RemindmeVar.debugMsg(1, threadID + " pre-setViewComponent");
+				CommonVar.debugMsg(1, threadID + " pre-setViewComponent");
 				// 設定：頁面元件
 				setViewComponent();
 			}
@@ -164,7 +166,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 	/** StartService LOCALE **/
 	/**********************/
 	public void StartService() {
-		if (RemindmeVar.IS_SERVICE_ON()) {
+		if (CommonVar.IS_SERVICE_ON()) {
 			Intent intent = new Intent(this, TaskSortingService.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startService(intent);
@@ -279,7 +281,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				RemindmeVar.debugMsg(1, threadID + " setViewComponent");
+				CommonVar.debugMsg(1, threadID + " setViewComponent");
 
 
 				setLoding("OFF");
@@ -297,7 +299,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				RemindmeVar.debugMsg(1, threadID + " setFragment "
+				CommonVar.debugMsg(1, threadID + " setFragment "
 						+ FragmentPosition);
 
 				fragmentManager = getFragmentManager();
@@ -372,7 +374,7 @@ public class RemindmeMainActivity extends FragmentActivity {
 			public void run() {
 				threadID = android.os.Process
 						.getThreadPriority(android.os.Process.myTid());
-				RemindmeVar.debugMsg(1, +threadID + " setDatatoEditor");
+				CommonVar.debugMsg(1, +threadID + " setDatatoEditor");
 
 			}
 		}).start();

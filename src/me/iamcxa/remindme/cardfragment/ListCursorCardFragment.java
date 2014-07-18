@@ -23,10 +23,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import common.CommonVar;
+import common.CommonVar.TaskCursor;
+
 import it.gmariotti.cardslib.library.view.CardListView;
-import me.iamcxa.remindme.RemindmeVar;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeVar.TaskCursor;
 import android.R.string;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -52,12 +53,12 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	private static CardListView mListView;
 	private static String[] projection = TaskCursor.PROJECTION;
 	private static String selection = null;
-	private static String sortOrder = RemindmeVar.DEFAULT_SORT_ORDER;
+	private static String sortOrder = CommonVar.DEFAULT_SORT_ORDER;
 	private static String[] selectionArgs;
 	private static Cursor cursor;
 	private static Double Latitude;
 	private static Double Longitude;
-	private static String mToday=RemindmeVar.getCalendarToday(0);
+	private static String mToday=CommonVar.getCalendarToday(0);
 
 	/********************/
 	/** Initialization **/
@@ -81,15 +82,15 @@ LoaderManager.LoaderCallbacks<Cursor> {
 			break;
 		case 1:
 			// filter=1 : 今天
-			String today=RemindmeVar.getCalendarToday(0);
+			String today=CommonVar.getCalendarToday(0);
 			Toast.makeText(getActivity(), "today="+today, Toast.LENGTH_SHORT).show();
 			setSelection("DUE_DATE = '"+today+"'");
 			break;
 		case 2:
 			// filter=2 : 未來七天
-			String curDate=RemindmeVar.getCalendarToday(0);
-			String sevenDaysLater = 
-					RemindmeVar.getCalendarToday(7);
+			long curDate=CommonVar.getNextFewDays(0);
+			long sevenDaysLater = 
+					CommonVar.getNextFewDays(7);
 
 			Toast.makeText(getActivity(), 
 					"now:"+curDate+
@@ -140,7 +141,7 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
 		Loader<Cursor> loader = null;
-		loader = new CursorLoader(getActivity(), RemindmeVar.CONTENT_URI,
+		loader = new CursorLoader(getActivity(), CommonVar.CONTENT_URI,
 				projection, selection, selectionArgs, sortOrder);
 
 		return loader;

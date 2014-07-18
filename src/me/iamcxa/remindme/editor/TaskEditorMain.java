@@ -1,7 +1,8 @@
 package me.iamcxa.remindme.editor;
 
+import common.CommonVar;
+
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeVar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -65,9 +66,10 @@ public class TaskEditorMain extends Fragment {
 		String taskDueDateString = "null";
 		if (!(taskDueDate.getText().toString().isEmpty())){
 			taskDueDateString=taskDueDate.getText().toString().trim();
+			
 		}
 		
-		RemindmeVar.debugMsg(0,"getTaskDueDate:"+ taskDueDateString.isEmpty());
+		CommonVar.debugMsg(0,"getTaskDueDate:"+ taskDueDateString.isEmpty());
 		return taskDueDateString;
 	}
 	public static String getTaskTittle() {
@@ -75,7 +77,7 @@ public class TaskEditorMain extends Fragment {
 		if (!(taskTittle.getText().toString().isEmpty())){
 			TaskTittleString= taskTittle.getText().toString().trim();
 		}
-		RemindmeVar.debugMsg(0,"getTaskTittle:"+ TaskTittleString+",TaskTittle.len="+TaskTittleString.length());
+		CommonVar.debugMsg(0,"getTaskTittle:"+ TaskTittleString+",TaskTittle.len="+TaskTittleString.length());
 		return TaskTittleString;
 	}
 
