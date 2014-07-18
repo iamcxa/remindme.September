@@ -1,22 +1,26 @@
 package me.iamcxa.remindme.editor;
 
+import common.MyCursor.TaskCursor;
+import common.MyDebug;
 import common.CommonVar;
-import common.CommonVar.TaskCursor;
 
 import me.iamcxa.remindme.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 public class TaskEditorTab extends Activity {
 
 	private static EditorVar mEditorVar=EditorVar.GetInstance();
 	private static SaveOrUpdate mSaveOrUpdate;
+	//private Resources res = getApplicationContext().getResources();
 
 
 	/** Called when the activity is first created. */
@@ -25,6 +29,7 @@ public class TaskEditorTab extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_editor_tab);
 		setupViewComponent();
+		//init(this.getIntent());
 	}
 
 	// This is the action bar menu
@@ -61,7 +66,7 @@ public class TaskEditorTab extends Activity {
 
 	//  由資料庫初始化變數
 	public static void init(Intent intent) {
-		Bundle b = intent.getBundleExtra(TaskCursor.KEY._Bundle);
+		Bundle b = intent.getBundleExtra(CommonVar.BundleName);
 		if (b != null) {
 			//參照 底部之TaskFieldContents/RemindmeVar.class等處, 確保變數欄位與順序都相同
 			mEditorVar.Task.setTaskId(b.getInt(TaskCursor.KEY._ID));
@@ -76,19 +81,24 @@ public class TaskEditorTab extends Activity {
 			mEditorVar.TaskType.setCategory(b.getString(TaskCursor.KEY.CATEGORY));
 			mEditorVar.TaskType.setPriority(b.getInt(TaskCursor.KEY.PRIORITY));
 			mEditorVar.TaskType.setTag(b.getString(TaskCursor.KEY.TAG));
+			
+			//TaskEditorMain.setTaskTittle(mEditorVar.Task.getTittle());
+			//TaskEditorMain.setTaskDueDate(mEditorVar.Task.getDueDate());
+		
 
-			if (b.getString("dueDate") != null && b.getString("dueDate").length() > 0) {
-				String[] dateStr = mEditorVar.Task.getDueDate().split("/");
-				mEditorVar.TaskDate.setmYear(Integer.parseInt(dateStr[0]));
-				mEditorVar.TaskDate.setmMonth(Integer.parseInt(dateStr[1]) - 1);
-				mEditorVar.TaskDate.setmDay(Integer.parseInt(dateStr[2]));
-			}
-
-			if (b.getString("alertTime") != null && b.getString("alertTime").length() > 0) {
-				String[] timeStr = mEditorVar.TaskAlert.getAlertTime().split(":");
-				mEditorVar.TaskDate.setmHour (Integer.parseInt(timeStr[0]));
-				mEditorVar.TaskDate.setmMinute(Integer.parseInt(timeStr[1]));
-			}
+//			if (b.getString("dueDate") != null && b.getString("dueDate").length() > 0) {
+//				String[] dateStr = mEditorVar.Task.getDueDate().split("/");
+//				mEditorVar.TaskDate.setmYear(Integer.parseInt(dateStr[0]));
+//				mEditorVar.TaskDate.setmMonth(Integer.parseInt(dateStr[1]) - 1);
+//				mEditorVar.TaskDate.setmDay(Integer.parseInt(dateStr[2]));
+//			}
+//
+//			if (b.getString("alertTime") != null && b.getString("alertTime").length() > 0) {
+//				String[] timeStr = mEditorVar.TaskAlert.getAlertTime().split(":");
+//				mEditorVar.TaskDate.setmHour (Integer.parseInt(timeStr[0]));
+//				mEditorVar.TaskDate.setmMinute(Integer.parseInt(timeStr[1]));
+//			}
+			
 		}
 	}
 
@@ -101,21 +111,22 @@ public class TaskEditorTab extends Activity {
 
 		Fragment fragMarriSug =new TaskEditorMain();
 		actBar.addTab(actBar.newTab()
-				//.setText("任務")
+				.setText("")
 				.setIcon(getResources().getDrawable(R.drawable.tear_of_calendar))
 				.setTabListener(new MyTabListener(fragMarriSug)));
 
 		Fragment fragGame = new TaskEditorLocation();
 		actBar.addTab(actBar.newTab()
-				//.setText("位置")
+				.setText("")
 				.setIcon(getResources().getDrawable(R.drawable.map_marker))
 				.setTabListener(new MyTabListener(fragGame)));
 
 		Fragment fragVideo = new TaskEditorMain();
 		actBar.addTab(actBar.newTab()
-				//.setText("播放影片")
+				.setText("")
 				.setIcon(getResources().getDrawable(android.R.drawable.ic_media_play))
 				.setTabListener(new MyTabListener(fragVideo)));
+
 	}
 
 
@@ -128,7 +139,7 @@ public class TaskEditorTab extends Activity {
 		public boolean onMenuItemClick(MenuItem item) {
 			// TODO Auto-generated method stub
 			String itemName=String.valueOf(item.getTitle());
-			Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(),item.getTitle(),Toast.LENGTH_SHORT).show();
 			if (itemName.contentEquals( "action_add")){
 
 				btnActionAdd();
@@ -164,30 +175,38 @@ public class TaskEditorTab extends Activity {
 							mEditorVar.Task.getContent()+","+		
 							mEditorVar.Task.getCreated()+","+		
 							mEditorVar.Task.getDueDate();
-			CommonVar.debugMsg(0,"TaskField_Main="+ TaskField_Main);
+			MyDebug.MakeLog(0,"TaskField_Main="+ TaskField_Main);
 
 			String TaskField_Location=
 					mEditorVar.TaskLocation.getCoordinate()+","+	
 							mEditorVar.TaskLocation.getLocationName();
-			CommonVar.debugMsg(0,"TaskField_Location="+ TaskField_Location);
+			MyDebug.MakeLog(0,"TaskField_Location="+ TaskField_Location);
 
 			String TaskField_Alert=
 					mEditorVar.TaskAlert .getAlertInterval()+","+	
 							mEditorVar.TaskAlert.getAlertTime();
-			CommonVar.debugMsg(0,"TaskField_Alert="+ TaskField_Alert);
+			MyDebug.MakeLog(0,"TaskField_Alert="+ TaskField_Alert);
 
 			String TaskField_Type=
 					mEditorVar.TaskType.getPriority()+","+		
 							mEditorVar.TaskType.getCategory()+","+	
-							mEditorVar.TaskType.getTag();			
-			CommonVar.debugMsg(0,"TaskField_Type="+ TaskField_Type);	
+							mEditorVar.TaskType.getTag()+","+
+							mEditorVar.TaskType.getLevel();			
+			MyDebug.MakeLog(0,"TaskField_Type="+ TaskField_Type);	
+
+			String TaskField_Other=
+					mEditorVar.TaskOther.getCollaborator()+","+		
+							mEditorVar.TaskOther.getGoogle_cal_sync_id()+","+	
+							mEditorVar.TaskOther.getTask_color();			
+			MyDebug.MakeLog(0,"TaskField_Other="+ TaskField_Other);
 
 			mSaveOrUpdate = new SaveOrUpdate(getApplicationContext());
 			mSaveOrUpdate.DoTaskEditorAdding(
 					TaskField_Main,
 					TaskField_Location,
 					TaskField_Alert,
-					TaskField_Type
+					TaskField_Type,
+					TaskField_Other
 					);
 			finish();
 		}else {

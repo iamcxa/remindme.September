@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Page Task Editor Main  -->
+    <!-- String -->
+    <string-array name="Array_TaskEditor_btnTaskDueDate_String">
+        <item>今天</item>
+        <item>明天</item>
+        <item>下週</item>
+        <item>一個月內</item>
+        <item>選擇日期</item>
+        <item>‧‧‧</item>
+    </string-array>
+    <!-- Value -->
+    <string-array name="Array_TaskEditor_btnTaskDueDate_Value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    
+    
+    
+</resources>

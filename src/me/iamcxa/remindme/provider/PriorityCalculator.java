@@ -5,8 +5,10 @@ package me.iamcxa.remindme.provider;
 
 import java.text.DecimalFormat;
 
+import common.MyCalendar;
+import common.MyCursor.TaskCursor;
+import common.MyDebug;
 import common.CommonVar;
-import common.CommonVar.TaskCursor;
 
 
 import me.iamcxa.remindme.database.TaskDbEditor;
@@ -57,28 +59,28 @@ public class PriorityCalculator {
 
 	public void ProcessData(Cursor data) {
 
-		CommonVar.debugMsg(0, "GetDistance onLoadFinished");
+		MyDebug.MakeLog(0, "GetDistance onLoadFinished");
 		int i = 0;
 		double Distance;
 		long dayLeft;
 		data.moveToFirst();
 		for (i = 0; i < data.getCount(); i++) {
-			CommonVar.debugMsg(0, "GetDistance data.move@" + i);
+			MyDebug.MakeLog(0, "GetDistance data.move@" + i);
 			// idList.add("" +
 			// data.getInt(TaskCursor.IndexColumns.KEY_ID));
 			// WeightsList.add("" + data.getInt(4));
 
-			CommonVar.debugMsg(0, "GetDistance LatLon1=" + data.getString(2)
+			MyDebug.MakeLog(0, "GetDistance LatLon1=" + data.getString(2)
 					+ " / LatLon2=" + Lat + "," + Lon);
 			Distance = DistanceCalculator.Distance(data.getString(2), Lat, Lon);
 			endDate = data.getString(5);
 			endTime = data.getString(6);
-			dayLeft = CommonVar.getDaysLeft(endDate + " " + endTime, 1);
+			dayLeft = MyCalendar.getDaysLeft(endDate + " " + endTime, 1);
 
-			CommonVar.debugMsg(0, "GetDistance dayLeft org=" + dayLeft);
-			CommonVar.debugMsg(0, "GetDistance endDate=" + endDate);
-			CommonVar.debugMsg(0, "GetDistance endTime=" + endTime);
-			CommonVar.debugMsg(0, "GetDistance Distance=" + Distance);
+			MyDebug.MakeLog(0, "GetDistance dayLeft org=" + dayLeft);
+			MyDebug.MakeLog(0, "GetDistance endDate=" + endDate);
+			MyDebug.MakeLog(0, "GetDistance endTime=" + endTime);
+			MyDebug.MakeLog(0, "GetDistance Distance=" + Distance);
 			saveOrUpdate(
 					Integer.valueOf(data.getInt(0)),
 					getNewWeight(i, Integer.valueOf(data.getInt(4)), Distance,
@@ -104,7 +106,7 @@ public class PriorityCalculator {
 		int newPriorityWeight = oldWeights;
 		dayLeft = (dayLeft) * 24;
 		//Distance *= 10;
-		CommonVar.debugMsg(0, "GetDistance dayLeft=" + dayLeft);
+		MyDebug.MakeLog(0, "GetDistance dayLeft=" + dayLeft);
 		// 時間
 //		if ((dayLeft>168)) {
 //			newPriorityWeight *= 0.25;
@@ -141,8 +143,7 @@ public class PriorityCalculator {
 		//newPriorityWeight = newPriorityWeight + oldWeights;
 //		
 	//	oldWeights+=newPriorityWeight ;
-		CommonVar
-				.debugMsg(0, "GetDistance getNewWeight=" + newPriorityWeight);
+		MyDebug.MakeLog(0, "GetDistance getNewWeight=" + newPriorityWeight);
 		return newPriorityWeight+1;   //+1防止歸0
 	}
 
@@ -168,7 +169,7 @@ public class PriorityCalculator {
 			// Toast.makeText(this, "事項更新成功！" + curDate.toString(),
 			// Toast.LENGTH_SHORT).show();
 
-			CommonVar.debugMsg(0, "GetDistance newPriorityWeight更新成功！");
+			MyDebug.MakeLog(0, "GetDistance newPriorityWeight更新成功！");
 			load.closeDB();
 			return true;
 		} catch (Exception e) {

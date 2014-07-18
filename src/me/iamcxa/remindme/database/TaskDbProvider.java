@@ -6,8 +6,7 @@ package me.iamcxa.remindme.database;
 import java.util.HashMap;
 
 import common.CommonVar;
-import common.CommonVar.TaskCursor;
-
+import common.MyCursor.TaskCursor;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;

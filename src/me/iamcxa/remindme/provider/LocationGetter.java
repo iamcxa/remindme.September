@@ -1,6 +1,8 @@
 package me.iamcxa.remindme.provider;
 
+import common.MyDebug;
 import common.CommonVar;
+import common.MyPreferences;
 
 import android.content.Context;
 import android.location.Location;
@@ -26,7 +28,7 @@ public class LocationGetter implements GPSCallback {
 		Lat = location.getLatitude();
 		Lon = location.getLongitude();
 		Speed = location.getSpeed();
-		CommonVar.debugMsg(0, "LocationProvider onGPSUpdate");
+		MyDebug.MakeLog(0, "LocationProvider onGPSUpdate");
 	}
 
 	public LocationGetter(Context context) {
@@ -38,21 +40,21 @@ public class LocationGetter implements GPSCallback {
 		gpsManager.stopListening();
 		gpsManager.setGPSCallback(null);
 		isGpsStrat = false;
-		CommonVar.debugMsg(0, "LocationProvider stopListening");
+		MyDebug.MakeLog(0, "LocationProvider stopListening");
 	}
 
 	public void startNetWorkListening(GPSCallback gpsCallBack) {
 		gpsManager.startNetWorkListening(context);
 		gpsManager.setGPSCallback(gpsCallBack);
 		isGpsStrat = true;
-		CommonVar.debugMsg(0, "LocationProvider startNetWorkListening");
+		MyDebug.MakeLog(0, "LocationProvider startNetWorkListening");
 	}
 
 	public void startGpsListening(GPSCallback gpsCallBack) {
 		gpsManager.startGpsListening(context);
 		gpsManager.setGPSCallback(gpsCallBack);
 		isGpsStrat = true;
-		CommonVar.debugMsg(0, "LocationProvider startNetWorkListening");
+		MyDebug.MakeLog(0, "LocationProvider startNetWorkListening");
 	}
 
 	public boolean isLocationGet() {
@@ -67,7 +69,7 @@ public class LocationGetter implements GPSCallback {
 		handler = new Handler();
 		UpdatePriority = new PriorityCalculator(context);
 
-		updatePeriod = CommonVar.getUpdatePeriod();
+		updatePeriod = MyPreferences.getUpdatePeriod();
 
 		handler.postDelayed(GpsTime, Long.parseLong(updatePeriod));
 		UseOnceTime = false;
@@ -111,26 +113,26 @@ public class LocationGetter implements GPSCallback {
 		@Override
 		public void run() {
 
-			CommonVar.debugMsg(0, "service GpsTime start");
+			MyDebug.MakeLog(0, "service GpsTime start");
 
-			setIsSortingOn(CommonVar.IS_SORTING_ON());			
+			setIsSortingOn(MyPreferences.IS_SORTING_ON());			
 
-			CommonVar.debugMsg(0, "service preferance isSortingOn="+getIsSortingOn());
+			MyDebug.MakeLog(0, "service preferance isSortingOn="+getIsSortingOn());
 
 			if (getIsSortingOn()) {
 
 				if (isLocationGet()) {
 					stopListening();
-					CommonVar.debugMsg(0, "比較上次距離:"+CompareLastDistance(Lat,Lon));
-					if(CompareLastDistance(Lat,Lon)>CommonVar.GpsSetting.GpsTolerateErrorDistance){
-						CommonVar.debugMsg(0, "跟新權重");
+					MyDebug.MakeLog(0, "比較上次距離:"+CompareLastDistance(Lat,Lon));
+					if(CompareLastDistance(Lat,Lon)>MyPreferences.GpsSetting.GpsTolerateErrorDistance){
+						MyDebug.MakeLog(0, "跟新權重");
 						UpdatePriority.SetLatLng(Lat, Lon);
 						UpdatePriority.ProcessData(UpdatePriority.loadData());
 					}
 					if (UseOnceTime) {
 						CloseUpdatePriority();
 					} else {
-						updatePeriod = CommonVar.mPreferences.getString(
+						updatePeriod = MyPreferences.mPreferences.getString(
 								"GetPriorityPeriod", "5000");
 						handler.postDelayed(this, Long.parseLong(updatePeriod));
 					}
@@ -138,19 +140,19 @@ public class LocationGetter implements GPSCallback {
 				} else {
 					if (isGpsStrat) {
 						handler.postDelayed(this, 1000);
-						CommonVar.debugMsg(0, "已經開啟GPS但是還沒拿到資料:" + Lat + ","
+						MyDebug.MakeLog(0, "已經開啟GPS但是還沒拿到資料:" + Lat + ","
 								+ Lon);
 					} else {
 						startNetWorkListening(LocationGetter.this);
 						handler.postDelayed(this, 1000);
 						// make log
-						CommonVar.debugMsg(0, "開啟GPS:" + Lat + "," + Lon);
+						MyDebug.MakeLog(0, "開啟GPS:" + Lat + "," + Lon);
 					}
 				}
 
 			}else{
 
-				CommonVar.debugMsg(0, "service GpsTime stop because isSortingOn=False");
+				MyDebug.MakeLog(0, "service GpsTime stop because isSortingOn=False");
 
 			}
 		}

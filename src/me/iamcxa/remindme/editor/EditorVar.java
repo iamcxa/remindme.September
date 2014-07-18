@@ -1,6 +1,5 @@
 package me.iamcxa.remindme.editor;
 
-
 public class EditorVar {
 
 	// 顯示日期、時間對話方塊常數
@@ -14,7 +13,8 @@ public class EditorVar {
 	public EditorFields Task = new EditorFields();
 	public TaskTypeVar TaskType= new TaskTypeVar();
 	public AlertVar TaskAlert= new AlertVar();
-	
+	public OtherVar TaskOther= new OtherVar();
+
 	private EditorVar(){}
 
 	public static EditorVar GetInstance(){
@@ -65,38 +65,7 @@ class EditorFields {
 	public void setCreated(String created) {
 		this.created = created;
 	}
-	
-}
 
-//任務類型/標籤/優先成員
-class TaskTypeVar{
-
-	//任務優先等級
-	private int priority=0;
-	//任務分類
-	private String category="null";
-	//任務標籤
-	private String tag="null";
-	
-	//---------------Getter/Setter-----------------//
-	public int getPriority() {
-		return priority;
-	}
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	public String getTag() {
-		return tag;
-	}
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
 }
 
 //任務地點成員
@@ -112,7 +81,7 @@ class LocationVar {
 	// 是否有搜尋過地點
 	private Boolean isSearched = false;
 	private Boolean isDropped = false;
-	
+
 	//---------------Getter/Setter-----------------//
 	public String getLocationName() {
 		return locationName;
@@ -166,7 +135,7 @@ class AlertVar {
 	private boolean isAlertOn = false;
 	private String alertTime ="null";
 	private String alertInterval ="null";
-	
+
 	//---------------Getter/Setter-----------------//
 	public boolean isAlertOn() {
 		return isAlertOn;
@@ -199,7 +168,7 @@ class DateVar {
 	private int mHour=0;
 	private int mMinute=0;
 	//private int target;
-	
+
 	//---------------Getter/Setter-----------------//
 	public int getmYear() {
 		return mYear;
@@ -232,4 +201,71 @@ class DateVar {
 		this.mMinute = mMinute;
 	}
 
+}
+
+//任務類型/標籤/優先成員
+class TaskTypeVar{
+
+	//任務優先等級
+	private int priority=0;
+	//任務分類
+	private String category="null";
+	//任務標籤
+	private String tag="null";
+	private String level="null";
+
+	//---------------Getter/Setter-----------------//
+	public int getPriority() {
+		return priority;
+	}
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+}
+
+// 其他成員
+class OtherVar{
+
+	//任務顏色
+	private String collaborator="null";
+	private String google_cal_sync_id="null";
+	private int task_color=0;
+
+	//---------------Getter/Setter-----------------//
+	public int getTask_color() {
+		return task_color;
+	}
+	public String getCollaborator() {
+		return collaborator;
+	}
+	public String getGoogle_cal_sync_id() {
+		return google_cal_sync_id;
+	}
+	public void setCollaborator(String collaborator) {
+		this.collaborator = collaborator;
+	}
+	public void setGoogle_cal_sync_id(String google_cal_sync_id) {
+		this.google_cal_sync_id = google_cal_sync_id;
+	}
+	public void setTask_color(int task_color) {
+		this.task_color = task_color;
+	}
 }

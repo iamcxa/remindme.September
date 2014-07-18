@@ -58,33 +58,21 @@
     <string name="PowerUsageOptionDefaultValue">0</string>
     <string name="PowerUsageOptionTittle">位置偵測模式</string>
 
-    <string-array name="CardOnLongClickDialogString">
-        <item>修改</item>
-        <item>刪除</item>
-s        <item>提高優先權</item>
-        <item>降低優先權</item>
-        <item>分享</item>
-    </string-array>
-    <string-array name="CardOnLongClickDialogValue">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
+ 
     <string-array name="drawer_array_CHT">
         <item>任務盒</item>
-        <item>今天</item>
+        <item>今  天</item>
         <item>往後一週</item>
-        <item>任務組合</item>
-        <item>●距離</item>
-        <item>標籤</item>
+        <item>專  案</item>
+        <item>距離檢視</item>
+        <item>地圖檢視</item>
+        <item>＃標  籤</item>
     </string-array>
+
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    
-	    <string name="action_websearch">Web search</string>
+    <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
 
 </resources>

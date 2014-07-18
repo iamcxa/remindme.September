@@ -18,17 +18,13 @@
 
 package me.iamcxa.remindme.cardfragment;
 
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
+import common.MyCalendar;
 import common.CommonVar;
-import common.CommonVar.TaskCursor;
+import common.MyCursor.TaskCursor;
 
 import it.gmariotti.cardslib.library.view.CardListView;
 import me.iamcxa.remindme.R;
-import android.R.string;
+import android.R.integer;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -58,7 +54,10 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	private static Cursor cursor;
 	private static Double Latitude;
 	private static Double Longitude;
-	private static String mToday=CommonVar.getCalendarToday(0);
+	private static String todayString=MyCalendar.getCalendarToday(0);
+	private static long today=MyCalendar.getTimeMillis_From_Date(todayString);
+	private static String nextWeekDateString=MyCalendar.getCalendarToday(7);
+	private static long nextWeekDate=MyCalendar.getTimeMillis_From_Date(nextWeekDateString);
 
 	/********************/
 	/** Initialization **/
@@ -73,32 +72,35 @@ LoaderManager.LoaderCallbacks<Cursor> {
 		}
 
 		int filter = getArguments().getInt(FILTER_STRING);
-		Toast.makeText(getActivity(), "i="+String.valueOf(filter), Toast.LENGTH_SHORT).show();		
+		//Toast.makeText(getActivity(), "i="+String.valueOf(filter), Toast.LENGTH_SHORT).show();		
 
 		switch (filter) {
-		case 0:
-			// filter=0 : 任務盒
+		case 0:// 任務盒
 			setSelection("DUE_DATE = 'null'");
 			break;
-		case 1:
-			// filter=1 : 今天
-			String today=CommonVar.getCalendarToday(0);
+		case 1:// 今天
 			Toast.makeText(getActivity(), "today="+today, Toast.LENGTH_SHORT).show();
 			setSelection("DUE_DATE = '"+today+"'");
 			break;
-		case 2:
-			// filter=2 : 未來七天
-			long curDate=CommonVar.getNextFewDays(0);
-			long sevenDaysLater = 
-					CommonVar.getNextFewDays(7);
-
+		case 2://未來七天
 			Toast.makeText(getActivity(), 
-					"now:"+curDate+
-					"\n,+7="+sevenDaysLater, Toast.LENGTH_LONG).show();
-			setSelection("DUE_DATE > "+curDate+" AND DUE_DATE < "+sevenDaysLater);
+					"now:"+today+
+					"\n,+7="+nextWeekDate, Toast.LENGTH_LONG).show();
+			
+			setSelection("DUE_DATE > "+today+" AND DUE_DATE < "+nextWeekDate);
+			break;
+		case 3://專案
 
 			break;
-
+		case 4://距離檢視
+			
+			break;
+		case 5://地圖檢視
+			
+			break;
+		case 6://標籤
+			
+			break;
 		default:
 			break;
 		}

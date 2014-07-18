@@ -4,6 +4,8 @@
 package me.iamcxa.remindme.cardfragment;
 
 import common.CommonVar;
+import common.MyCursor;
+import common.MyCursor.TaskCursor;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
@@ -83,7 +85,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		CardExpand expand = new CardExpand(getContext());
 		// Set inner title in Expand Area
 		String aa = "dbId=" + cursor.getString(0) + ",w="
-				+ cursor.getString(CommonVar.TaskCursor.KEY_INDEX.PRIORITY)
+				+ cursor.getString(MyCursor.TaskCursor.KEY_INDEX.PRIORITY)
 				+ "cardID="+card.getId();
 
 		expand.setTitle(aa);
@@ -248,7 +250,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 		//long noDeleted =
 		resolver.delete(CommonVar.CONTENT_URI,
-				CommonVar.TaskCursor.KEY._ID + " = ? ",
+				TaskCursor.KEY._ID + " = ? ",
 				new String[] { this.getCardFromCursor(getCursor()).getId() });
 
 		this.notifyDataSetChanged();
@@ -262,7 +264,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 		return new AlertDialog.Builder(getContext())
 		.setTitle("½Ð¿ï¾Ü...")
-		.setItems(R.array.CardOnLongClickDialogString,
+		.setItems(R.array.Array_Task_List_Card_Long_Clcik_String,
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,
 					int which) {
@@ -291,7 +293,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 				String[] items = getContext()
 						.getResources()
 						.getStringArray(
-								R.array.CardOnLongClickDialogString);
+								R.array.Array_Task_List_Card_Long_Clcik_String);
 				//				new AlertDialog.Builder(getContext())
 				//				.setMessage(
 				//						"You selected: " + which

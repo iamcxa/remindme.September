@@ -42,17 +42,22 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        layout="@layout/activity_task_editor_parts_box_priority" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/activity_task_editor_parts_box_project" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/activity_task_editor_parts_box_tag" />
+    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         layout="@layout/activity_task_editor_parts_box_btnmore" />
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_task_editor_parts_box_option" />
-
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/activity_task_editor_parts_box_location" />
     
 </LinearLayout>
 </ScrollView>

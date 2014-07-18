@@ -2,8 +2,7 @@ package me.iamcxa.remindme.fragment;
 
 
 import common.CommonVar;
-import common.CommonVar.TaskCursor;
-
+import common.MyCursor.TaskCursor;
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
 import me.iamcxa.remindme.R;
 import android.database.Cursor;
