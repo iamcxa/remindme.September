@@ -1,4 +1,4 @@
-package me.iamcxa.remindme.editor;
+package common;
 
 import me.iamcxa.remindme.R;
 import android.app.ActionBar;

@@ -1,12 +1,12 @@
 package me.iamcxa.remindme.editor;
 
-public class EditorVar {
+public class CommonEditorVar {
 
 	// 顯示日期、時間對話方塊常數
 	public final int DATE_DIALOG_ID = 0;
 	public final int TIME_DIALOG_ID = 1;
 
-	public static EditorVar EditorVarInstance = new EditorVar();
+	public static CommonEditorVar EditorVarInstance = new CommonEditorVar();
 	//切割分類
 	public DateVar TaskDate = new DateVar();
 	public LocationVar TaskLocation = new LocationVar();
@@ -15,9 +15,9 @@ public class EditorVar {
 	public AlertVar TaskAlert= new AlertVar();
 	public OtherVar TaskOther= new OtherVar();
 
-	private EditorVar(){}
+	private CommonEditorVar(){}
 
-	public static EditorVar GetInstance(){
+	public static CommonEditorVar GetInstance(){
 		return EditorVarInstance;
 	}
 
@@ -28,10 +28,11 @@ class EditorFields {
 	// 任務ID
 	private int taskId=0;
 	//任務標題/備註
-	private String tittle ="null";
+	private String title ="null";
 	private String content ="null";
 	//任務到期日/建立日
-	private String dueDate ="null";
+	private String dueDateTime ="null";
+	private String dueDateString ="null";
 	private String created ="null";
 
 	//---------------Getter/Setter-----------------//
@@ -41,11 +42,11 @@ class EditorFields {
 	public void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
-	public String getTittle() {
-		return tittle;
+	public String getTitle() {
+		return title;
 	}
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
+	public void setTitle(String tittle) {
+		this.title = tittle;
 	}
 	public String getContent() {
 		return content;
@@ -53,17 +54,23 @@ class EditorFields {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getDueDate() {
-		return dueDate;
-	}
-	public void setDueDate(String dueDate) {
-		this.dueDate = dueDate;
-	}
 	public String getCreated() {
 		return created;
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public String getDueDateString() {
+		return dueDateString;
+	}
+	public void setDueDateString(String dueDateString) {
+		this.dueDateString = dueDateString;
+	}
+	public String getDueDateTime() {
+		return dueDateTime;
+	}
+	public void setDueDateTime(String dueDateTime) {
+		this.dueDateTime = dueDateTime;
 	}
 
 }
@@ -81,6 +88,7 @@ class LocationVar {
 	// 是否有搜尋過地點
 	private Boolean isSearched = false;
 	private Boolean isDropped = false;
+	private Double Distance=0.0;
 
 	//---------------Getter/Setter-----------------//
 	public String getLocationName() {
@@ -124,6 +132,12 @@ class LocationVar {
 	}
 	public void setIsDropped(Boolean isDropped) {
 		this.isDropped = isDropped;
+	}
+	public Double getDistance() {
+		return Distance;
+	}
+	public void setDistance(Double distance) {
+		Distance = distance;
 	}
 
 }

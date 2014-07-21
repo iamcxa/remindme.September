@@ -5,13 +5,14 @@ package me.iamcxa.remindme.provider;
 
 import java.text.DecimalFormat;
 
+import me.iamcxa.remindme.database.ColumnLocation;
+import me.iamcxa.remindme.database.ColumnTask;
+import me.iamcxa.remindme.database.TaskDbEditor;
+
 import common.MyCalendar;
-import common.MyCursor.TaskCursor;
 import common.MyDebug;
 import common.CommonVar;
 
-
-import me.iamcxa.remindme.database.TaskDbEditor;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,11 +28,11 @@ public class PriorityCalculator {
 
 	private double Lat;
 	private double Lon;
-	public static String[] projection = TaskCursor.PROJECTION_GPS;
-	public static String selection = TaskCursor.KEY.COORDINATE
-			+ " <> \"\" AND " + TaskCursor.KEY.COORDINATE
+	public static String[] projection = ColumnLocation.PROJECTION;
+	public static String selection = ColumnLocation.KEY.lat
+			+ " <> \"\" AND " + ColumnLocation.KEY.lon
 			+ " NOT LIKE \"null%\"";
-	public static String sortOrder = TaskCursor._ID;
+	public static String sortOrder = ColumnLocation.DEFAULT_SORT_ORDER;
 	public static String[] selectionArgs;
 	// private ArrayList<String> coordinatesList = new ArrayList<String>();
 	// private ArrayList<String> distanceList = new ArrayList<String>();
@@ -67,7 +68,7 @@ public class PriorityCalculator {
 		for (i = 0; i < data.getCount(); i++) {
 			MyDebug.MakeLog(0, "GetDistance data.move@" + i);
 			// idList.add("" +
-			// data.getInt(TaskCursor.IndexColumns.KEY_ID));
+			// data.getInt(ColumnTask.IndexColumns.KEY_ID));
 			// WeightsList.add("" + data.getInt(4));
 
 			MyDebug.MakeLog(0, "GetDistance LatLon1=" + data.getString(2)
@@ -81,10 +82,10 @@ public class PriorityCalculator {
 			MyDebug.MakeLog(0, "GetDistance endDate=" + endDate);
 			MyDebug.MakeLog(0, "GetDistance endTime=" + endTime);
 			MyDebug.MakeLog(0, "GetDistance Distance=" + Distance);
-			saveOrUpdate(
-					Integer.valueOf(data.getInt(0)),
-					getNewWeight(i, Integer.valueOf(data.getInt(4)), Distance,
-							dayLeft), Distance);
+//			saveOrUpdate(
+//					Integer.valueOf(data.getInt(0)),
+//					getNewWeight(i, Integer.valueOf(data.getInt(4)), Distance,
+//							dayLeft), Distance);
 			if (!data.isLast())
 				data.moveToNext();
 
@@ -157,13 +158,13 @@ public class PriorityCalculator {
 
 			values.clear();
 
-			values.put(TaskCursor.KEY.DISTANCE,
+			values.put(ColumnLocation.KEY.dintance,
 					((Distance)));
-			values.put(TaskCursor.KEY.PRIORITY,
+			values.put(ColumnTask.KEY.priority,
 					newPriorityWeight);
 
 			// 修改
-			Uri uri = ContentUris.withAppendedId(CommonVar.CONTENT_URI, ID);
+			Uri uri = ContentUris.withAppendedId(ColumnLocation.URI, ID);
 			context.getContentResolver().update(uri, values, null, null);
 			//load.update(values, null, null);
 			// Toast.makeText(this, "事項更新成功！" + curDate.toString(),

@@ -1,16 +1,24 @@
 package me.iamcxa.remindme.editor;
 
+
+import com.devspark.progressfragment.ProgressFragment;
+
 import common.MyCalendar;
 import common.MyDebug;
 import common.CommonVar;
-import common.MyCursor.TaskCursor;
 
 import me.iamcxa.remindme.R;
+import me.iamcxa.remindme.RemindmeFragment;
+import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
+import me.iamcxa.remindme.database.ColumnTask;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,32 +28,47 @@ import android.widget.ImageButton;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
-public class TaskEditorMain extends Fragment {
+public class TaskEditorMain extends Fragment  {
 
-	private static MultiAutoCompleteTextView taskTittle; 	//任務標題
+	private static MultiAutoCompleteTextView taskTitle; 	//任務標題
 	private static EditText taskDueDate;					//任務到期日
 	private static Spinner taskCategory;					//任務類別
 	private static Spinner taskPriority;					//任務優先
-	private static ImageButton taskBtnDueDate;
+	private ImageButton taskBtnDueDate;
+	private Handler mHandler;
+	public static TaskEditorMain newInstance() {
+		TaskEditorMain fragment = new TaskEditorMain();
+		return fragment;
+	}
 
-	private static EditorVar mEditorVar=EditorVar.GetInstance();
+	private static  CommonEditorVar mEditorVar=CommonEditorVar.GetInstance();	
+	private Runnable mShowContentRunnable = new Runnable() {
+
+		@Override
+		public void run() {
+			setupViewComponent();
+			setupStringArray();
+			init(getActivity().getIntent());
+		}
+
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreateView(inflater, container, savedInstanceState);
-		return inflater.inflate(R.layout.activity_task_editor, container,false);
+		return inflater.inflate(R.layout.activity_task_editor_tab_main, container,false);
 	}
-
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		setupViewComponent();
-		setupStringArray();
-		init(getActivity().getIntent());
+		obtainData();
+		if(savedInstanceState==null){
+			
+		}
 	}
 
 	private void setupStringArray(){
@@ -59,10 +82,10 @@ public class TaskEditorMain extends Fragment {
 
 	private void setupViewComponent(){
 		//任務標題輸入框
-		taskTittle =(MultiAutoCompleteTextView)getView().
-				findViewById(R.id.multiAutoCompleteTextViewTittle);
-		taskTittle.setHint("任務");
-		//taskTittle.setText(mEditorVar.Task.getTittle());
+		taskTitle =(MultiAutoCompleteTextView)getView().
+				findViewById(R.id.multiAutoCompleteTextViewTitle);
+		taskTitle.setHint("任務");
+		//taskTitle.setText(mEditorVar.Task.getTitle());
 
 		//任務期限輸入框
 		taskDueDate =(EditText)getView().findViewById(R.id.editTextDueDate);
@@ -82,33 +105,35 @@ public class TaskEditorMain extends Fragment {
 
 
 	}
-	
+
 	//  由資料庫初始化變數
 	public static void init(Intent intent) {
 		Bundle b = intent.getBundleExtra(CommonVar.BundleName);
 		if (b != null) {
 			//參照 底部之TaskFieldContents/RemindmeVar.class等處, 確保變數欄位與順序都相同
-			mEditorVar.Task.setTaskId(b.getInt(TaskCursor.KEY._ID));
-//			mEditorVar.Task.setTittle(b.getString(TaskCursor.KEY.TITTLE));
-//			mEditorVar.Task.setContent(b.getString(TaskCursor.KEY.CONTENT));
-//			mEditorVar.Task.setCreated(b.getString(TaskCursor.KEY.CREATED));
-//			mEditorVar.Task.setDueDate(b.getString(TaskCursor.KEY.DUE_DATE));
-//			mEditorVar.TaskAlert.setAlertInterval(b.getString(TaskCursor.KEY.ALERT_Interval));
-//			mEditorVar.TaskAlert.setAlertTime(b.getString(TaskCursor.KEY.ALERT_TIME));
-//			mEditorVar.TaskLocation.setLocationName(b.getString(TaskCursor.KEY.LOCATION_NAME));
-//			mEditorVar.TaskLocation.setCoordinate(b.getString(TaskCursor.KEY.COORDINATE));
-//			mEditorVar.TaskType.setCategory(b.getString(TaskCursor.KEY.CATEGORY));
-//			mEditorVar.TaskType.setPriority(b.getInt(TaskCursor.KEY.PRIORITY));
-//			mEditorVar.TaskType.setTag(b.getString(TaskCursor.KEY.TAG));
-			
-			TaskEditorMain.setTaskTittle(b.getString(TaskCursor.KEY.TITTLE));
-			TaskEditorMain.setTaskDueDate(b.getString(TaskCursor.KEY.DUE_DATE));
+			mEditorVar.Task.setTaskId(b.getInt(ColumnTask.KEY._id));
+			//			mEditorVar.Task.setTitle(b.getString(TaskCursor.KEY.Title));
+			//			mEditorVar.Task.setContent(b.getString(TaskCursor.KEY.CONTENT));
+			//			mEditorVar.Task.setCreated(b.getString(TaskCursor.KEY.CREATED));
+			//			mEditorVar.Task.setDueDate(b.getString(TaskCursor.KEY.DUE_DATE_TIME));
+			//			mEditorVar.Task.setDueDateString(b.getString(TaskCursor.KEY.DUE_DATE_STRING));
+			//			mEditorVar.TaskAlert.setAlertInterval(b.getString(TaskCursor.KEY.ALERT_Interval));
+			//			mEditorVar.TaskAlert.setAlertTime(b.getString(TaskCursor.KEY.ALERT_TIME));
+			//			mEditorVar.TaskLocation.setLocationName(b.getString(TaskCursor.KEY.LOCATION_NAME));
+			//			mEditorVar.TaskLocation.setCoordinate(b.getString(TaskCursor.KEY.COORDINATE));;
+			//			mEditorVar.TaskLocation.setDistance(Double.valueOf((TaskCursor.KEY.DISTANCE)));
+			//			mEditorVar.TaskType.setCategory(b.getString(TaskCursor.KEY.CATEGORY));
+			//			mEditorVar.TaskType.setPriority(b.getInt(TaskCursor.KEY.PRIORITY));
+			//			mEditorVar.TaskType.setTag(b.getString(TaskCursor.KEY.TAG));
 
-			
+			TaskEditorMain.setTaskTitle(b.getString(ColumnTask.KEY.title));
+			TaskEditorMain.setTaskDueDate(b.getString(ColumnTask.KEY.due_date_string));
+
+
 		}
 	}
 
-	
+
 	private  OnClickListener btnClcikListener=new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -125,6 +150,7 @@ public class TaskEditorMain extends Fragment {
 
 	};
 
+	@SuppressLint("InflateParams")
 	private TaskEditorMain ShowTaskDueDateSelectMenu() {
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		View mview = inflater.inflate(
@@ -142,19 +168,19 @@ public class TaskEditorMain extends Fragment {
 				switch (which) {
 				case 0:// 今天
 					taskDueDate.setText(
-							MyCalendar.getCalendarToday(0));
+							MyCalendar.getTodayString(0));
 					break;
 				case 1:// 明天
 					taskDueDate.setText(
-							MyCalendar.getCalendarToday(1));
+							MyCalendar.getTodayString(1));
 					break;
 				case 2:// 下週
 					taskDueDate.setText(
-							MyCalendar.getCalendarToday(7));
+							MyCalendar.getTodayString(7));
 					break;
 				case 3:// 一個月內
 					taskDueDate.setText(
-							MyCalendar.getCalendarToday(30));
+							MyCalendar.getTodayString(30));
 					break;
 				case 4:// 選擇日期
 
@@ -168,31 +194,35 @@ public class TaskEditorMain extends Fragment {
 		return this;
 	}
 
-	//-----------------TaskTittle------------------//
-	// 確保 Title 欄位不為空
-	public static String getTaskTittle() {
-		String TaskTittleString = "null";
-		// 如果TaskTittle欄位不為空則放入使用者輸入數值
-		if (!(taskTittle.getText().toString().isEmpty())){
-			TaskTittleString= taskTittle.getText().toString().trim();
-		}
-		MyDebug.MakeLog(0,"getTaskTittle:"+ TaskTittleString+",TaskTittle.len="+TaskTittleString.length());
-		return TaskTittleString;
+	private void obtainData() {
+		// Show indeterminate progress
+		mHandler = new Handler();
+		mHandler.postDelayed(mShowContentRunnable, 5);
 	}
-	public static void setTaskTittle(String taskTittle) {
-		TaskEditorMain.taskTittle.setText(taskTittle);
+	//-----------------TaskTitle------------------//
+	// 確保 Title 欄位不為空
+	public static String getTaskTitle() {
+		String TaskTitleString = "null";
+		// 如果TaskTitle欄位不為空則放入使用者輸入數值
+		if (!(taskTitle.getText().toString().isEmpty())){
+			TaskTitleString= taskTitle.getText().toString().trim();
+		}
+		MyDebug.MakeLog(0,"getTaskTitle:"+ TaskTitleString+",TaskTitle.len="+TaskTitleString.length());
+		return TaskTitleString;
+	}
+	public static void setTaskTitle(String taskTitle) {
+		TaskEditorMain.taskTitle.setText(taskTitle);
 	}
 
-	
+
 	//-----------------TaskDueDate------------------//
 	// 確保  DueDate 欄位不為空
 	public static String getTaskDueDate() {
-		String rawTaskDueDateString = taskDueDate.getText().toString();
 		String taskDueDateString="null";
-
-		TaskEditorMain_DueDateCheck.checkDueDate(rawTaskDueDateString);
-
-		
+		// 如果TaskTitle欄位不為空則放入使用者輸入數值
+		if (!(taskDueDate.getText().toString().isEmpty())){
+			taskDueDateString= taskTitle.getText().toString().trim();
+		}
 		return taskDueDateString;
 	}	
 	public static void setTaskDueDate(String taskDueDate) {
@@ -216,6 +246,7 @@ public class TaskEditorMain extends Fragment {
 	public static void setTaskPriority(Spinner taskPriority) {
 		TaskEditorMain.taskPriority = taskPriority;
 	}
+
 
 
 

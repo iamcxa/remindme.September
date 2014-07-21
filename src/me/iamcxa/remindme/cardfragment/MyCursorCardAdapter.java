@@ -3,9 +3,7 @@
  */
 package me.iamcxa.remindme.cardfragment;
 
-import common.CommonVar;
-import common.MyCursor;
-import common.MyCursor.TaskCursor;
+import common.MyDebug;
 
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardCursorAdapter;
@@ -15,6 +13,7 @@ import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.ViewToClickToExpand;
 import it.gmariotti.cardslib.library.view.component.CardHeaderView;
 import me.iamcxa.remindme.R;
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -27,6 +26,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import me.iamcxa.remindme.cardfragment.SetCardFromCursor;
+import me.iamcxa.remindme.database.ColumnAlert;
+import me.iamcxa.remindme.database.ColumnTask;
 
 /**
  * @author cxa
@@ -40,18 +41,30 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 	private static SetCardFromCursor mSetCardFromCursor;
 	private static OnClickCard mReadCardOnClick;
 
-	public MyCursorCardAdapter(Context context) {
+	private MyCursorCardAdapter(Context context) {
 		super(context);
+	}
+	
+	public static MyCursorCardAdapter newInstance(Context context) {
+		MyCursorCardAdapter adapter = new MyCursorCardAdapter(context);
+		return adapter;
 	}
 
 	@Override
 	protected Card getCardFromCursor(final Cursor cursor) {
-		MyCursorCard card = new MyCursorCard(super.getContext());
+		if(cursor.getCount()>0){	
+
+		}else {
+
+		}
+		MyCursorCard card = new MyCursorCard(getContext());
 
 		mReadCardOnClick = new OnClickCard(getContext(), cursor, card);
 		mReadCardOnClick.setMyCursorCardAdapter(this);
 
-		mSetCardFromCursor = new SetCardFromCursor(getContext(), cursor, card);
+		mSetCardFromCursor = new SetCardFromCursor(getContext(), 
+				cursor, 
+				card);
 		mSetCardFromCursor.setIt();
 
 		card.setClickable(true);
@@ -85,7 +98,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		CardExpand expand = new CardExpand(getContext());
 		// Set inner title in Expand Area
 		String aa = "dbId=" + cursor.getString(0) + ",w="
-				+ cursor.getString(MyCursor.TaskCursor.KEY_INDEX.PRIORITY)
+				+ cursor.getString(ColumnTask.KEY_INDEX.priority)
 				+ "cardID="+card.getId();
 
 		expand.setTitle(aa);
@@ -112,7 +125,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 			public boolean onLongClick(Card card, View view) {
 				// TODO Auto-generated method stubs
 
-				ShowLongClickMenu();
+				ShowLongClickMenu(cursor.getInt(0));
 
 				return false;
 
@@ -120,6 +133,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		});
 
 		return card;
+
 	}
 
 	// private void setCardFromCursor(MyCursorCard card, Cursor cursor) {
@@ -243,16 +257,45 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 		}
 	}
 
-	private void removeCard() {
+	private void removeCard(int id) {
 
 		// Use this code to delete items on DB
-		ContentResolver resolver = getContext().getContentResolver();
+		ContentResolver resolverTask = getContext().getContentResolver();
 
-		//long noDeleted =
-		resolver.delete(CommonVar.CONTENT_URI,
-				TaskCursor.KEY._ID + " = ? ",
-				new String[] { this.getCardFromCursor(getCursor()).getId() });
+		long taskDeleted = 0 ;
+		resolverTask.delete(ColumnTask.URI,
+				ColumnTask.KEY._id + " = ? ",
+				//new String[] { this.getCardFromCursor(getCursor()).getId() });
+		new String[] { String.valueOf(id) });
 
+		// Alert PArt
+		ContentResolver resolverAlert = getContext().getContentResolver();
+		Cursor rowIDs=resolverAlert.query(ColumnAlert.URI, 
+				null,
+				ColumnAlert.KEY.task_id + " = ? ",
+				new String[] { String.valueOf(id) }, 
+				ColumnAlert.DEFAULT_SORT_ORDER);
+		int rowCounter=rowIDs.getCount();
+		rowIDs.moveToFirst();
+		String[] IDs = {""};
+		for (int i = 0; i < rowIDs.getCount(); i++) {
+			IDs[i]=rowIDs.getString(i).toString();
+			MyDebug.MakeLog(0, "rowOrder="+i+
+					",rowID="+IDs);
+			rowIDs.moveToNext();
+		}
+
+		MyDebug.MakeLog(0, "task_id="+ColumnAlert.KEY.task_id+
+				",ColumnAlert rows="+rowCounter);
+		long alertDeleted = 0;
+		if(rowCounter > 0){
+			alertDeleted =resolverAlert.delete(ColumnAlert.URI,
+					ColumnAlert.KEY.task_id + " = ? ",
+					IDs);
+		}
+
+		MyDebug.MakeLog(0, "taskDeleted="+taskDeleted+
+				",alertDeleted="+alertDeleted);
 		this.notifyDataSetChanged();
 
 
@@ -260,7 +303,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 
 
-	private AlertDialog ShowLongClickMenu() {
+	private AlertDialog ShowLongClickMenu(final int id) {
 
 		return new AlertDialog.Builder(getContext())
 		.setTitle("請選擇...")
@@ -274,7 +317,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 					break;
 				case 1:// 刪除
-					removeCard();
+					removeCard(id);
 
 					break;
 				case 2:// 提高優先
@@ -287,20 +330,6 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 					break;
 				}
-
-				//
-				/* User clicked so do some stuff */
-				String[] items = getContext()
-						.getResources()
-						.getStringArray(
-								R.array.Array_Task_List_Card_Long_Clcik_String);
-				//				new AlertDialog.Builder(getContext())
-				//				.setMessage(
-				//						"You selected: " + which
-				//						+ " , " + items[which])
-				//						.show();
-				//
-
 			}
 		}).show();
 

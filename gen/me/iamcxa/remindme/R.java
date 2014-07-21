@@ -12,24 +12,24 @@ public final class R {
         /** Page Task Editor Main  
  String 
          */
-        public static final int Array_TaskEditor_btnTaskDueDate_String=0x7f0d0017;
+        public static final int Array_TaskEditor_btnTaskDueDate_String=0x7f0d0015;
         /**  Value 
          */
-        public static final int Array_TaskEditor_btnTaskDueDate_Value=0x7f0d0018;
+        public static final int Array_TaskEditor_btnTaskDueDate_Value=0x7f0d0016;
         /**  Card Long Clcik Menu 
  String 
          */
-        public static final int Array_Task_Editor_Date_Basic_Meaning_String=0x7f0d0013;
+        public static final int Array_Task_Editor_Date_Basic_Meaning_String=0x7f0d0017;
         /**  重複性前綴 
          */
-        public static final int Array_Task_Editor_Date_Repeat_Meaning_String=0x7f0d0014;
+        public static final int Array_Task_Editor_Date_Repeat_Meaning_String=0x7f0d0018;
         /**  Card Long Clcik Menu 
  String 
          */
-        public static final int Array_Task_List_Card_Long_Clcik_String=0x7f0d0015;
+        public static final int Array_Task_List_Card_Long_Clcik_String=0x7f0d0013;
         /**  Value 
          */
-        public static final int Array_Task_List_Card_Long_Clcik_Value=0x7f0d0016;
+        public static final int Array_Task_List_Card_Long_Clcik_Value=0x7f0d0014;
         public static final int PowerUsageOptionString=0x7f0d0010;
         public static final int PowerUsageOptionValue=0x7f0d0011;
         public static final int bubblecolors=0x7f0d000c;
@@ -671,99 +671,106 @@ containing a value of this type.
         public static final int ws_icon_large=0x7f0200fd;
     }
     public static final class id {
-        public static final int CheckBoxIsNoticeMeWhenClose=0x7f06001d;
-        public static final int CheckBoxRemind=0x7f06001e;
-        public static final int LinearLayout1=0x7f06000e;
-        public static final int ListCursorCardFragment=0x7f06000d;
-        public static final int ListView=0x7f060043;
-        public static final int OK=0x7f060022;
-        public static final int PlaceName=0x7f060024;
-        public static final int QucikAddBoxFragment=0x7f06000a;
-        public static final int RelativeLayout=0x7f060009;
-        public static final int Search=0x7f060021;
-        public static final int SearchText=0x7f060020;
-        public static final int action_add=0x7f060052;
-        public static final int action_help=0x7f060050;
-        public static final int action_refresh=0x7f06005b;
-        public static final int action_search=0x7f060059;
-        public static final int action_settings=0x7f06005a;
-        public static final int action_show_all_field=0x7f06004f;
-        public static final int action_show_page=0x7f060051;
-        public static final int action_websearch=0x7f060058;
+        public static final int CheckBoxIsNoticeMeWhenClose=0x7f06001f;
+        public static final int CheckBoxRemind=0x7f060020;
+        public static final int FrameLayout=0x7f06002e;
+        public static final int LinearLayout1=0x7f060012;
+        public static final int ListCursorCardFragment=0x7f060011;
+        public static final int OK=0x7f060024;
+        public static final int PlaceName=0x7f060026;
+        public static final int QucikAddBoxFragment=0x7f060010;
+        public static final int RelativeLayout=0x7f06000f;
+        public static final int Search=0x7f060023;
+        public static final int SearchText=0x7f060022;
+        public static final int action_add=0x7f060059;
+        public static final int action_help=0x7f060057;
+        public static final int action_refresh=0x7f060062;
+        public static final int action_search=0x7f060060;
+        public static final int action_settings=0x7f060061;
+        public static final int action_show_all_field=0x7f060056;
+        public static final int action_show_page=0x7f060058;
+        public static final int action_websearch=0x7f06005f;
         public static final int ampm=0x7f060006;
-        public static final int button1=0x7f060019;
-        public static final int buttonSetDate=0x7f060015;
-        public static final int buttonSetTime=0x7f060016;
-        public static final int buttonSubmit=0x7f060029;
-        public static final int cardListView1=0x7f060042;
-        public static final int card_content_expand_layout=0x7f060039;
-        public static final int card_cursor_main_inner_subtitle=0x7f060034;
-        public static final int card_cursor_main_inner_thirdtitle=0x7f060035;
-        public static final int card_cursor_main_inner_title=0x7f060033;
-        public static final int card_expand_inner_simple_title=0x7f060047;
-        public static final int card_header_button_expand=0x7f06002d;
-        public static final int card_header_button_frame=0x7f06002b;
-        public static final int card_header_button_other=0x7f06002e;
-        public static final int card_header_button_overflow=0x7f06002c;
-        public static final int card_header_inner_frame=0x7f06002a;
-        public static final int card_header_inner_simple_title=0x7f060048;
-        public static final int card_header_layout=0x7f060038;
-        public static final int card_main_content_layout=0x7f060031;
-        public static final int card_main_inner_simple_title=0x7f060049;
-        public static final int card_main_layout=0x7f060036;
-        public static final int card_overlap=0x7f06003c;
-        public static final int card_shadow_layout=0x7f060032;
-        public static final int card_shadow_view=0x7f06002f;
-        public static final int card_thumb_and_content_layout=0x7f06003d;
-        public static final int card_thumbnail_image=0x7f060030;
-        public static final int card_thumbnail_layout=0x7f060037;
-        public static final int carddemo_list_colors=0x7f060041;
-        public static final int carddemo_list_cursor=0x7f06003a;
-        public static final int content=0x7f06004a;
-        public static final int content_frame=0x7f06000b;
+        public static final int button1=0x7f06001b;
+        public static final int buttonSetDate=0x7f060017;
+        public static final int buttonSetTime=0x7f060018;
+        public static final int buttonSubmit=0x7f060032;
+        public static final int card_content_expand_layout=0x7f060042;
+        public static final int card_cursor_main_inner_subtitle=0x7f06003d;
+        public static final int card_cursor_main_inner_thirdtitle=0x7f06003e;
+        public static final int card_cursor_main_inner_title=0x7f06003c;
+        public static final int card_expand_inner_simple_title=0x7f06004e;
+        public static final int card_header_button_expand=0x7f060036;
+        public static final int card_header_button_frame=0x7f060034;
+        public static final int card_header_button_other=0x7f060037;
+        public static final int card_header_button_overflow=0x7f060035;
+        public static final int card_header_inner_frame=0x7f060033;
+        public static final int card_header_inner_simple_title=0x7f06004f;
+        public static final int card_header_layout=0x7f060041;
+        public static final int card_main_content_layout=0x7f06003a;
+        public static final int card_main_inner_simple_title=0x7f060050;
+        public static final int card_main_layout=0x7f06003f;
+        public static final int card_overlap=0x7f060045;
+        public static final int card_shadow_layout=0x7f06003b;
+        public static final int card_shadow_view=0x7f060038;
+        public static final int card_thumb_and_content_layout=0x7f060046;
+        public static final int card_thumbnail_image=0x7f060039;
+        public static final int card_thumbnail_layout=0x7f060040;
+        public static final int carddemo_list_colors=0x7f06004a;
+        public static final int carddemo_list_cursor=0x7f060043;
+        public static final int content=0x7f060051;
+        public static final int content_container=0x7f06000a;
+        public static final int content_frame=0x7f06000d;
         public static final int date=0x7f060007;
-        public static final int desc=0x7f060027;
-        public static final int drawer_layout=0x7f060008;
-        public static final int editTexQuickAddBox=0x7f06000f;
-        public static final int editTexbox=0x7f060025;
-        public static final int editTextDueDate=0x7f06001c;
-        public static final int fragment_local=0x7f060044;
-        public static final int fragment_main=0x7f060045;
-        public static final int fragment_time=0x7f060046;
-        public static final int frameLayout=0x7f060028;
-        public static final int frameTabLayout=0x7f060012;
-        public static final int gamesicons=0x7f060056;
+        public static final int desc=0x7f060029;
+        public static final int drawer_layout=0x7f06000b;
+        public static final int editTexQuickAddBox=0x7f060013;
+        public static final int editTexbox=0x7f060027;
+        public static final int editTextDueDate=0x7f06001e;
+        public static final int frameLayout=0x7f06002a;
+        public static final int frameTabLayout=0x7f06002f;
+        public static final int gamesicons=0x7f06005d;
+        public static final int grid=0x7f06004c;
+        public static final int grid_container=0x7f06004b;
         public static final int hour=0x7f060005;
         public static final int hybrid=0x7f060004;
-        public static final int imageButtonEnter=0x7f060010;
-        public static final int imageButtonResetDate=0x7f060017;
-        public static final int imageView1=0x7f060018;
-        public static final int latesticons=0x7f060053;
-        public static final int left_drawer=0x7f06000c;
-        public static final int linearLayout1=0x7f060013;
-        public static final int list_cardId=0x7f06003b;
-        public static final int list_card_undobar=0x7f06004b;
-        public static final int list_card_undobar_button=0x7f06004d;
-        public static final int list_card_undobar_message=0x7f06004c;
-        public static final int main_scrollview=0x7f060011;
-        public static final int map=0x7f060023;
-        public static final int menu_item_share=0x7f06005c;
-        public static final int miscicons=0x7f060057;
-        public static final int multiAutoCompleteTextViewContent=0x7f06001b;
-        public static final int multiAutoCompleteTextViewTittle=0x7f06001f;
-        public static final int name=0x7f060026;
+        public static final int imageButtonEnter=0x7f060014;
+        public static final int imageButtonResetDate=0x7f060019;
+        public static final int imageView1=0x7f06001a;
+        public static final int includeA=0x7f06002b;
+        public static final int includeB=0x7f06002c;
+        public static final int latesticons=0x7f06005a;
+        public static final int left_drawer=0x7f06000e;
+        public static final int linearLayout1=0x7f060015;
+        public static final int list_cardId=0x7f060044;
+        public static final int list_card_undobar=0x7f060052;
+        public static final int list_card_undobar_button=0x7f060054;
+        public static final int list_card_undobar_message=0x7f060053;
+        public static final int list_container=0x7f06004d;
+        public static final int loading=0x7f060031;
+        public static final int loadingLayout=0x7f060030;
+        public static final int loading_frame=0x7f06000c;
+        public static final int main_scrollview=0x7f06002d;
+        public static final int map=0x7f060025;
+        public static final int menu_item_share=0x7f060063;
+        public static final int miscicons=0x7f06005e;
+        public static final int multiAutoCompleteTextViewContent=0x7f06001d;
+        public static final int multiAutoCompleteTextViewTitle=0x7f060021;
+        public static final int name=0x7f060028;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
-        public static final int playicons=0x7f060055;
-        public static final int remove=0x7f06004e;
+        public static final int playicons=0x7f06005c;
+        public static final int progress_container=0x7f060008;
+        public static final int progress_text=0x7f060009;
+        public static final int remove=0x7f060055;
         public static final int satellite=0x7f060002;
-        public static final int spinnerCategory=0x7f06001a;
-        public static final int systemicons=0x7f060054;
+        public static final int spinnerCategory=0x7f06001c;
+        public static final int systemicons=0x7f06005b;
         public static final int terrain=0x7f060003;
-        public static final int textView1=0x7f060014;
-        public static final int undobar=0x7f06003e;
-        public static final int undobar_button=0x7f060040;
-        public static final int undobar_message=0x7f06003f;
+        public static final int textView1=0x7f060016;
+        public static final int undobar=0x7f060047;
+        public static final int undobar_button=0x7f060049;
+        public static final int undobar_message=0x7f060048;
     }
     public static final class integer {
         /**  Space between the bubble and the icon 
@@ -784,10 +791,10 @@ containing a value of this type.
         public static final int min_version=0x7f080002;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int activity_main_backup=0x7f030001;
-        public static final int activity_main_parts_quick_add_box=0x7f030002;
-        public static final int activity_task_editor=0x7f030003;
+        public static final int activity_loading=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int activity_main_backup=0x7f030002;
+        public static final int activity_main_parts_quick_add_box=0x7f030003;
         public static final int activity_task_editor_parts_box_attachment=0x7f030004;
         public static final int activity_task_editor_parts_box_baseline=0x7f030005;
         public static final int activity_task_editor_parts_box_btnmore=0x7f030006;
@@ -799,47 +806,43 @@ containing a value of this type.
         public static final int activity_task_editor_parts_box_priority=0x7f03000c;
         public static final int activity_task_editor_parts_box_project=0x7f03000d;
         public static final int activity_task_editor_parts_box_tag=0x7f03000e;
-        public static final int activity_task_editor_parts_box_tittle=0x7f03000f;
+        public static final int activity_task_editor_parts_box_title=0x7f03000f;
         public static final int activity_task_editor_parts_dialog_duedate=0x7f030010;
         public static final int activity_task_editor_parts_dialog_location=0x7f030011;
         public static final int activity_task_editor_parts_dialog_location_parts_search=0x7f030012;
         public static final int activity_task_editor_parts_textedit=0x7f030013;
         public static final int activity_task_editor_parts_textview=0x7f030014;
         public static final int activity_task_editor_tab=0x7f030015;
-        public static final int alertdialoglayout=0x7f030016;
-        public static final int base_header_layout=0x7f030017;
-        public static final int base_shadow_layout=0x7f030018;
-        public static final int base_thumbnail_layout=0x7f030019;
-        public static final int card_base_layout=0x7f03001a;
-        public static final int card_cursor_inner_content=0x7f03001b;
-        public static final int card_cursor_layout=0x7f03001c;
-        public static final int card_cursor_thumbnail_layout=0x7f03001d;
-        public static final int card_fragment_list_cursor=0x7f03001e;
-        public static final int card_layout=0x7f03001f;
-        public static final int card_list_cursor_layout=0x7f030020;
-        public static final int card_overlay_layout=0x7f030021;
-        public static final int card_thumbnail_layout=0x7f030022;
-        public static final int card_thumbnail_overlay_layout=0x7f030023;
-        public static final int card_undo_layout=0x7f030024;
-        public static final int demo_fragment_colors=0x7f030025;
-        public static final int drawer_list_item=0x7f030026;
-        public static final int fragment_cardtest=0x7f030027;
-        public static final int fragment_deadline=0x7f030028;
-        public static final int fragment_distance=0x7f030029;
-        public static final int fragment_listview=0x7f03002a;
-        public static final int fragment_local=0x7f03002b;
-        public static final int fragment_locations=0x7f03002c;
-        public static final int fragment_main=0x7f03002d;
-        public static final int fragment_overall=0x7f03002e;
-        public static final int fragment_time=0x7f03002f;
-        public static final int inner_base_expand=0x7f030030;
-        public static final int inner_base_header=0x7f030031;
-        public static final int inner_base_main=0x7f030032;
-        public static final int item_content=0x7f030033;
-        public static final int list_card_layout=0x7f030034;
-        public static final int list_card_thumbnail_layout=0x7f030035;
-        public static final int list_card_undo_message=0x7f030036;
-        public static final int preference=0x7f030037;
+        public static final int activity_task_editor_tab_location=0x7f030016;
+        public static final int activity_task_editor_tab_main=0x7f030017;
+        public static final int alertdialoglayout=0x7f030018;
+        public static final int base_header_layout=0x7f030019;
+        public static final int base_shadow_layout=0x7f03001a;
+        public static final int base_thumbnail_layout=0x7f03001b;
+        public static final int card_base_layout=0x7f03001c;
+        public static final int card_cursor_inner_content=0x7f03001d;
+        public static final int card_cursor_layout=0x7f03001e;
+        public static final int card_cursor_thumbnail_layout=0x7f03001f;
+        public static final int card_fragment_list_cursor=0x7f030020;
+        public static final int card_layout=0x7f030021;
+        public static final int card_list_cursor_layout=0x7f030022;
+        public static final int card_overlay_layout=0x7f030023;
+        public static final int card_thumbnail_layout=0x7f030024;
+        public static final int card_thumbnail_overlay_layout=0x7f030025;
+        public static final int card_undo_layout=0x7f030026;
+        public static final int demo_fragment_colors=0x7f030027;
+        public static final int drawer_list_item=0x7f030028;
+        public static final int fragment_progress=0x7f030029;
+        public static final int fragment_progress_grid=0x7f03002a;
+        public static final int fragment_progress_list=0x7f03002b;
+        public static final int inner_base_expand=0x7f03002c;
+        public static final int inner_base_header=0x7f03002d;
+        public static final int inner_base_main=0x7f03002e;
+        public static final int item_content=0x7f03002f;
+        public static final int list_card_layout=0x7f030030;
+        public static final int list_card_thumbnail_layout=0x7f030031;
+        public static final int list_card_undo_message=0x7f030032;
+        public static final int preference=0x7f030033;
     }
     public static final class menu {
         public static final int card_popup=0x7f0e0000;
@@ -861,6 +864,13 @@ containing a value of this type.
     public static final class string {
         public static final int PowerUsageOptionDefaultValue=0x7f070036;
         public static final int PowerUsageOptionTittle=0x7f070037;
+        public static final int TaskEditor_Field_DueDate_Hint=0x7f07003e;
+        public static final int TaskEditor_Field_Inbox=0x7f070042;
+        public static final int TaskEditor_Field_Priority_Hint=0x7f070041;
+        public static final int TaskEditor_Field_Project_Hint=0x7f07003f;
+        public static final int TaskEditor_Field_Tag_Hint=0x7f070040;
+        public static final int TaskEditor_Field_Title_Hint=0x7f07003d;
+        public static final int TaskEditor_Title_Is_Empty=0x7f07003c;
         public static final int action_websearch=0x7f07003a;
         /**  Basic theme information 
          */
@@ -898,8 +908,8 @@ containing a value of this type.
         public static final int carddemo_title_list_cursor=0x7f070035;
         /**  Clock text and text's shadow color 
          */
-        public static final int clockcolor=0x7f07003c;
-        public static final int clockshadow=0x7f07003d;
+        public static final int clockcolor=0x7f070043;
+        public static final int clockshadow=0x7f070044;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -971,7 +981,7 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f070013;
-        public static final int default_wallpaper=0x7f07003f;
+        public static final int default_wallpaper=0x7f070046;
         public static final int developerName=0x7f070025;
         /**  This (optional) link will appear at the end of the theme description 
          */
@@ -993,7 +1003,7 @@ containing a value of this type.
         public static final int icon5=0x7f07002e;
         /**  A suggested iconPack for drawer, insert here the packagename of the app you'd like to suggest 
          */
-        public static final int iconpack=0x7f07003e;
+        public static final int iconpack=0x7f070045;
         /**  Undo Controller
          */
         public static final int list_card_undo_title=0x7f07001c;

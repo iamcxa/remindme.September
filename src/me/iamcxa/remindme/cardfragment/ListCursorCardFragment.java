@@ -18,21 +18,30 @@
 
 package me.iamcxa.remindme.cardfragment;
 
-import common.MyCalendar;
 import common.CommonVar;
-import common.MyCursor.TaskCursor;
+import common.MyCalendar;
+import common.MyDebug;
 
 import it.gmariotti.cardslib.library.view.CardListView;
 import me.iamcxa.remindme.R;
-import android.R.integer;
+import me.iamcxa.remindme.RemindmeFragment;
+import me.iamcxa.remindme.RemindmeMainActivity;
+import me.iamcxa.remindme.database.ColumnAlert;
+import me.iamcxa.remindme.database.ColumnLocation;
+import me.iamcxa.remindme.database.ColumnTask;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 /**
@@ -42,91 +51,98 @@ import android.widget.Toast;
  */
 public class ListCursorCardFragment extends BaseFragment implements
 LoaderManager.LoaderCallbacks<Cursor> {
-
+	// getArguments().getInt(FILTER_STRING)
 	public static final String FILTER_STRING="FILTER_STRING";
-
+	private static int position;
+	private Handler mHandler ;
 	private static MyCursorCardAdapter mAdapter;
 	private static CardListView mListView;
-	private static String[] projection = TaskCursor.PROJECTION;
-	private static String selection = null;
-	private static String sortOrder = CommonVar.DEFAULT_SORT_ORDER;
+	private static String[] projectionTask = ColumnTask.PROJECTION;
+	private static String[] projectionAlert = ColumnAlert.PROJECTION;
+	private static String[] projectionLoc = ColumnLocation.PROJECTION;
+	private static String taskSelection = null;
+	private static String taskSortOrder = ColumnTask.DEFAULT_SORT_ORDER;
+	//
+	private static String alertSelection = null;
+	private static String alertSortOrder = ColumnAlert.DEFAULT_SORT_ORDER;
+	//
+	private static String LocSelection = null;
+	private static String LocSortOrder = ColumnLocation.DEFAULT_SORT_ORDER;
 	private static String[] selectionArgs;
-	private static Cursor cursor;
-	private static Double Latitude;
-	private static Double Longitude;
-	private static String todayString=MyCalendar.getCalendarToday(0);
-	private static long today=MyCalendar.getTimeMillis_From_Date(todayString);
-	private static String nextWeekDateString=MyCalendar.getCalendarToday(7);
-	private static long nextWeekDate=MyCalendar.getTimeMillis_From_Date(nextWeekDateString);
+	private static String todayString=MyCalendar.getTodayString(0);
+
+	public static ListCursorCardFragment newInstance() {
+		ListCursorCardFragment fragment = new ListCursorCardFragment();
+		return fragment;
+	}
+
 
 	/********************/
 	/** Initialization **/
 	/********************/
 	private void init() {
-		mAdapter = new MyCursorCardAdapter(getActivity());
-		mListView = (CardListView) getActivity().findViewById(
-				R.id.carddemo_list_cursor);
 
-		if (mListView != null) {
-			mListView.setAdapter(mAdapter);
-		}
+		//int filter = getArguments().getInt(FILTER_STRING);
+		int filter =position;
 
-		int filter = getArguments().getInt(FILTER_STRING);
-		//Toast.makeText(getActivity(), "i="+String.valueOf(filter), Toast.LENGTH_SHORT).show();		
+		MyDebug.MakeLog(0, "init被執行");
 
 		switch (filter) {
 		case 0:// 任務盒
-			setSelection("DUE_DATE = 'null'");
+			setTaskSelection("due_date_string = 'null'");
 			break;
 		case 1:// 今天
-			Toast.makeText(getActivity(), "today="+today, Toast.LENGTH_SHORT).show();
-			setSelection("DUE_DATE = '"+today+"'");
+			Toast.makeText(getActivity(), 
+					"Today="+todayString, Toast.LENGTH_SHORT).show();
+			setTaskSelection("due_date_string = '"+todayString+"'");
 			break;
 		case 2://未來七天
-			Toast.makeText(getActivity(), 
-					"now:"+today+
-					"\n,+7="+nextWeekDate, Toast.LENGTH_LONG).show();
-			
-			setSelection("DUE_DATE > "+today+" AND DUE_DATE < "+nextWeekDate);
+			setTaskSelection("due_date_string IS NOT 'null'");
 			break;
 		case 3://專案
 
 			break;
 		case 4://距離檢視
-			
+			//setProjection(projection)
+			setTaskSelection("distance IS NOT '0'");
 			break;
 		case 5://地圖檢視
-			
+
 			break;
 		case 6://標籤
-			
+			setTaskSelection("TAG IS NOT 'null'");
 			break;
 		default:
 			break;
 		}
 
 
+
+		mAdapter = MyCursorCardAdapter.newInstance(getActivity());
+		mListView = (CardListView) getActivity().findViewById(
+				R.id.carddemo_list_cursor);
+		if (mListView != null)mListView.setAdapter(mAdapter);
+		
 		// Force start background query to load sessions
 		getLoaderManager();
-		getLoaderManager().restartLoader(0, null, this);
-
-		// LoaderManager.enableDebugLogging(true);
+		getLoaderManager().restartLoader(101, null, this);
+		//getLoaderManager().restartLoader(201, null, this);
+		//getLoaderManager().restartLoader(301, null, this);
+		LoaderManager.enableDebugLogging(true);
 	}
+
+
 
 	@Override
 	public int getTitleResourceId() {
-
 		return  R.string.app_name;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceStat) {
-
 		View root = inflater.inflate(R.layout.card_fragment_list_cursor,
 				container, false);
-
-		// mScrollView = (ScrollView) root.findViewById(R.id.card_scrollview);
 
 		return root;
 	}
@@ -135,16 +151,35 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		getLoaderManager().initLoader(0, null, this);
+		getLoaderManager().initLoader(101, null, this);
+		//getLoaderManager().initLoader(201, null, this);
+		//getLoaderManager().initLoader(301, null, this);
 		init();
 	}
+
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
 		Loader<Cursor> loader = null;
-		loader = new CursorLoader(getActivity(), CommonVar.CONTENT_URI,
-				projection, selection, selectionArgs, sortOrder);
+
+		switch (id) {
+		case 101:
+			loader = new CursorLoader(getActivity(), ColumnTask.URI,
+					projectionTask, taskSelection, selectionArgs, taskSortOrder);
+			break;
+		case 201:
+			loader = new CursorLoader(getActivity(), ColumnAlert.URI,
+					projectionAlert, alertSelection, selectionArgs, alertSortOrder);
+			break;
+		case 301:
+			loader = new CursorLoader(getActivity(), ColumnLocation.URI,
+					projectionLoc, LocSelection, selectionArgs, LocSortOrder);
+			break;
+
+		default:
+			break;
+		}
 
 		return loader;
 	}
@@ -154,17 +189,26 @@ LoaderManager.LoaderCallbacks<Cursor> {
 		if (getActivity() == null) {
 			return;
 		}
+		
 		mAdapter.swapCursor(data);
 	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		mAdapter.swapCursor(null);
-
 	}
 
+	private Runnable newInit = new Runnable() {
 
+		@Override
+		public void run() {
+			//setContentShown(true);
 
+			init();
+
+		};
+	};
+	//-------------------------------------------------//
 	public static MyCursorCardAdapter getmAdapter() {
 		return mAdapter;
 	}
@@ -173,53 +217,46 @@ LoaderManager.LoaderCallbacks<Cursor> {
 		ListCursorCardFragment.mAdapter = mAdapter;
 	}
 
-
-	public static Double getLongitude() {
-		return Longitude;
+	public static String getTaskSelection() {
+		return taskSelection;
 	}
 
-	public static void setLongitude(Double longitude) {
-		Longitude = longitude;
+	public static void setTaskSelection(String taskSelection) {
+		ListCursorCardFragment.taskSelection = taskSelection;
 	}
 
-	public static Double getLatitude() {
-		return Latitude;
+	public static String getAlertSelection() {
+		return alertSelection;
 	}
 
-	public static void setLatitude(Double latitude) {
-		Latitude = latitude;
+	public static void setAlertSelection(String alertSelection) {
+		ListCursorCardFragment.alertSelection = alertSelection;
 	}
 
-	public static String[] getProjection() {
-		return projection;
+	public static String getLocSelection() {
+		return LocSelection;
 	}
 
-	public static void setProjection(String[] projection) {
-		ListCursorCardFragment.projection = projection;
+	public static void setLocSelection(String locSelection) {
+		LocSelection = locSelection;
 	}
 
-	public static String getSortOrder() {
-		return sortOrder;
+
+	/**
+	 * @return the position
+	 */
+	public static int getPosition() {
+		return position;
 	}
 
-	public static void setSortOrder(String sortOrders) {
-		ListCursorCardFragment.sortOrder = sortOrders;
+
+	/**
+	 * @param position the position to set
+	 */
+	public static void setPosition(int position) {
+		ListCursorCardFragment.position = position;
 	}
 
-	public static String getSelection() {
-		return selection;
-	}
-
-	public static void setSelection(String selections) {
-		ListCursorCardFragment.selection = selections;
-	}
-
-	public static Cursor getCursor() {
-		return cursor;
-	}
-
-	public static void setCursor(Cursor cursor) {
-		ListCursorCardFragment.cursor = cursor;
-	}
 
 }
+

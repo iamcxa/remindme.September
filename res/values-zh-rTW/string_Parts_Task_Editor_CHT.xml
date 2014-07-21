@@ -21,6 +21,16 @@
         <item>5</item>
     </string-array>
     
+    <string name="TaskEditor_Title_Is_Empty">您需要輸入任務名稱。</string>
+    <string name="TaskEditor_Field_Title_Hint">任務</string>
+    <string name="TaskEditor_Field_DueDate_Hint">到期日</string>
+    <string name="TaskEditor_Field_Project_Hint">專案</string>
+    <string name="TaskEditor_Field_Tag_Hint">標籤</string>
+    <string name="TaskEditor_Field_Priority_Hint">優先等級</string>
+    <string name="TaskEditor_Field_Inbox">任務盒</string>
+   
+   
+    
     
     
 </resources>

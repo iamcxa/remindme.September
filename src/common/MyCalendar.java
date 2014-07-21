@@ -86,15 +86,17 @@ public class MyCalendar {
 		}else {
 		 mTimeMillis=A_Date.split("/");
 		}
+		MyDebug.MakeLog(0, "mTimeMillis[]='"+mTimeMillis[0]+","+mTimeMillis[1]+","+mTimeMillis[2]+"'");
 		Calendar calendar=Calendar.getInstance();
 		calendar.set(Integer.valueOf(mTimeMillis[0]),
 				Integer.valueOf(mTimeMillis[1]), 
-				Integer.valueOf(mTimeMillis[2]));
+				Integer.valueOf(mTimeMillis[2]),
+				0,0,0);
 		
-		return calendar.getTimeInMillis();
+		return (calendar.getTimeInMillis())/1000;
 	}
 	
-	public static String getCalendarToday(int ExtraDaysIfNeeded) {
+	public static String getTodayString(int ExtraDaysIfNeeded) {
 		Calendar today = Calendar.getInstance();
 		today.add(Calendar.DAY_OF_MONTH, ExtraDaysIfNeeded);
 		int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);

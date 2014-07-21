@@ -1,5 +1,6 @@
 package me.iamcxa.remindme.editor;
 
+import com.devspark.progressfragment.ProgressFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -8,6 +9,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import common.MyDebug;
 
 import me.iamcxa.remindme.R;
 import me.iamcxa.remindme.provider.GPSCallback;
@@ -30,29 +32,34 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
+public class TaskEditorLocation extends ProgressFragment  /*implements GPSCallback*/ {
 
-
-	// 宣告GPS模組
-	private static GPSManager gpsManager = null;
 
 	// 宣告pick
 	private static GoogleMap map;
-	private static EditText EditTextTittle;
 	private static EditText SearchText;
 	private static TextView PlaceName;
-	private static TextView locationTittle;
 	private static Button Search;
 	
-	private static ImageButton OK;
 	private Handler GpsTimehandler = new Handler();
-	private static Boolean isDrop=false;
+	private static CommonEditorVar mEditorVar=CommonEditorVar.GetInstance();
+	private Handler mHandler;
+	private View mContentView;
 
-	private MultiAutoCompleteTextView taskTittle; //任務標題
-	private EditText taskDuedate;//任務到期日
-	private Spinner taskCategory;//任務類別
+	public static TaskEditorLocation newInstance() {
+		TaskEditorLocation fragment = new TaskEditorLocation();
+		return fragment;
+	}	
+	
+	private Runnable mShowContentRunnable = new Runnable() {
 
-	private EditorVar mEditorVar ;
+		@Override
+		public void run() {
+			setContentShown(true);
+			setUpMapIfNeeded();
+		}
+
+	};
 
 	//****************搜尋到的經緯度、名稱********************
 	
@@ -68,28 +75,19 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 		// TODO Auto-generated method stub
 		super.onCreateView(inflater, container, savedInstanceState);
 	
-		View v= inflater.inflate(R.layout.activity_task_editor_parts_dialog_location, container, false);
-		//OK = (ImageButton) getActivity().findViewById(R.id.OK);
-		setUpMapIfNeeded();
-		SearchText = (EditText) v.findViewById(R.id.SearchText);
-		Search = (Button) v.findViewById(R.id.Search);
-		Search.setOnClickListener(SearchPlace);
-		PlaceName = (TextView)v.findViewById(R.id.PlaceName);
-//		OK.setOnClickListener(SearchPlace);
-//		gpsManager = new GPSManager();
-//		gpsManager.startNetWorkListening(getActivity());
-//		gpsManager.setGPSCallback(TaskEditorLocation.this);
-//		map = ((MapFragment) getActivity().getFragmentManager()
-//				 .findFragmentById(R.id.map)).getMap();
-//		map= ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+	
+		 mContentView =inflater.inflate(R.layout.activity_task_editor_tab_location, container, false);
 		
-		return v;
+	
+
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		//setContentShown(false);
 //		SearchText = (EditText) getActivity().findViewById(R.id.SearchText);
 //		Search = (Button) getActivity().findViewById(R.id.Search);
 //		Search.setOnClickListener(new Button.OnClickListener(){ 
@@ -107,8 +105,49 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 		// TODO Auto-generated method stub
 		super.onResume();
 		//setUpMapIfNeeded();
+		//setContentEmpty(false);
+		//setContentShown(true);
+	}
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		setContentView(mContentView);
+		
+		//OK = (ImageButton) getActivity().findViewById(R.id.OK);
+		
+		SearchText = (EditText) getContentView().findViewById(R.id.SearchText);
+		Search = (Button) getContentView().findViewById(R.id.Search);
+		Search.setOnClickListener(SearchPlace);
+		PlaceName = (TextView)getContentView().findViewById(R.id.PlaceName);
+		
+//		OK.setOnClickListener(SearchPlace);
+//		gpsManager = new GPSManager();
+//		gpsManager.startNetWorkListening(getActivity());
+//		gpsManager.setGPSCallback(TaskEditorLocation.this);
+//		map = ((MapFragment) getActivity().getFragmentManager()
+//				 .findFragmentById(R.id.map)).getMap();
+//		map= ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+		
+		obtainData();
 	}
 
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		mHandler.removeCallbacks(mShowContentRunnable);
+	}
+
+	
+	private void obtainData() {
+		// Show indeterminate progress
+		setContentShown(false);
+
+		mHandler = new Handler();
+		mHandler.postDelayed(mShowContentRunnable, 400);
+
+		MyDebug.MakeLog(0, "RemindmeFragment mHandler");
+	}
+	
 	private void setUpMapIfNeeded()
 	{
 	    if(map == null)
@@ -138,17 +177,6 @@ public class TaskEditorLocation extends Fragment /*implements GPSCallback*/ {
 	    				.position(nowLoacation));
 	        }
 	    }
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		setupViewComponent();
-	}
-
-
-	private void setupViewComponent(){
 	}
 
 	

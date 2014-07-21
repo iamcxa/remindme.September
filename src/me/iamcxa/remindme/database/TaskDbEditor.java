@@ -25,7 +25,7 @@ public class TaskDbEditor {
 	public Cursor query(String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		db = DH.getWritableDatabase();
-		return db.query(TaskDbProvider.TASK_LIST_TABLE_NAME,		//資料表名稱
+		return db.query(ColumnLocation.TABLE_NAME,		//資料表名稱
 				projection,	//欄位名稱
 				selection, // WHERE
 				selectionArgs, // WHERE 的參數
@@ -38,7 +38,7 @@ public class TaskDbEditor {
 	public void update(ContentValues values, Object object,
 			Object object2) {
 		db = DH.getWritableDatabase();
-		db.update(TaskDbProvider.TASK_LIST_TABLE_NAME, values, null	, null);
+		db.update(ColumnLocation.TABLE_NAME, values, null	, null);
 	}
     
 }

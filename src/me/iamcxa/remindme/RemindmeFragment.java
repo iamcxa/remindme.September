@@ -1,52 +1,85 @@
 package me.iamcxa.remindme;
 
-import java.util.Locale;
+import com.devspark.progressfragment.ProgressFragment;
+import common.MyDebug;
 
+import me.iamcxa.remindme.cardfragment.ListCursorCardFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 
 /**
  * Fragment that appears in the "content_frame", shows a planet
  */
 
-public class RemindmeFragment extends Fragment {
-	public static class MyFragment extends Fragment {
-		public static final String ARG_PLANET_NUMBER = "planet_number";
+public class RemindmeFragment extends ProgressFragment   {
 
-		public MyFragment() {
-			// Empty constructor required for fragment subclasses
-			
-		}
+	private View mContentView;
+	private Handler mHandler;
+	private static Fragment fragment ;
+	public static final String FILTER_STRING="FILTER_STRING";
+	private Runnable mShowContentRunnable = new Runnable() {
 
 		@Override
-		public View onCreateView(
-				LayoutInflater inflater,
-				ViewGroup container,
-				Bundle savedInstanceState) {
-			
-			View rootView = inflater.inflate(R.layout.activity_main, container, false);
-			
-			int i = getArguments().getInt(ARG_PLANET_NUMBER);
-			String planet = getResources().getStringArray(R.array.drawer_array_CHT)[i];
-			getActivity().setTitle(planet);
+		public void run() {
+			setContentShown(true);
+			FragmentManager fragmentManager = getFragmentManager();
+			fragment = getFragmentManager().findFragmentById(R.id.content_container);
+			//if(fragment==null){
+				fragment = ListCursorCardFragment.newInstance();
+		//	}
 
-//			int imageId = getResources().getIdentifier(planet.toLowerCase(Locale.getDefault()),
-//					"drawable", getActivity().getPackageName());
-			//((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageId);
-		
-			
-			
-			
-			
-			
-			return rootView;
+			//			int filter = getArguments().getInt(FILTER_STRING);
+			//			Bundle args = new Bundle();
+			//			args.putInt(RemindmeFragment.FILTER_STRING,filter);
+			//			
+			//			Fragment fragment= ListCursorCardFragment.newInstance();
+			//			fragment.setArguments(args);
+			fragmentManager.beginTransaction().replace(R.id.content_container, fragment,"ListCursorCardFragment").commit();
+			MyDebug.MakeLog(0, "RemindmeFragment.run³Q°õ¦æ");
 		}
+
+	};
+
+	public static RemindmeFragment newInstance() {
+		RemindmeFragment fragment = new RemindmeFragment();
+		return fragment;
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		mHandler.removeCallbacks(mShowContentRunnable);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		mContentView =inflater.inflate(R.layout.activity_loading, container, false);
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		setContentView(mContentView);
+		obtainData();
+	}
+
+
+	private void obtainData() {
+		// Show indeterminate progress
+		setContentShown(false);
+
+		mHandler = new Handler();
+		mHandler.postDelayed(mShowContentRunnable, 250);
+
+		MyDebug.MakeLog(0, "RemindmeFragment mHandler");
 	}
 }
+
 

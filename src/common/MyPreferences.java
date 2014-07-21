@@ -1,7 +1,5 @@
 package common;
 
-import java.util.Locale;
-
 import android.content.SharedPreferences;
 
 public class MyPreferences {

@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayout1"
+    <!-- class="me.iamcxa.remindme.provider.WorkaroundMapFragment" /> -->
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
-         <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/activity_task_editor_parts_dialog_location_parts_search" />
-            <!-- class="me.iamcxa.remindme.provider.WorkaroundMapFragment" />-->
+    <TextView
+        android:id="@+id/PlaceName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="40dp"
+        android:background="#96555555"
+        android:gravity="center"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff" />
 
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content" >
-
-             <fragment
-                 android:id="@+id/map"
-                 android:name="com.google.android.gms.maps.MapFragment"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentLeft="true"
-                 android:layout_alignParentTop="true" />
-
-             <TextView
-                 android:id="@+id/PlaceName"
-                 android:layout_width="fill_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentBottom="true"
-                 android:layout_alignParentLeft="true"
-                 android:layout_marginBottom="40dp"
-                 android:textAppearance="?android:attr/textAppearanceLarge" 
-                 android:text="" 
-                 android:background="#96555555"
-                 android:textColor="#ffffff"
-                 android:gravity="center"/>
-             
-
-         </RelativeLayout>
-
-    </LinearLayout>
-    
+</LinearLayout>
