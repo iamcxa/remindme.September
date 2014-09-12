@@ -4,9 +4,9 @@ import common.MyDebug;
 
 import common.CommonVar;
 
-public class DbAction_CheckDueDateField {
+public class Handler_duedate_field {
 
-	private DbAction_CheckDueDateField(){
+	private Handler_duedate_field(){
 	}	
 
 	private  String[] basicStringArray=CommonVar.TASKEDITOR_DUEDATE_BASIC_STRING_ARRAY;
@@ -86,7 +86,7 @@ public class DbAction_CheckDueDateField {
 	}
 
 	public static void setRawTaskDueDateString(String rawTaskDueDateString) {
-		DbAction_CheckDueDateField.rawTaskDueDateString = rawTaskDueDateString;
+		Handler_duedate_field.rawTaskDueDateString = rawTaskDueDateString;
 	}
 
 	public static String getProcessedTaskDueDateString() {
@@ -95,6 +95,6 @@ public class DbAction_CheckDueDateField {
 
 	public static void setProcessedTaskDueDateString(
 			String processedTaskDueDateString) {
-		DbAction_CheckDueDateField.processedTaskDueDateString = processedTaskDueDateString;
+		Handler_duedate_field.processedTaskDueDateString = processedTaskDueDateString;
 	}
 }

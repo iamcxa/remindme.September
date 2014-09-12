@@ -114,8 +114,8 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 			@Override
 			public void onClick(Card card, View view) {
 
-
-				mReadCardOnClick.readIt(card.getId());
+				ShowLongClickMenu(cursor.getInt(0));
+				
 
 			}
 		});
@@ -125,7 +125,7 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 			public boolean onLongClick(Card card, View view) {
 				// TODO Auto-generated method stubs
 
-				ShowLongClickMenu(cursor.getInt(0));
+				mReadCardOnClick.readIt(card.getId());
 
 				return false;
 
@@ -314,16 +314,16 @@ public class MyCursorCardAdapter extends CardCursorAdapter {
 
 				switch (which) {
 				case 0:// 修改
-
+					mReadCardOnClick.readIt(String.valueOf(id));
 					break;
 				case 1:// 刪除
 					removeCard(id);
 
 					break;
-				case 2:// 提高優先
+				case 2:// 提高優先 - 提前一天
 
 					break;
-				case 3:// 降低優先
+				case 3:// 降低優先 - 延後一天
 
 					break;
 				case 5:// 分享

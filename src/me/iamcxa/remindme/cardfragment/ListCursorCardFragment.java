@@ -18,22 +18,17 @@
 
 package me.iamcxa.remindme.cardfragment;
 
-import common.CommonVar;
 import common.MyCalendar;
 import common.MyDebug;
 
 import it.gmariotti.cardslib.library.view.CardListView;
 import me.iamcxa.remindme.R;
-import me.iamcxa.remindme.RemindmeFragment;
-import me.iamcxa.remindme.RemindmeMainActivity;
 import me.iamcxa.remindme.database.ColumnAlert;
+import me.iamcxa.remindme.database.ColumnCategory;
 import me.iamcxa.remindme.database.ColumnLocation;
 import me.iamcxa.remindme.database.ColumnTask;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -41,7 +36,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 /**
@@ -54,7 +48,6 @@ LoaderManager.LoaderCallbacks<Cursor> {
 	// getArguments().getInt(FILTER_STRING)
 	public static final String FILTER_STRING="FILTER_STRING";
 	private static int position;
-	private Handler mHandler ;
 	private static MyCursorCardAdapter mAdapter;
 	private static CardListView mListView;
 	private static String[] projectionTask = ColumnTask.PROJECTION;
@@ -89,40 +82,42 @@ LoaderManager.LoaderCallbacks<Cursor> {
 
 		switch (filter) {
 		case 0:// 任務盒
-			setTaskSelection("due_date_string = 'null'");
+			setTaskSelection(ColumnTask.KEY.due_date_string+" = 'null'");
 			break;
 		case 1:// 今天
 			Toast.makeText(getActivity(), 
 					"Today="+todayString, Toast.LENGTH_SHORT).show();
-			setTaskSelection("due_date_string = '"+todayString+"'");
+			setTaskSelection(ColumnTask.KEY.due_date_string+" = '"+todayString+"'");
 			break;
 		case 2://未來七天
-			setTaskSelection("due_date_string IS NOT 'null'");
+			setTaskSelection(ColumnTask.KEY.due_date_string+" IS NOT 'null'");
+			taskSortOrder= ColumnTask.DEFAULT_SORT_ORDER;
 			break;
 		case 3://專案
 
 			break;
 		case 4://距離檢視
 			//setProjection(projection)
-			setTaskSelection("distance IS NOT '0'");
+			this.getLoaderManager().initLoader(301, null, this);
+			getLoaderManager().restartLoader(301, null, this);
+			getLoaderManager().getLoader(301);
+			setTaskSelection(ColumnLocation.KEY.dintance+" IS NOT '0'");
 			break;
 		case 5://地圖檢視
 
 			break;
 		case 6://標籤
-			setTaskSelection("TAG IS NOT 'null'");
+			setTaskSelection(ColumnCategory.KEY.tag_id+" IS NOT 'null'");
 			break;
 		default:
 			break;
 		}
 
-
-
 		mAdapter = MyCursorCardAdapter.newInstance(getActivity());
 		mListView = (CardListView) getActivity().findViewById(
 				R.id.carddemo_list_cursor);
 		if (mListView != null)mListView.setAdapter(mAdapter);
-		
+
 		// Force start background query to load sessions
 		getLoaderManager();
 		getLoaderManager().restartLoader(101, null, this);
@@ -189,7 +184,7 @@ LoaderManager.LoaderCallbacks<Cursor> {
 		if (getActivity() == null) {
 			return;
 		}
-		
+
 		mAdapter.swapCursor(data);
 	}
 

@@ -7,7 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-public class SetAlarm {
+public class Handler_Alarm {
 	Context context;
 	int mYear;
 	int mMonth;
@@ -15,7 +15,7 @@ public class SetAlarm {
 	int mHour;
 	int mMinute;
 
-	public SetAlarm(Context context) {
+	public Handler_Alarm(Context context) {
 		// TODO Auto-generated constructor stub
 		super();
 		this.context = context;

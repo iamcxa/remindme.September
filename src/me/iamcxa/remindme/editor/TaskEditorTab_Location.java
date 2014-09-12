@@ -32,7 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TaskEditorLocation extends ProgressFragment  /*implements GPSCallback*/ {
+public class TaskEditorTab_Location extends ProgressFragment  /*implements GPSCallback*/ {
 
 
 	// «Å§ipick
@@ -46,8 +46,8 @@ public class TaskEditorLocation extends ProgressFragment  /*implements GPSCallba
 	private Handler mHandler;
 	private View mContentView;
 
-	public static TaskEditorLocation newInstance() {
-		TaskEditorLocation fragment = new TaskEditorLocation();
+	public static TaskEditorTab_Location newInstance() {
+		TaskEditorTab_Location fragment = new TaskEditorTab_Location();
 		return fragment;
 	}	
 	
