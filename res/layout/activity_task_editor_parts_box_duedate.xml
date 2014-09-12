@@ -15,7 +15,6 @@
                 android:layout_weight="2.5"
                 android:ems="10"
                 android:height="@dimen/task_editor_parts_EditText_Height"
-                android:hint="@string/TaskEditor_Field_DueDate_Hint"
                 android:inputType="datetime" >
   
             </EditText>

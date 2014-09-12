@@ -7,7 +7,7 @@
         android:orientation="vertical" >
 
         <Spinner
-            android:id="@+id/spinnerCategory"
+            android:id="@+id/spinnerProject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/task_editor_parts_layout_margin_Top_Bottom"
@@ -15,7 +15,8 @@
             android:layout_marginRight="@dimen/task_editor_parts_layout_margin_Left_Right"
             android:layout_marginTop="@dimen/task_editor_parts_layout_margin_Top_Bottom"
             android:height="@dimen/task_editor_parts_EditText_Height"
-            android:minHeight="40dp" />
+            android:minHeight="40dp"
+            android:prompt="@string/spinner_project_prompt" />
 
     </LinearLayout>
     

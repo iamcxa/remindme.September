@@ -17,7 +17,6 @@
             android:background="?android:attr/editTextBackground"
             android:ems="10"
             android:height="@dimen/task_editor_parts_EditText_Height"
-            android:hint="@string/TaskEditor_Field_Title_Hint"
             android:textColor="@color/task_editor_parts_layout_textview_color" >
 
             <requestFocus />
