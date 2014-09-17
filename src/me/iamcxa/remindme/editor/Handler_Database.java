@@ -15,10 +15,10 @@ import android.widget.Toast;
  * @author cxa
  * 
  */
-public class DbAction_SaveOrUpdate {
+public class Handler_Database {
 	private static CommonEditorVar mEditorVar=CommonEditorVar.GetInstance();
 	private Uri taskUri=ColumnTask.URI;
-	private SetAlarm mSetAlarm;
+	private Handler_Alarm mSetAlarm;
 	private Context context;
 	private int taskId=0;
 	private String TaskField_Main="";
@@ -27,10 +27,10 @@ public class DbAction_SaveOrUpdate {
 	private String TaskField_Type="";
 	private String TaskField_Other="";
 
-	public DbAction_SaveOrUpdate(Context context) {
+	public Handler_Database(Context context) {
 		super();
 		this.context = context;
-		mSetAlarm = new SetAlarm(context);
+		mSetAlarm = new Handler_Alarm(context);
 		StartOver();
 	}
 
@@ -47,17 +47,18 @@ public class DbAction_SaveOrUpdate {
 	}
 
 	/*
-	 * 
+	 *  由view物件取得輸入資訊
 	 */
-	// 由view物件取得輸入資訊
 	private void getDataFromView(){
-		mEditorVar.Task.setTitle(TaskEditorMain.getTaskTitle());	
-		mEditorVar.Task.setContent(TaskEditorMain.getTaskTitle());	
-		
+		mEditorVar.Task.setTitle(TaskEditorTab_Main.getTaskTitle());	
+		mEditorVar.Task.setContent(TaskEditorTab_Main.getTaskTitle());	
+
 		// 設定資料庫日期(字串)欄位
-		mEditorVar.Task.setDueDateString(MyCalendar.getTodayString(0));
-		// 設定資料庫日期(毫秒)欄位
-		DbAction_CheckDueDateField.setRawTaskDueDateString(TaskEditorMain.getTaskDueDate());
+		mEditorVar.Task.setDueDateString(TaskEditorTab_Main.getTaskDueDate());
+		
+		// 檢查資料庫日期(毫秒)欄位
+		Handler_duedate_field.setRawTaskDueDateString(
+				TaskEditorTab_Main.getTaskDueDate());
 
 
 
@@ -173,6 +174,6 @@ public class DbAction_SaveOrUpdate {
 			return false;
 		}
 	}
-	
+
 	// 結束 //
 }

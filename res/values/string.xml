@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
     
 </resources>
+=======
+    <!-- Basic theme information -->
+    <string name="app_name">智慧提醒</string>
+    <string name="pkg">tw.iamcxa.remindme</string>
+
+    <string name="carddemo_title_list_cursor">carddemo_title_list_cursor</string>
+
+
+    <string name="action_websearch">搜尋</string>
+        
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+</resources>
+>>>>>>> dce7deaa85890e28fba875b170e627a10bdf36be

@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class TaskEditorTab extends FragmentActivity  {
 
 	static CommonEditorVar mEditorVar=CommonEditorVar.GetInstance();
-	static DbAction_SaveOrUpdate mSaveOrUpdate;
+	static Handler_Database mSaveOrUpdate;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -104,19 +104,19 @@ public class TaskEditorTab extends FragmentActivity  {
 		actBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 
-		Fragment fragMarriSug = TaskEditorMain.newInstance();
+		Fragment fragMarriSug = TaskEditorTab_Main.newInstance();
 		actBar.addTab(actBar.newTab()
 				.setText("")
 				.setIcon(getResources().getDrawable(R.drawable.tear_of_calendar))
 				.setTabListener(new MyTabListener(fragMarriSug)));
 
-		Fragment fragGame =  TaskEditorLocation.newInstance();
+		Fragment fragGame =  TaskEditorTab_Location.newInstance();
 		actBar.addTab(actBar.newTab()
 				.setText("")
 				.setIcon(getResources().getDrawable(R.drawable.map_marker))
 				.setTabListener(new MyTabListener(fragGame)));
 
-		Fragment fragVideo = new TaskEditorMain();
+		Fragment fragVideo = new TaskEditorTab_Main();
 		actBar.addTab(actBar.newTab()
 				.setText("")
 				.setIcon(getResources().getDrawable(android.R.drawable.ic_media_play))
@@ -153,11 +153,11 @@ public class TaskEditorTab extends FragmentActivity  {
 
 	private void btnActionAdd(){
 		//檢查title是否為空
-		boolean isEmpty=(TaskEditorMain.getTaskTitle().contentEquals("null"));
+		boolean isEmpty=(TaskEditorTab_Main.getTaskTitle().contentEquals("null"));
 		if(!isEmpty){
 			try {
 
-				mSaveOrUpdate=new DbAction_SaveOrUpdate(getApplicationContext());
+				mSaveOrUpdate=new Handler_Database(getApplicationContext());
 				finish();
 
 			} catch (Exception e) {

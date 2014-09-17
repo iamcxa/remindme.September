@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class datepicker {
+public class Handle_datepicker {
 
 	/*
 	 * 設定提示日期對話方塊
